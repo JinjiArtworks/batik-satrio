@@ -18,7 +18,7 @@ class ProductController extends Controller
     public function detail($id)
     {
         $products = Product::find($id);
-        // return dd($products->name);
+        // return dd($products->nama);
         return view('customers.detailproduct', compact('products'));
     }
 

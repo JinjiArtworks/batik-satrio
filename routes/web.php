@@ -46,10 +46,9 @@ Route::get('/detail-report', function () {
 Route::get('/detail-riwayat-pesanan', function () {
     return view('stores.history.detail-history');
 });
-
-Route::get('/edit-product', function () {
-    return view('stores.products.edit');
-});
+// Route::get('/edit-product', function () {
+//     return view('staff.products.edit');
+// });
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::group(['as' => 'homepage.'], function () {
@@ -61,7 +60,7 @@ Route::middleware(['auth'])->group(function () {
     Route::group(['as' => 'cart.'], function () {
         Route::get('/cart', [CartController::class, 'index'])->name('index');
         Route::post('/add-to-cart/{id}', [CartController::class, 'addCart'])->name('add');
-        Route::get('/remove-from-cart/{id}', [CartController::class, 'index'])->name('remove');
+        Route::get('/remove-from-cart/{id}', [CartController::class, 'destroy'])->name('remove');
     });
     Route::group(['as' => 'checkout.'], function () {
         Route::post('/checkout', [CheckoutController::class, 'index'])->name('index');
@@ -72,12 +71,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/riwayat-detail/{id}', [HistoryOrderController::class, 'detail'])->name('detail');
     });
     Route::group(['as' => 'customers.'], function () {
-        Route::get('/data-customer', [CustomerController::class, 'index']);
-        Route::get('/create-customer', [CustomerController::class, 'create'])->name('create');
-        Route::get('/edit-customer/{id}', [CustomerController::class, 'edit'])->name('edit');
-        Route::post('/store-customer', [CustomerController::class, 'store'])->name('store');
-        Route::put('/update-customer/{id}', [CustomerController::class, 'update'])->name('update');
-        Route::get('/delete-customer/{id}', [CustomerController::class, 'destroy'])->name('delete');
+        Route::get('data-customer', [CustomerController::class, 'index']);
+        Route::get('create-customer', [CustomerController::class, 'create'])->name('create');
+        Route::get('edit-customer/{id}', [CustomerController::class, 'edit'])->name('edit');
+        Route::post('store-customer', [CustomerController::class, 'store'])->name('store');
+        Route::put('update-customer/{id}', [CustomerController::class, 'update'])->name('update');
+        Route::get('delete-customer/{id}', [CustomerController::class, 'destroy'])->name('delete');
     });
     Route::group(['as' => 'categories.'], function () {
         Route::get('/data-category', [CategoryController::class, 'index']);
@@ -98,12 +97,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/delete-reports/{id}', [DashboardController::class, 'destroy'])->name('delete');
     });
     Route::group(['as' => 'products.'], function () {
-        Route::get('/data-product', [ListProductController::class, 'index'])->name('dashboard');
-        Route::get('/create-product', [ListProductController::class, 'create'])->name('create');
-        Route::get('/edit-product/{id}', [ListProductController::class, 'edit'])->name('edit');
-        Route::post('/store-product', [ListProductController::class, 'store'])->name('store');
-        Route::put('/update-product/{id}', [ListProductController::class, 'update'])->name('update');
-        Route::get('/delete-product/{id}', [ListProductController::class, 'destroy'])->name('delete');
+        Route::get('data-product', [ListProductController::class, 'index'])->name('dashboard');
+        Route::get('create-product', [ListProductController::class, 'create'])->name('create');
+        Route::get('edit-product/{id}', [ListProductController::class, 'edit'])->name('edit');
+        Route::post('store-product', [ListProductController::class, 'store'])->name('store');
+        Route::put('update-product/{id}', [ListProductController::class, 'update'])->name('update');
+        Route::get('delete-product/{id}', [ListProductController::class, 'destroy'])->name('delete');
     });
     Route::group(['as' => 'history.'], function () {
         Route::get('/data-history', [StaffHistoryController::class, 'index'])->name('dashboard');

@@ -11,105 +11,107 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class CheckoutController extends Controller
 {
     public function index(Request $request)
     {
         // dd($request->courier);
-        $user = Auth::user()->id;
-        $point = Auth::user()->point;
+        $user = Auth::user();
+        $courierName = $request->courier;
         $cart = session()->get('cart');
-        // return dd($cart);
-        return view('customer.checkout',  compact('cart', 'point'));
+        // return dd($courierName);
+        if ($request->origin && $request->destination && $request->weight && $request->courier) {
+            $origin = $request->origin;
+            $destination = $request->destination;
+            $weight = $request->weight;
+            $courier = $request->courier;
+            $response = Http::asForm()->withHeaders([
+                'key' => '91f6ce360df9a6e2ca7badaae61f5b78'
+            ])->post('https://api.rajaongkir.com/starter/cost', [
+                'origin' => $origin,
+                'destination' => $destination,
+                'weight' => $weight,
+                'courier' => $courier,
+            ]);
+            // $resultz = json_decode($response);
+            // return ($resultz);
+            $cekongkir = $response['rajaongkir']['results'][0]['costs'][0]['cost'][0]['value'];
+            // return dd($cekongkir);
+        } else {
+            $origin = '';
+            $destination = '';
+            $weight = '';
+            $courier = '';
+            $cekongkir = null;
+        }
+        $userName = $user->name;
+        // payment gateway
+        \Midtrans\Config::$serverKey = 'SB-Mid-server-yUxga--v_4EQ_EKe8TWMMmbZ';
+        // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
+        \Midtrans\Config::$isProduction = false;
+        // Set sanitization on (default)
+        \Midtrans\Config::$isSanitized = true;
+        // Set 3DS transaction for credit card to true
+        \Midtrans\Config::$is3ds = true;
+
+        // return dd($request->all());
+        $grandTotal =  $request->total + $cekongkir;
+        $params = array(
+            'transaction_details' => array(
+                'order_id' => rand(),
+                'gross_amount' => $grandTotal,
+            ),
+            'customer_details' => array(
+                'first_name' => $userName,
+                'phone' => '08111222333',
+            ),
+        );
+        $snapToken = \Midtrans\Snap::getSnapToken($params);
+        // dd($params);
+        return view('customers.checkout', ['snap_token' => $snapToken],  compact('cart', 'cekongkir', 'courierName'));
     }
+
     public function store(Request $request)
     {
         $user = Auth::user();
+        $json = json_decode($request->get('json'));
         $cart = session()->get('cart');
+        // return dd($cart);
+        // return dd($request->all());
         $orders = new Order();
-        $orders->date = Carbon::now();
-        $orders->total = $request->grandTotal;
-        $orders->user_id = $user->id;
+        $orders->users_id = $user->id;
+        $orders->nama = $request->penerima;
+        $orders->nomor_hp = $request->phone;
+        $orders->alamat = $request->address;
+        $orders->tanggal = Carbon::now();
+        $orders->ongkos_kirim = $request->ongkir; // belum, gunakan raja ongkir
+        $orders->jenis_pembayaran = $json->payment_type; // belum, gunakan payment gateway untuk dapat jenis pembayarannya
         $orders->status = 'Sedang Diproses';
+        $orders->ekspedisi = $request->courierName; // belum, gunakan raja ongkir
+        $orders->total = $request->grandTotal;
         $saved =  $orders->save();
-        // dd($user->point);
-        // $user = User::find($user->id);
-        // dd($request->all());
-
-        // $getMaxPoint = round($request->total/100000); 
-        // if ($request->redemption == "Yes" && $user->point >= $getMaxPoint)
-        // {
-        //     $usedPoint = $user->point - $getMaxPoint;
-        //     ($request->total - ($usedPoint * 100000)) + 100000;
-        // } else {
-        //     if ($request->total >= 100000) {
-        //         $getPoint = round($request->total / 100000);
-        //         // dd($getPoint);
-        //         User::where('id', $user->id)
-        //             ->update(
-        //                 [
-        //                     'point' => $user->point + $getPoint,
-        //                     'membership' => 'Active'
-        //                 ]
-        //             );
-        //     } else {
-        //         $getPoint = 0;
-        //         User::where('id', $user->id)
-        //             ->update(
-        //                 [
-        //                     'point' => $user->point + $getPoint,
-        //                     'membership' => 'Active'
-        //                 ]
-        //             );
-        //     }
-        // }`
-
-
-        if ($request->total >= 100000) {
-            $getPoint = round($request->total / 100000);
-            // dd($getPoint);
-            User::where('id', $user->id)
-                ->update(
-                    [
-                        'point' => $user->point + $getPoint,
-                        'membership' => 'Active'
-                    ]
-                );
-        } else {
-            $getPoint = 0;
-            User::where('id', $user->id)
-                ->update(
-                    [
-                        'point' => $user->point + $getPoint,
-                        'membership' => 'Active'
-                    ]
-                );
-        }
         foreach ($cart as $item) {
             $details = new OrderDetail();
             $details->product_id = $item['id'];
             $details->order_id = $orders->id;
-            $details->name = $user->name;
-            $details->alamat = $user->address;
-            $details->phone = $user->phone;
             $details->quantity = $item['quantity'];
-            $details->price = $item['price'] * $item['quantity'];
+            $details->harga = $item['price'] * $item['quantity'];
             $details->save();
             $product = Product::find($item['id']);
             $product::where('id', $item['id'])
                 ->update(
                     [
-                        'stock' => $product["stock"] - $item["quantity"],
+                        'stok' => $product["stok"] - $item["quantity"],
                     ]
                 );
         }
-
         if (!$saved) {
             return redirect('/')->with('warning', 'Silahkan Menyelesaikan Pembayaran');
         } else {
             session()->forget('cart');
-            return redirect('/shop')->with('success', 'Produk berhasil di order');
+            return redirect('/belanja')->with('success', 'Produk berhasil di order');
         }
     }
     /**
