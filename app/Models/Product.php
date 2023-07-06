@@ -20,7 +20,7 @@ class Product extends Model
     }
     public function orderdetail()
     {
-        return $this->belongsTo(OrderDetail::class);
+        return $this->hasOne(OrderDetail::class);
     }
     // foreign key yang dititipkan pada tabel, akan menggunakan relasi belongsTo. Sedangkan tabel utama yang menitipkan, di modelsnya menggunakan relasi hasMany / hasOne!!!!
 }

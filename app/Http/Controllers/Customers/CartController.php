@@ -20,7 +20,7 @@ class CartController extends Controller
         $user = Auth::user();
         $cart = session()->get('cart');
         // return dd($user);
-        return view('customers.cart', compact('cart'));
+        return view('customers.cart.cart', compact('cart'));
     }
     public function addCart(Request $request, $id)
     {

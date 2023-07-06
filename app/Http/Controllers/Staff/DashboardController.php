@@ -3,46 +3,35 @@
 namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
-use App\Models\Categories;
-use App\Models\Jenis;
+use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Models\Product;
-use App\Models\Tipe;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $product = Product::all();
-        return view('staff.reports.data-reports', compact('product'));
+        $orders = Order::all();
+        return view('staff.reports.data-reports', compact('orders'));
     }
-    public function edit($id)
+    public function detail($id)
     {
-        // $product = Product::find($id);
-        // $categories = Categories::all();
-        // return view('staff.products.edit', compact('product', 'jenis', 'categories', 'tipe'));
+        // $about = OrderDetail::where('product_id', 'order_id')->first();
+        $orderdetails = OrderDetail::where('order_id', $id)->first();
+        // $orderdetail = OrderDetail::whereOrderId($id);
+        // return dd($orderdetail->product->nama);
+        // return dd($orderdetails->order->harga);
+        return view('staff.reports.detail-reports', compact('orderdetails'));
     }
     public function update(Request $request, $id)
     {
-        // $destinationPath = '/img';
-        // $request->image->move(public_path($destinationPath), $request->image->getClientOriginalName());
-        // Product::where('id', $id)
-        //     ->update(
-        //         [
-        //             'name' => $request->name,
-        //             'image' => $request->image->getClientOriginalName(),
-        //             'dimension' => $request->dimension,
-        //             'brand' => $request->brand,
-        //             'categories_id' => $request->categories,
-        //             'stock' => $request->stock,
-        //             'price' => $request->price,
-        //         ]
-        //     );
-        // return redirect('/data-product');
-    }
-    public function destroy($id)
-    {
-        Product::where('id', $id)->delete();
-        return redirect()->back();
+        Order::where('id', $id)
+            ->update(
+                [
+                    'status' => 'Pesanan Dikirim',
+                ]
+            );
+        return redirect('/data-reports');
     }
 }

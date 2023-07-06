@@ -13,13 +13,13 @@ class ProductController extends Controller
     {
         $products = Product::all();
         // return dd($products);
-        return view('customers.shop', compact('products'));
+        return view('customers.products.shop', compact('products'));
     }
     public function detail($id)
     {
         $products = Product::find($id);
         // return dd($products->nama);
-        return view('customers.detailproduct', compact('products'));
+        return view('customers.products.detailproduct', compact('products'));
     }
 
     public function create()

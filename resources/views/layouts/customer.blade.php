@@ -77,7 +77,7 @@
                             </div>
                             <ul class="py-2" aria-labelledby="user-menu-button">
                                 <li>
-                                    <a href="/data-product"
+                                    <a href="/data-reports"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Lihat Toko</a>
                                 </li>
                                 <form method="POST" action="{{ route('logout') }}">

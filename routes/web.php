@@ -3,6 +3,7 @@
 use App\Http\Controllers\Customers\CartController;
 use App\Http\Controllers\Customers\CheckoutController;
 use App\Http\Controllers\Customers\HistoryController;
+use App\Http\Controllers\Customers\HistoryOrderController;
 use App\Http\Controllers\Customers\HomeController;
 use App\Http\Controllers\Customers\ProductController;
 use App\Http\Controllers\Staff\DashboardController;
@@ -21,9 +22,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/cart', function () {
-    return view('customers.cart');
-});
+// Route::get('/cart', function () {
+//     return view('customers.cart');
+// });
 Route::get('/wishlist', function () {
     return view('customers.wishlist');
 });
@@ -39,10 +40,6 @@ Route::get('/history-detail', function () {
 });
 
 
-
-Route::get('/detail-report', function () {
-    return view('stores.reports.detail-reports');
-});
 Route::get('/detail-riwayat-pesanan', function () {
     return view('stores.history.detail-history');
 });
@@ -68,7 +65,7 @@ Route::middleware(['auth'])->group(function () {
     });
     Route::group(['as' => 'history-order.'], function () {
         Route::get('/riwayat-order', [HistoryOrderController::class, 'index'])->name('index');
-        Route::get('/riwayat-detail/{id}', [HistoryOrderController::class, 'detail'])->name('detail');
+        Route::get('/riwayat-detail/{id}', [HistoryOrHistoryOrderControllerderController::class, 'detail'])->name('detail');
     });
     Route::group(['as' => 'customers.'], function () {
         Route::get('data-customer', [CustomerController::class, 'index']);
@@ -92,7 +89,7 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::group(['as' => 'reports.'], function () {
         Route::get('/data-reports', [DashboardController::class, 'index'])->name('dashboard');
-        Route::get('/edit-reports/{id}', [DashboardController::class, 'edit'])->name('edit');
+        Route::get('detail-reports/{id}', [DashboardController::class, 'detail'])->name('details');
         Route::put('/update-reports/{id}', [DashboardController::class, 'update'])->name('update');
         Route::get('/delete-reports/{id}', [DashboardController::class, 'destroy'])->name('delete');
     });

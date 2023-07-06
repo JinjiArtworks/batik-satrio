@@ -70,7 +70,7 @@ class CheckoutController extends Controller
         );
         $snapToken = \Midtrans\Snap::getSnapToken($params);
         // dd($params);
-        return view('customers.checkout', ['snap_token' => $snapToken],  compact('cart', 'cekongkir', 'courierName'));
+        return view('customers.cart.checkout', ['snap_token' => $snapToken],  compact('cart', 'cekongkir', 'courierName'));
     }
 
     public function store(Request $request)
@@ -88,6 +88,7 @@ class CheckoutController extends Controller
         $orders->tanggal = Carbon::now();
         $orders->ongkos_kirim = $request->ongkir; // belum, gunakan raja ongkir
         $orders->jenis_pembayaran = $json->payment_type; // belum, gunakan payment gateway untuk dapat jenis pembayarannya
+        $orders->jenis_pesanan = 'Non Custom';
         $orders->status = 'Sedang Diproses';
         $orders->ekspedisi = $request->courierName; // belum, gunakan raja ongkir
         $orders->total = $request->grandTotal;
