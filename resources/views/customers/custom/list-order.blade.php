@@ -35,7 +35,7 @@
                 </svg>
                 <a href="#"
                     class="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">
-                    Keranjang</a>
+                    Pesanan Custom Batik</a>
             </div>
         </li>
     </ol>
@@ -45,21 +45,21 @@
         $total = 0;
         $berat = 0;
         $totalBerat = 0;
-        if ($cart != null) {
-            foreach ($cart as $key => $value) {
+        if ($list != null) {
+            foreach ($list as $key => $value) {
                 $total = $value['total_after_disc'] + $total;
                 $berat = $value['weight'] * $value['quantity'];
                 $totalBerat += $berat;
             }
         }
     @endphp
-    @if ($cart == null)
+    @if ($list == null)
         <div class="wrap-iten-in-cart">
             <div class="container-fluid ">
                 <div class="row">
                     <div class="card-body cart">
                         <div class="col-sm-12 empty-cart-cls text-center">
-                            <h4><strong>Keranjang Kosong</strong></h4>
+                            <h4><strong>Pesanan Custom Kosong</strong></h4>
                         </div>
                     </div>
                 </div>
@@ -67,30 +67,52 @@
         </div>
     @else
         <div class="max-w-screen-xl items-center justify-between mx-auto p-4">
-            <h2 class="text-xl font-semibold">Your cart</h2>
-            @foreach ($cart as $key => $c)
+            <h2 class="text-xl font-semibold">Pesanan Custom Batik</h2>
+            @foreach ($list as $key => $c)
                 <ul class="flex flex-col divide-y divide-gray-700">
                     <li class="flex flex-col py-6 sm:flex-row sm:justify-between">
                         <div class="flex w-full space-x-2 sm:space-x-4">
-                            <img class="flex-shrink-0 object-cover w-20 h-22 dark:border-transparent rounded outline-none sm:w-32 sm:h-32 dark:bg-gray-500"
-                                src="{{ asset('images/' . $c['image']) }}">
+                            @if ($c['id'] == 1)
+                                <img class="flex-shrink-0 object-cover w-20 h-22 dark:border-transparent rounded outline-none sm:w-32 sm:h-32 dark:bg-gray-500"
+                                    src="{{ asset('images/wanita.png') }}">
+                            @else
+                                <img class="flex-shrink-0 object-cover w-20 h-22 dark:border-transparent rounded outline-none sm:w-32 sm:h-32 dark:bg-gray-500"
+                                    src="{{ asset('images/pria.png') }}">
+                            @endif
                             <div class="flex flex-col justify-between w-full pb-4">
                                 <div class="flex justify-between w-full pb-2 space-x-2">
                                     <div class="space-y-1">
-                                        <h3 class="text-lg font-semibold leadi sm:pr-8">{{ $c['name'] }} </h3>
-                                        <p class="text-sm dark:text-gray-400">Size : {{ $c['size'] }}</p>
+                                        <h3 class="text-lg font-semibold leadi sm:pr-8"> Custom Batik {{ $c['motif'] }}
+                                            @if ($c['id'] == 1)
+                                                Wanita
+                                            @else
+                                                Pria
+                                            @endif
+                                        </h3>
+                                        <p class="text-sm  dark:text-gray-400">Request Ukuran : {{ $c['size'] }}</p>
+                                    </div>
+                                    <div class="text-sm">
+                                        <p class="font-semibold mb-2">Quantity </p>
+                                        <p> {{ $c['quantity'] }} Pcs</p>
+                                    </div>
+                                    <div class="text-sm">
+                                        <p class="font-semibold mb-2">Harga Satuan </p>
+                                        <p> @currency($c['harga'])</p>
+                                    </div>
+                                    {{-- <div class="text-sm">
+                                        <p class="font-semibold mb-2">Request Kain </p>
+                                        <p> {{ $c['kain'] }}</p>
+                                    </div>
+                                    <div class="text-sm">
+                                        <p class="font-semibold mb-2">Request Warna Dasar</p>
+                                        <p> {{ $c['warna'] }} </p>
+                                    </div> --}}
+                                    <div class="text-sm">
+                                        <p class="font-semibold mb-2">Total </p>
+                                        <p> @currency($c['total_after_disc']) </p>
                                     </div>
                                     <div class="text-right">
-                                        <p class="text-sm font-semibold">x{{ $c['quantity'] }}</p>
-                                    </div>
-                                    <div class="text-right">
-                                        <p class="text-sm font-semibold">@currency($c['price'])</p>
-                                    </div>
-                                    <div class="text-right">
-                                        <p class="text-sm font-semibold">@currency($c['total_after_disc'])</p>
-                                    </div>
-                                    <div class="text-right">
-                                        <form action="{{ route('cart.remove', ['id' => $c['id']]) }}" method="GET">
+                                        <form action="{{ route('custom.remove', ['id' => $c['id']]) }}" method="GET">
                                             <button type="submit"
                                                 class="flex items-center px-2 py-1 pl-0 space-x-1 text-red-600">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
@@ -120,18 +142,52 @@
             <hr class=" border-gray-200 sm:mx-auto dark:border-gray-700" />
 
         </div>
-        <form method="POST" action="{{ route('checkout.index') }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('custom.checkout') }}" enctype="multipart/form-data">
             @csrf
-
             <div class="max-w-screen-xl items-center justify-between mx-auto">
                 <div class="container items-start gap-6">
+                    <table class="table-auto border-collapse w-full text-left text-gray-600 text-sm mt-2 mb-6">
+                        <tr>
+                            <h4 class="text-gray-800 text-lg font-medium">Detail Pesanan</h4>
+                        </tr>
+                        <tr>
+                            <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Warna Dasar</th>
+                            <th class="py-2 px-4 border border-gray-300 ">{{ $c['warna'] }}</th>
+                        </tr>
+                        <tr>
+                            <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Motif </th>
+                            <th class="py-2 px-4 border border-gray-300 ">{{ $c['motif'] }}</th>
+                        </tr>
+                        <tr>
+                            <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Model</th>
+                            <th class="py-2 px-4 border border-gray-300 ">{{ $c['model'] }}</th>
+                        </tr>
+                        <tr>
+                            <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Lengan</th>
+                            <th class="py-2 px-4 border border-gray-300 ">{{ $c['lengan'] }}</th>
+                        </tr>
+                        <tr>
+                            <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Kain</th>
+                            <th class="py-2 px-4 border border-gray-300 ">{{ $c['kain'] }}</th>
+                        </tr>
+                        <tr>
+                            <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Ukuran Detail</th>
+                            <th class="py-2 px-4 border border-gray-300 ">{{ $c['size'] }}</th>
+                        </tr>
+                       
+                        <tr>
+                            <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Weight</th>
+                            <th class="py-2 px-4 border border-gray-300 ">{{ $totalBerat }} gram</th>
+                        </tr>
+                    </table>
                     <div class="col-span-12 border border-gray-200 p-4 rounded">
-                        <h4 class="text-gray-800 text-lg mb-2 font-medium">Detail Informasi</h4>
+                        <h4 class="text-gray-800 text-lg mb-2 font-medium">Detail Pengiriman</h4>
                         <hr class="border-gray-200 sm:mx-auto dark:border-gray-700 " />
+
                         <div class="flex mt-4  text-gray-800 font-medium ">
                             <p class="font-bold ">Alamat Tujuan : </p>
                             <div class="items-center ml-2">
-                                <p>{{ Auth::user()->alamat }}</p>
+                                <p>{{ Auth::user()->address }}</p>
                             </div>
                         </div>
                         <a href="#" class="underline text-blue-700">Ubah</a>
@@ -142,11 +198,9 @@
                                     class="bg-gray-50  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                     <option value="jne">JNE</option>
                                 </select>
-
                             </div>
                         </div>
                         {{-- pakai modal untuk ubah alamat --}}
-
                     </div>
                     <div class="space-y-1 text-right mt-4">
                         <p>Total belanja:
@@ -169,6 +223,5 @@
             </div>
         </form>
     @endif
-
 
 @endsection

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Customers;
+namespace App\Http\Controllers\Customers\Custom;
 
 use App\Models\Customer;
 use App\Models\Order;
@@ -13,15 +13,17 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
-class CheckoutController extends Controller
+class CheckoutCustomController extends Controller
 {
-    public function index(Request $request)
+    public function checkout(Request $request)
     {
         // dd($request->courier);
+        // return dd($request->all()); 
         $user = Auth::user();
         $courierName = $request->courier;
-        $cart = session()->get('cart');
         // return dd($courierName);
+        $list = session()->get('list');
+        // return dd($list);
         if ($request->origin && $request->destination && $request->weight && $request->courier) {
             $origin = $request->origin;
             $destination = $request->destination;
@@ -70,15 +72,15 @@ class CheckoutController extends Controller
         );
         $snapToken = \Midtrans\Snap::getSnapToken($params);
         // dd($params);
-        return view('customers.cart.checkout', ['snap_token' => $snapToken],  compact('cart', 'cekongkir', 'courierName'));
+        return view('customers.custom.checkout', ['snap_token' => $snapToken],  compact('list', 'cekongkir', 'courierName'));
     }
 
     public function store(Request $request)
     {
         $user = Auth::user();
         $json = json_decode($request->get('json'));
-        $cart = session()->get('cart');
-        // return dd($cart);
+        $list = session()->get('list');
+        // return dd($list);
         // return dd($request->all());
         $orders = new Order();
         $orders->users_id = $user->id;
@@ -88,30 +90,28 @@ class CheckoutController extends Controller
         $orders->tanggal = Carbon::now();
         $orders->ongkos_kirim = $request->ongkir; // belum, gunakan raja ongkir
         $orders->jenis_pembayaran = $json->payment_type; // belum, gunakan payment gateway untuk dapat jenis pembayarannya
-        $orders->jenis_pesanan = 'Non Custom';
-        $orders->status = 'Sedang Diproses';
+        $orders->jenis_pesanan = 'Custom';
+        $orders->status = 'Menunggu Konfirmasi';
         $orders->ekspedisi = $request->courierName; // belum, gunakan raja ongkir
         $orders->total = $request->grandTotal;
         $saved =  $orders->save();
-        foreach ($cart as $item) {
+        foreach ($list as $item) {
             $details = new OrderDetail();
-            $details->product_id = $item['id'];
             $details->order_id = $orders->id;
             $details->quantity = $item['quantity'];
-            $details->harga = $item['price'] * $item['quantity'];
+            $details->request_warna = $item['warna'];
+            $details->request_ukuran = $item['size'];
+            $details->request_kain = $item['kain'];
+            $details->request_model = $item['model'];
+            $details->request_motif = $item['motif'];
+            $details->request_lengan = $item['lengan'];
+            $details->harga = $item['harga'] * $item['quantity'];
             $details->save();
-            $product = Product::find($item['id']);
-            $product::where('id', $item['id'])
-                ->update(
-                    [
-                        'stok' => $product["stok"] - $item["quantity"],
-                    ]
-                );
         }
         if (!$saved) {
             return redirect('/')->with('warning', 'Silahkan Menyelesaikan Pembayaran');
         } else {
-            session()->forget('cart');
+            session()->forget('list');
             return redirect('/belanja')->with('success', 'Produk berhasil di order');
         }
     }

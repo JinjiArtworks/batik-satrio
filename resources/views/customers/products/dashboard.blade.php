@@ -1,7 +1,7 @@
 @extends('layouts.customer')
 
 @section('content')
-    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+<div class="max-w-screen-xl flex flex-wrap justify-center mx-auto p-4">
         <div id="default-carousel" class="relative w-full" data-carousel="slide">
             <!-- Carousel wrapper -->
             <div class="relative h-56 overflow-hidden rounded-lg md:h-96 shadow dark:bg-gray-800 dark:border-gray-700">
@@ -71,69 +71,66 @@
             </button>
         </div>
     </div>
-    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <div class="container mt-4  ">
-            <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-6 mx-auto justify-center">
-                <div
-                    class="border  border-gray-20 shadow dark:bg-gray-800 dark:border-gray-700 rounded-xl px-3 py-6 flex justify-center items-center gap-5">
-                    <img src="/images/icons/delivery-van.svg" alt="Delivery" class="w-12 h-12 object-contain">
-                    <div class="pl-10">
-                        <h4 class="font-medium capitalize text-lg">Free Shipping</h4>
-                        <p class="text-gray-500 text-xl">Order over $200</p>
-                    </div>
+    <div class="max-w-screen-xl flex flex-wrap justify-center mx-auto p-4">
+        <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-6 mx-auto">
+            <div
+                class="border border-gray-20 shadow dark:bg-gray-800 dark:border-gray-700 rounded-xl px-3 py-6 flex justify-center items-center gap-5">
+                <img src="/images/icons/delivery-van.svg" alt="Delivery" class="w-12 h-12 object-contain">
+                <div class="pl-10">
+                    <h4 class=" font-light">Free Shipping</h4>
+                    <p class="text-gray-500 ">Order over $200</p>
                 </div>
-                <div
-                    class="border  border-gray-20 shadow dark:bg-gray-800 dark:border-gray-700 rounded-xl px-3 py-6 flex justify-center items-center gap-5">
-                    <img src="/images/icons/money-back.svg" alt="Delivery" class="w-12 h-12 object-contain">
-                    <div class="pl-10">
+            </div>
+            <div
+                class="border  border-gray-20 shadow dark:bg-gray-800 dark:border-gray-700 rounded-xl px-3 py-6 flex justify-center items-center gap-5">
+                <img src="/images/icons/money-back.svg" alt="Delivery" class="w-12 h-12 object-contain">
+                <div class="pl-10">
 
-                        <h4 class="font-medium capitalize text-lg">Money Rturns</h4>
-                        <p class="text-gray-500 text-xl">30 days money returs</p>
-                    </div>
+                    <h4 class=" font-light ">Money Returns</h4>
+                    <p class="text-gray-500 ">30 days money returns</p>
                 </div>
-                <div
-                    class="border  border-gray-20 shadow dark:bg-gray-800 dark:border-gray-700 rounded-xl px-3 py-6 flex justify-center items-center gap-5">
-                    <img src="/images/icons/service-hours.svg" alt="Delivery" class="w-12 h-12 object-contain">
-                    <div class="pl-10">
-
-                        <h4 class="font-medium capitalize text-lg">24/7 Support</h4>
-                        <p class="text-gray-500 text-xl">Customer support</p>
-                    </div>
+            </div>
+            <div
+                class="border border-gray-20 shadow dark:bg-gray-800 dark:border-gray-700 rounded-xl px-3 py-6 flex justify-center items-center gap-5">
+                <img src="/images/icons/service-hours.svg" alt="Delivery" class="w-12 h-12 object-contain">
+                <div class="pl-10">
+                    <h4 class=" font-light ">24/7 Support</h4>
+                    <p class="text-gray-500 ">Customer support</p>
                 </div>
             </div>
         </div>
     </div>
-    <div class="max-w-screen-xl flex items-center justify-between mx-auto p-4">
+    {{-- <div class="max-w-screen-lg flex mx-auto p-4">
         <div class="container">
-            <h2 class="text-2xl font-medium text-gray-800 mb-4">Kategori</h2>
+            <h2 class="text-2xl  font-light text-gray-800 mb-4">Kategori</h2>
             <div class="grid grid-cols-3 gap-3 ">
                 @foreach ($categories as $item)
                     <div class="relative rounded-sm overflow-hidden group mb-4 mr-4">
                         <img src="/images/category/category-1.jpg" alt="category 1" class="w-full">
                         <a href="#"
-                            class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-xl text-white  font-large group-hover:bg-opacity-60 transition">{{ $item->nama }}</a>
+                            class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center  text-white  font-large group-hover:bg-opacity-60 transition">{{ $item->nama }}</a>
                     </div>
                 @endforeach
 
             </div>
         </div>
+    </div> --}}
+    <div class="max-w-screen-xl flex flex-wrap mx-auto p-4">
+        <h2 class="text-xl font-semibold">Produk Kami</h2> <a href="/belanja"
+            class="flex items-center justify-end text-blue-600 underline ml-4">Lihat Semua</a>
     </div>
-    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto pl-4">
-        <h2 class="text-2xl font-medium text-gray-800">Produk Kami</h2>
-    </div>
-    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+    <div class="max-w-screen-xl flex flex-wrap   justify-center mx-auto">
         @foreach ($products as $item)
             <div
-                class="w-full max-w-sm mb-10 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                class="mr-4 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-56">
                 <a href="/detail-product/{{ $item->id }}">
-                    <img class="object-fill p-4 w-full" src="{{ asset('images/'.$item->gambar) }}"
-                        alt="product image" />
+                    <img class="p-2 w-full" src="{{ asset('images/' . $item->gambar) }}" alt="product image" />
                 </a>
                 <div class="px-5 pb-5">
                     <a href="/detail-product/{{ $item->id }}">
-                        <h5 class="text-xl  tracking-tight text-gray-900 dark:text-white">{{ $item->nama }}</h5>
+                        <h5 class="font-semibold text-gray-900 dark:text-white">{{ $item->nama }}</h5>
                     </a>
-                    {{-- <div class="flex items-center mt-2.5 mb-5">
+                    <div class="flex items-center mt-2.5 mb-5">
                         <svg aria-hidden="true" class="w-5 h-5 text-yellow-300" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
                             <title>First star</title>
@@ -171,17 +168,16 @@
                         </svg>
                         <span
                             class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">5.0</span>
-                    </div> --}}
+                    </div>
                     <span class="text-sm text-gray-900">Terjual : {{ $item->terjual }}</span>
-                    <div class="flex items-center justify-between">
-                        <span class="text-xl font-bold text-gray-900 dark:text-white">@currency($item->harga)</span>
-                        {{-- <a href="#"
-                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add
-                            to cart</a> --}}
+                    <div class="flex mt-4">
+                        <span
+                            class="text-xl font-bold text-gray-900
+                        dark:text-white">@currency($item->harga)</span>
                     </div>
                 </div>
-
             </div>
+            
         @endforeach
     </div>
 @endsection

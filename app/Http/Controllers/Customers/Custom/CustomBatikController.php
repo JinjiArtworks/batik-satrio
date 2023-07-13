@@ -1,30 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\Customers;
+namespace App\Http\Controllers\Customers\Custom;
 
-use App\Models\Categories;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 
-class ProductController extends Controller
+class CustomBatikController extends Controller
 {
     public function index()
     {
-        $products = Product::paginate(5);
-        // return dd($products);
-        return view('customers.products.shop', compact('products'));
+        $list = session()->get('list');
+        return view('customers.custom.index', compact('list'));
     }
-    public function detail($id)
+    public function details(Request $request , $id)
     {
-        $products = Product::find($id);
-        // return dd($products->nama);
-        return view('customers.products.detailproduct', compact('products'));
-    }
-
-    public function create()
-    {
-        //
+        $gender = $request->gender;
+        $gender_id = $request->gender_id;
+        // return dd($request->all());
+        return view('customers.custom.custom',compact('gender','gender_id'));
     }
 
 

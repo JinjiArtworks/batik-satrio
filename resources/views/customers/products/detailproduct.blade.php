@@ -213,7 +213,6 @@
 @section('script')
     <script type="text/javascript">
         // alert('test');
-
         $(document).ready(function() {
             $(document).on('click', '.btn-increase', function() {
                 $('.count').val(parseInt($('.count').val()) + 1);

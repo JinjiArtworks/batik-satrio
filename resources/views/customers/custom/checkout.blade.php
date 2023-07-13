@@ -43,28 +43,26 @@
 @section('content')
     @php
         $total = 0;
-        if ($cart != null) {
-            foreach ($cart as $key => $value) {
+        if ($list != null) {
+            foreach ($list as $key => $value) {
                 $total = $value['total_after_disc'] + $total;
             }
             $grandTotal = $total + $cekongkir;
-        
-            // echo $grandTotal;
         }
     @endphp
     <div class="max-w-screen-xl items-center justify-between mx-auto">
-        <h2 class="text-xl font-semibold pl-4 my-4">Checkout </h2>
-        <form method="POST" action="{{ route('checkout.store') }}" enctype="multipart/form-data" id="submit_form">
+        <h2 class="text-xl font-semibold pl-4 my-4">Checkout Custom Batik</h2>
+        <form method="POST" action="{{ route('custom.store') }}" enctype="multipart/form-data" id="submit_form">
             @csrf
             <input type="hidden" name="json" id="json_callback">
             <input type="hidden" value="{{ Auth::user()->alamat }}" name="address">
             <input type="hidden" value="{{ $grandTotal }}" name="grandTotal">
             <input type="hidden" value="{{ $courierName }}" name="courierName">
             <input type="hidden" value="{{ $cekongkir }}" name="ongkir">
-           
+
             <div class="grid grid-cols-12 container items-start gap-6">
                 <div class="col-span-4 border border-gray-200 p-4 rounded">
-                    <h4 class="text-gray-800 text-lg mb-2 font-medium">Detail Informasi</h4>
+                    <h4 class="text-gray-800 text-lg mb-2 font-medium">Detail Penerima</h4>
                     <hr class="border-gray-200 sm:mx-auto dark:border-gray-700 " />
                     <div class="mt-1 text-gray-800 font-medium py-3 ">
                         <p class="font-bold">Nama Penerima : </p>
@@ -75,24 +73,78 @@
                     <div class="mt-1 text-gray-800 font-medium py-3 ">
                         <p class="font-bold">Alamat Penerima : </p>
                         <span>
-                            <p>{{ Auth::user()->alamat }}</p>
+                            <p>{{ Auth::user()->address }}</p>
                         </span>
                     </div>
-                   
+                    <div class="mt-1 text-gray-800 font-medium py-3 ">
+                        <p class="font-bold">Nomor Handphone : </p>
+                        <span>
+                            <p>{{ Auth::user()->phone }}</p>
+                        </span>
+                    </div>
                 </div>
                 <div class="col-span-8 border border-gray-200 p-4 rounded">
+                    <h4 class="text-gray-800 text-lg mb-2 font-medium">Informasi Pesanan</h4>
+                    <hr class="border-gray-200 sm:mx-auto dark:border-gray-700 " />
+                    @foreach ($list as $key => $c)
+                    
+                        <table class="table-auto border-collapse w-full text-left text-gray-600 text-sm mt-2">
+                            <tr>
+                                <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Warna Dasar</th>
+                                <th class="py-2 px-4 border border-gray-300 ">{{ $c['warna'] }}</th>
+                            </tr>
+                            <tr>
+                                <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Motif </th>
+                                <th class="py-2 px-4 border border-gray-300 ">{{ $c['motif'] }}</th>
+                            </tr>
+                            <tr>
+                                <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Model</th>
+                                <th class="py-2 px-4 border border-gray-300 ">{{ $c['model'] }}</th>
+                            </tr>
+                            <tr>
+                                <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Lengan</th>
+                                <th class="py-2 px-4 border border-gray-300 ">{{ $c['lengan'] }}</th>
+                            </tr>
+                            <tr>
+                                <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Kain</th>
+                                <th class="py-2 px-4 border border-gray-300 ">{{ $c['kain'] }}</th>
+                            </tr>
+                            <tr>
+                                <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Ukuran Detail</th>
+                                <th class="py-2 px-4 border border-gray-300 ">{{ $c['size'] }}</th>
+                            </tr>
+
+                        </table>
+                    @endforeach
+                </div>
+            </div>
+            <div class="grid container items-start gap-6">
+                <div class="col-span-12 border border-gray-200 p-4 rounded mt-4">
                     <h4 class="text-gray-800 text-lg mb-2 font-medium">Detail Pesanan</h4>
                     <hr class=" border-gray-200 sm:mx-auto dark:border-gray-700 mb-4" />
-                    @foreach ($cart as $key => $c)
+                    @foreach ($list as $key => $c)
                         <div class="space-y-2">
                             <div class="flex justify-between">
-                                <img class="object-cover w-20 h-22" src="{{ asset('images/' . $c['image']) }}">
+                                @if ($c['id'] == 1)
+                                    <img class="object-cover w-20 h-22" src="{{ asset('images/wanita.png') }}">
+                                @else
+                                    <img class="object-cover w-20 h-22" src="{{ asset('images/pria.png') }}">
+                                @endif
                                 <div>
-                                    <h5 class="text-gray-800 text-lg font-semibold">{{ $c['name'] }}</h5>
-                                    <p class="text-sm text-gray-600">Size: {{ $c['size'] }}</p>
+                                    <h5 class="text-gray-800 text-lg font-semibold">Custom Batik {{ $c['motif'] }}
+                                        @if ($c['id'] == 1)
+                                            Wanita
+                                        @else
+                                            Pria
+                                        @endif
+                                    </h5>
+                                    <p class="text-sm text-gray-600">Request Ukuran : {{ $c['size'] }}</p>
                                 </div>
                                 <p class="text-gray-600">
                                     x {{ $c['quantity'] }}
+                                </p>
+                                <p class="text-gray-600">
+                                    @currency($c['harga'])
                                 </p>
                                 <p class="text-gray-800 font-medium">@currency($c['total_after_disc'])</p>
                             </div>
@@ -118,14 +170,16 @@
                         <label for="aggrement" class="text-gray-600 ml-3 cursor-pointer text-sm">I agree to the <a
                                 href="#" class="text-blue-600">terms & conditions</a></label>
                     </div>
-
                 </div>
+
             </div>
         </form>
-        <button id="pay-button"
-            class="pay block mt-4 w-full px-2 py-2 text-center bg-blue-600 border border-blue-600 text-white font-medium rounded gap-2 hover:bg-transparent hover:text-blue-600 transition">
-            Checkout
-        </button>
+        <div class="grid container items-start gap-6">
+            <button id="pay-button"
+                class="pay block mt-4 w-full px-2 py-2 text-center bg-blue-600 border border-blue-600 text-white font-medium rounded gap-2 hover:bg-transparent hover:text-blue-600 transition">
+                Checkout
+            </button>
+        </div>
     </div>
 @endsection
 @section('script')

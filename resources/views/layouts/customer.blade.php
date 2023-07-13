@@ -11,10 +11,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
 </head>
-
 <body>
     <nav class="bg-white border-gray-200 dark:bg-gray-900">
-        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+        <div class=" max-w-screen-lg flex flex-wrap items-center justify-between mx-auto p-4">
             <a href="/" class="flex items-center">
                 <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 mr-3" alt="Flowbite Logo" />
                 <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Satrio Batik</span>
@@ -30,7 +29,6 @@
                             src="https://flowbite.com/docs/images/people/profile-picture-3.jpg" alt="user photo">
                     </button>
                     @if (Auth::user()->role == 'Customers')
-                        <!-- Dropdown menu -->
                         <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow"
                             id="user-dropdown">
                             <div class="px-4 py-3">
@@ -104,7 +102,7 @@
                                 class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 ">Belanja</a>
                         </li>
                         <li>
-                            <a href="#"
+                            <a href="/list-produk-custom"
                                 class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 ">Custom
                                 Batik</a>
                         </li>
@@ -157,7 +155,7 @@
                                 class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 ">Belanja</a>
                         </li>
                         <li>
-                            <a href="#"
+                            <a href="/list-produk-custom"
                                 class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 ">Custom
                                 Batik</a>
                         </li>

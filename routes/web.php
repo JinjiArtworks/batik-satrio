@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\Customers\CartController;
 use App\Http\Controllers\Customers\CheckoutController;
+use App\Http\Controllers\Customers\Custom\CheckoutCustomController;
+use App\Http\Controllers\Customers\Custom\CustomBatikController;
+use App\Http\Controllers\Customers\Custom\ListOrderController;
 use App\Http\Controllers\Customers\HistoryController;
 use App\Http\Controllers\Customers\HistoryOrderController;
 use App\Http\Controllers\Customers\HomeController;
@@ -48,6 +51,7 @@ Route::get('/detail-riwayat-pesanan', function () {
 // });
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
 Route::group(['as' => 'homepage.'], function () {
     Route::get('/belanja', [ProductController::class, 'index'])->name('shop');
     Route::get('/detail-product/{id}', [ProductController::class, 'detail']);
@@ -60,21 +64,33 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/remove-from-cart/{id}', [CartController::class, 'destroy'])->name('remove');
     });
     Route::group(['as' => 'checkout.'], function () {
-        Route::post('/checkout', [CheckoutController::class, 'index'])->name('index');
+        Route::post('/checkout-batik', [CheckoutController::class, 'index'])->name('index');
         Route::post('/checkout-data', [CheckoutController::class, 'store'])->name('store');
     });
     Route::group(['as' => 'history-order.'], function () {
         Route::get('/riwayat-order', [HistoryOrderController::class, 'index'])->name('index');
-        Route::get('/riwayat-detail/{id}', [HistoryOrHistoryOrderControllerderController::class, 'detail'])->name('detail');
+        Route::get('/riwayat-detail/{id}', [HistoryOrderController::class, 'detail'])->name('detail');
     });
-    Route::group(['as' => 'customers.'], function () {
-        Route::get('data-customer', [CustomerController::class, 'index']);
-        Route::get('create-customer', [CustomerController::class, 'create'])->name('create');
-        Route::get('edit-customer/{id}', [CustomerController::class, 'edit'])->name('edit');
-        Route::post('store-customer', [CustomerController::class, 'store'])->name('store');
-        Route::put('update-customer/{id}', [CustomerController::class, 'update'])->name('update');
-        Route::get('delete-customer/{id}', [CustomerController::class, 'destroy'])->name('delete');
+    // Route::group(['as' => 'customers.'], function () {
+    //     Route::get('data-customer', [CustomerController::class, 'index']);
+    //     Route::get('create-customer', [CustomerController::class, 'create'])->name('create');
+    //     Route::get('edit-customer/{id}', [CustomerController::class, 'edit'])->name('edit');
+    //     Route::post('store-customer', [CustomerController::class, 'store'])->name('store');
+    //     Route::put('update-customer/{id}', [CustomerController::class, 'update'])->name('update');
+    //     Route::get('delete-customer/{id}', [CustomerController::class, 'destroy'])->name('delete');
+    // });
+    Route::group(['as' => 'custom.'], function () {
+        Route::get('/list-produk-custom', [CustomBatikController::class, 'index'])->name('index');
+        Route::post('/custom-batik/{id}', [CustomBatikController::class, 'details'])->name('details');
+
+        Route::get('/list-order', [ListOrderController::class, 'index'])->name('orders');
+        Route::post('/add-to-list/{id}', [ListOrderController::class, 'addList'])->name('add');
+        Route::get('/remove-from-list/{id}', [ListOrderController::class, 'destroy'])->name('remove');
+
+        Route::post('/checkout', [CheckoutCustomController::class, 'checkout'])->name('checkout');
+        Route::post('/checkout-data', [CheckoutCustomController::class, 'store'])->name('store');
     });
+
     Route::group(['as' => 'categories.'], function () {
         Route::get('/data-category', [CategoryController::class, 'index']);
         Route::get('/create-category', [CategoryController::class, 'create'])->name('create');
@@ -88,10 +104,10 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::group(['as' => 'reports.'], function () {
-        Route::get('/data-reports', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('data-reports', [DashboardController::class, 'index'])->name('dashboard');
         Route::get('detail-reports/{id}', [DashboardController::class, 'detail'])->name('details');
-        Route::put('/update-reports/{id}', [DashboardController::class, 'update'])->name('update');
-        Route::get('/delete-reports/{id}', [DashboardController::class, 'destroy'])->name('delete');
+        Route::put('update-reports/{id}', [DashboardController::class, 'update'])->name('update');
+        Route::get('delete-reports/{id}', [DashboardController::class, 'destroy'])->name('delete');
     });
     Route::group(['as' => 'products.'], function () {
         Route::get('data-product', [ListProductController::class, 'index'])->name('dashboard');
