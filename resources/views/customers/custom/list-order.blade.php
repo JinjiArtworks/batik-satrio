@@ -151,6 +151,16 @@
                             <h4 class="text-gray-800 text-lg font-medium">Detail Pesanan</h4>
                         </tr>
                         <tr>
+                            <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Gender</th>
+                            <th class="py-2 px-4 border border-gray-300 ">
+                                @if ($c['id'] == 1)
+                                    <input type="hidden" name="gender" value="Wanita">Wanita
+                                @else
+                                    <input type="hidden" name="gender" value="Pria">Pria
+                                @endif
+                            </th>
+                        </tr>
+                        <tr>
                             <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Warna Dasar</th>
                             <th class="py-2 px-4 border border-gray-300 ">{{ $c['warna'] }}</th>
                         </tr>
@@ -174,7 +184,7 @@
                             <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Ukuran Detail</th>
                             <th class="py-2 px-4 border border-gray-300 ">{{ $c['size'] }}</th>
                         </tr>
-                       
+
                         <tr>
                             <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Weight</th>
                             <th class="py-2 px-4 border border-gray-300 ">{{ $totalBerat }} gram</th>

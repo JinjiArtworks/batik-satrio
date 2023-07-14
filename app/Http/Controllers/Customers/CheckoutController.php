@@ -98,7 +98,7 @@ class CheckoutController extends Controller
             $details->product_id = $item['id'];
             $details->order_id = $orders->id;
             $details->quantity = $item['quantity'];
-            $details->harga = $item['price'] * $item['quantity'];
+            $details->harga = $item['price'];
             $details->save();
             $product = Product::find($item['id']);
             $product::where('id', $item['id'])
@@ -112,7 +112,7 @@ class CheckoutController extends Controller
             return redirect('/')->with('warning', 'Silahkan Menyelesaikan Pembayaran');
         } else {
             session()->forget('cart');
-            return redirect('/belanja')->with('success', 'Produk berhasil di order');
+            return redirect('/history-order')->with('success', 'Produk berhasil di order');
         }
     }
     /**

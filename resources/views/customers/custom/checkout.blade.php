@@ -87,8 +87,17 @@
                     <h4 class="text-gray-800 text-lg mb-2 font-medium">Informasi Pesanan</h4>
                     <hr class="border-gray-200 sm:mx-auto dark:border-gray-700 " />
                     @foreach ($list as $key => $c)
-                    
                         <table class="table-auto border-collapse w-full text-left text-gray-600 text-sm mt-2">
+                            <tr>
+                                <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Gender</th>
+                                <th class="py-2 px-4 border border-gray-300 ">
+                                    @if ($c['id'] == 1)
+                                        <input type="hidden" name="gender" value="Wanita">Wanita
+                                    @else
+                                        <input type="hidden" name="gender" value="Pria">Pria
+                                    @endif
+                                </th>
+                            </tr>
                             <tr>
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Warna Dasar</th>
                                 <th class="py-2 px-4 border border-gray-300 ">{{ $c['warna'] }}</th>

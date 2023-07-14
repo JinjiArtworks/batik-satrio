@@ -9,20 +9,13 @@ use App\Models\Product;
 use App\Models\Wishlist;
 use Illuminate\Support\Facades\Auth;
 
-class ProductController extends Controller
+class WishlistController extends Controller
 {
     public function index()
     {
-        $products = Product::paginate(5);
-        // return dd($products);
-        return view('customers.products.shop', compact('products'));
-    }
-    public function detail($id)
-    {
-        $products = Product::find($id);
-        $wishlist = Wishlist::whereProductsId($id)->get();
-        // $getIdProducts = $products->id;
-        return view('customers.products.detailproduct', compact('products','wishlist'));
+        $wishlist = Wishlist::all(); // already declated a has many from categories, its mean it is beloangsto categories\
+        // return dd($wishlist->users->name);
+        return view('customers.wishlist.wishlist', compact('wishlist'));
     }
 
     public function store(Request $request)
@@ -76,8 +69,9 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        Wishlist::where('products_id', $request->products)->delete();
+        return redirect()->back();
     }
 }

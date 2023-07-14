@@ -10,26 +10,23 @@ use Illuminate\Support\Facades\Auth;
 
 class HistoryOrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $user = Auth::user()->id;
-        $orders = Order::whereUserId($user)->get(); // already declated a has many from categories, its mean it is beloangsto categories
-        return view('customer.history.history-order', compact('orders'));
+        $orders = Order::whereUsersId($user)->get(); // already declated a has many from categories, its mean it is beloangsto categories\
+        // return dd($orders);
+        return view('customers.history.history-order', compact('orders'));
     }
     public function detail($id)
     {
-        
         $details = OrderDetail::whereOrderId($id)->get(); // already declated a has many from categories, its mean it is beloangsto categories
+        $getId = $id;
         // $test = OrderDetail::whereOrderId($id)->get('price'); // already declated a has many from categories, its mean it is beloangsto categories
         // $sumPendapatan = collect($details)->sum('price');
-        // return dd($sumPendapatan);
-        return view('customer.riwayat-detail', compact('details'));
+        // return dd($details);
+        return view('customers.history.history-detail', compact('details','getId'));
     }
+  
     /**
      * Store a newly created resource in storage.
      *

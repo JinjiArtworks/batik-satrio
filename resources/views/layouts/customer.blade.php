@@ -10,7 +10,10 @@
     <link rel="stylesheet" href="{{ asset('css/cust.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"
+        type='text/css'>
 </head>
+
 <body>
     <nav class="bg-white border-gray-200 dark:bg-gray-900">
         <div class=" max-w-screen-lg flex flex-wrap items-center justify-between mx-auto p-4">

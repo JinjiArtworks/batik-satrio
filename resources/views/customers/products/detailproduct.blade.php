@@ -55,36 +55,56 @@
                 </div> --}}
             </div>
 
-            <form action="{{ route('cart.add', ['id' => $products->id]) }}" method="POST">
-                @csrf
-                <div>
+
+            <div>
+
+                <div class="flex justify-between">
                     <h2 class="text-3xl font-semibold tracking-tight mb-2">{{ $products->nama }}</h2>
-                    <hr class=" border-gray-200 sm:mx-auto dark:border-gray-700 mb-5" />
-                    <div class="space-y-2">
-                        <p class="text-gray-800 font-semibold space-x-2">
-                            <span>Stock: </span>
-                            <span class="text-green-600">{{ $products->stok }} pcs</span>
-                        </p>
-                        <p class="space-x-2">
-                            <span class="text-gray-800 font-semibold">Motif: </span>
-                            <span class="text-gray-600">{{ $products->motif->nama }}</span>
-                        </p>
-                        <p class="space-x-2">
-                            <span class="text-gray-800 font-semibold">Category: </span>
-                            <span class="text-gray-600">{{ $products->categories->nama }}</span>
-                        </p>
-                        <p class="space-x-2">
-                            <span class="text-gray-800 font-semibold">SKU: </span>
-                            <span class="text-gray-600">BE45VGRT</span>
-                        </p>
-                    </div>
-                    <div class="flex items-baseline mb-1 space-x-2 font-roboto mt-4">
-                        <p class="text-xl text-green-600 font-semibold">@currency($products->harga)</p>
-                        {{-- <p class="text-base text-gray-400 line-through">$55.00</p> --}}
-                    </div>
+                    @if (Auth::check())
+                        @if (Auth::user()->role == 'Customers')
+                            <form action="{{ route('products.wishlist', ['id' => $products->id]) }}" method="POST">
+                                @csrf
+                                {{-- @if ($wishlist[0]['products_id'] == $getIdProducts) --}}
+                                    <input type="hidden" name="products" value="{{ $products->id }}">
+                                    <button type="submit"
+                                        class="font-sm px-8 py-2 rounded  flex items-center gap-2 hover:text-blue-600 transition underline">
+                                        Wishlist<i class="fa-solid fa-heart justify-between"></i>
+                                    </button>
+                                {{-- @else
+                                    produk sudah ditambahkan
+                                @endif --}}
 
-                    <p class="mt-4 text-gray-600">{{ $products->deskripsi }}.</p>
+                            </form>
+                        @endif
+                    @endif
+                </div>
+                <hr class=" border-gray-200 sm:mx-auto dark:border-gray-700 mb-5" />
+                <div class="space-y-2">
+                    <p class="text-gray-800 font-semibold space-x-2">
+                        <span>Stock: </span>
+                        <span class="text-green-600">{{ $products->stok }} pcs</span>
+                    </p>
+                    <p class="space-x-2">
+                        <span class="text-gray-800 font-semibold">Motif: </span>
+                        <span class="text-gray-600">{{ $products->motif->nama }}</span>
+                    </p>
+                    <p class="space-x-2">
+                        <span class="text-gray-800 font-semibold">Category: </span>
+                        <span class="text-gray-600">{{ $products->categories->nama }}</span>
+                    </p>
+                    <p class="space-x-2">
+                        <span class="text-gray-800 font-semibold">SKU: </span>
+                        <span class="text-gray-600">BE45VGRT</span>
+                    </p>
+                </div>
+                <div class="flex items-baseline mb-1 space-x-2 font-roboto mt-4">
+                    <p class="text-xl text-green-600 font-semibold">@currency($products->harga)</p>
+                    {{-- <p class="text-base text-gray-400 line-through">$55.00</p> --}}
+                </div>
 
+                <p class="mt-4 text-gray-600">{{ $products->deskripsi }}.</p>
+                <form action="{{ route('cart.add', ['id' => $products->id]) }}" method="POST">
+                    @csrf
                     <div class="pt-4">
                         <h3 class="text-sm text-gray-800 uppercase mb-1">Size</h3>
                         <div class="flex items-center gap-2">
@@ -156,10 +176,6 @@
                                     class="add-to-cart bg-blue-600 border border-blue-600 text-white px-8 py-2 font-medium rounded uppercase flex items-center gap-2 hover:bg-transparent hover:text-blue-600 transition">
                                     <i class="fa-solid fa-bag-shopping"></i> Add to cart
                                 </button>
-                                <a href="#"
-                                    class="border border-blue-300 text-gray-600 px-8 py-2 font-medium rounded uppercase flex items-center gap-2 hover:text-blue-600 transition">
-                                    <i class="fa-solid fa-heart"></i> Wishlist
-                                </a>
                             </div>
                         @endif
                     @else
@@ -168,14 +184,11 @@
                                 class="add-to-cart bg-blue-600 border border-blue-600 text-white px-8 py-2 font-medium rounded uppercase flex items-center gap-2 hover:bg-transparent hover:text-blue-600 transition">
                                 <i class="fa-solid fa-bag-shopping"></i> Add to cart
                             </button>
-                            <a href="#"
-                                class="border border-blue-300 text-gray-600 px-8 py-2 font-medium rounded uppercase flex items-center gap-2 hover:text-blue-600 transition">
-                                <i class="fa-solid fa-heart"></i> Wishlist
-                            </a>
+
                         </div>
                     @endif
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
         <div class="container pb-16 mt-4">
             <h3 class="border-b border-gray-200 font-roboto text-gray-800 pb-3 font-medium">Product details</h3>

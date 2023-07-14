@@ -131,7 +131,7 @@
                         <div class="flex mt-4  text-gray-800 font-medium ">
                             <p class="font-bold ">Alamat Tujuan : </p>
                             <div class="items-center ml-2">
-                                <p>{{ Auth::user()->alamat }}</p>
+                                <p>{{ Auth::user()->address }}</p>
                             </div>
                         </div>
                         <a href="#" class="underline text-blue-700">Ubah</a>

@@ -99,20 +99,21 @@ class CheckoutCustomController extends Controller
             $details = new OrderDetail();
             $details->order_id = $orders->id;
             $details->quantity = $item['quantity'];
+            $details->request_gender = $request->gender;
             $details->request_warna = $item['warna'];
             $details->request_ukuran = $item['size'];
             $details->request_kain = $item['kain'];
             $details->request_model = $item['model'];
             $details->request_motif = $item['motif'];
             $details->request_lengan = $item['lengan'];
-            $details->harga = $item['harga'] * $item['quantity'];
+            $details->harga = $item['harga'];
             $details->save();
         }
         if (!$saved) {
             return redirect('/')->with('warning', 'Silahkan Menyelesaikan Pembayaran');
         } else {
             session()->forget('list');
-            return redirect('/belanja')->with('success', 'Produk berhasil di order');
+            return redirect('/history-order')->with('success', 'Produk berhasil di order');
         }
     }
     /**
