@@ -1,4 +1,5 @@
 @extends('layouts.customer')
+
 @section('breadcum')
     <ol class="inline-flex items-center space-x-1 md:space-x-3">
         <li class="inline-flex items-center">
@@ -55,7 +56,7 @@
 @endsection
 @section('content')
     <div class="max-w-screen-xl items-center justify-between mx-auto p-4">
-        <div class="container grid items-start gap-6 pt-4 pb-16">
+        <div class="container grid items-start gap-6 pt-4 pb-10">
             <div class="col-span-9 space-y-4">
                 <div class="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
                     <div class="w-full">
@@ -97,7 +98,7 @@
                         <table class="table-auto border-collapse w-full text-left text-gray-600 text-sm">
                             <tr>
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Ongkos Kirim</th>
-                                <th class="py-2 px-4 border border-gray-300 ">@currency($item->order->ongkos_kirim )
+                                <th class="py-2 px-4 border border-gray-300 ">@currency($item->order->ongkos_kirim)
                                 </th>
                             </tr>
                             <tr>
@@ -156,7 +157,7 @@
                             <table class="table-auto border-collapse w-full text-left text-gray-600 text-sm">
                                 <tr>
                                     <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Ongkos Kirim</th>
-                                    <th class="py-2 px-4 border border-gray-300 ">@currency($item->order->ongkos_kirim )
+                                    <th class="py-2 px-4 border border-gray-300 ">@currency($item->order->ongkos_kirim)
                                     </th>
                                 </tr>
                                 <tr>
@@ -191,5 +192,40 @@
                 @endif
             @endforeach
         </div>
+        {{-- Review hanya untuk produk NON Custom! --}}
+        @if ($item->product_id != null)
+            @foreach ($reviews as $r)
+                {{-- Kalo belum ngirim review --}}
+                @if ($r->products_id != $item->product_id)
+                    <div class="container grid items-start ">
+                        <div class="col-span-9 space-y-2">
+                            <h3>Kirim Review</h3>
+                            <form action="{{ route('history-order.review', ['id' => $item->product_id]) }}"
+                                method="POST">
+                                @csrf
+                                <div class="flex items-center space-x-1 mb-4">
+                                    <input type="radio" name="rating" value="1">
+                                    <input type="radio" name="rating" value="2">
+                                    <input type="radio" name="rating" value="3">
+                                    <input type="radio" name="rating" value="4">
+                                    <input type="radio" name="rating" value="5">
+                                </div>
+                                <textarea
+                                    class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    name="comment" placeholder="Berikan Komentar Anda" required></textarea>
+                                <div class="flex justify justify-end">
+                                    <button type="submit"
+                                        class="bg-blue-600 border my-4  border-blue-600 text-white px-4 py-2 font-medium rounded  gap-2 hover:bg-transparent hover:text-blue-600 transition">
+                                        Checkout
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                @else
+                    Anda Sudah Memberikan Review Terhadap Produk Ini
+                @endif
+            @endforeach
+        @endif
     </div>
 @endsection

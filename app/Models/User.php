@@ -44,7 +44,11 @@ class User extends Authenticatable
     ];
     public function cities()
     {
-        return $this->belongsTo(City::class);
+        return $this->belongsTo(City::class, 'city_id');
+    }
+    public function reviews()
+    {
+        return $this->belongsTo(Review::class);
     }
     public function wishlist()
     {

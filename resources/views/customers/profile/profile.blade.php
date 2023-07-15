@@ -62,7 +62,7 @@
                 <div class="mt-6 bg-white shadow rounded p-4 divide-y divide-gray-200 space-y-4 text-gray-600">
 
                     <div class="space-y-1 pl-8">
-                        <a href="#" class="relative text-blue-600 block font-medium capitalize transition">
+                        <a href="/wishlist" class="relative hover:text-blue-600 block font-medium capitalize transition">
                             <span class="absolute -left-8 top-0 text-base">
                                 <i class="fa-regular fa-heart"></i>
                             </span>
@@ -70,12 +70,11 @@
                         </a>
                     </div>
                     <div class="space-y-1 pl-8 pt-4">
-
-                        <a href="#" class="relative hover:text-blue-600 block capitalize transition">
-                            Ubah Data Profil
-                        </a>
-                        <a href="#" class="relative hover:text-blue-600 block capitalize transition">
-                            Ubah Alamat Pengiriman
+                        <a href="/profile" class="relative text-blue-600 block capitalize transition" type="button">
+                            <span class="absolute -left-8 top-0 text-base mt-1">
+                                <i class="fa-regular fa-user"></i>
+                            </span>
+                            Ubah Data Profile
                         </a>
                     </div>
                     <div class="space-y-1 pl-8 pt-4">
@@ -87,8 +86,6 @@
                             Riwayat Pesanan
                         </a>
                     </div>
-
-
                     <div class="space-y-1 pl-8 pt-4">
                         <a href="#" class="relative hover:text-blue-600 block font-medium capitalize transition">
                             <span class="absolute -left-8 top-0 text-base">
@@ -103,35 +100,53 @@
             <!-- ./sidebar -->
 
             <!-- wishlist -->
-            <div class="col-span-9 space-y-4">
-                @foreach ($wishlist as $item)
-                    <div class="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
-                        <div class="w-28">
-                            <img src="{{ asset('images/' . $item->product->gambar) }}" alt="product 6" class="w-full">
-                        </div>
-                        <div class="w-1/3">
-                            <h2 class="text-gray-800 text-xl font-medium ">{{ $item->product->nama }}</h2>
-                            <p class="text-gray-500 text-sm">Stock: <span
-                                    class="text-green-600">{{ $item->product->stok }}</span></p>
-                        </div>
-                        <div class="text-gray-600 text-lg font-semibold">@currency($item->product->harga)</div>
-                        <a href="/detail-product/{{ $item->product->id }}"
-                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Lihat
-                            Produk</a>
-                        <div class="text-gray-600 cursor-pointer hover:text-blue-600">
-                            <form action="{{ route('wishlist.remove', ['id' => $item->product->id]) }}" method="GET">
-                                <input type="hidden" name="products" value="{{ $item->product->id }}">
-                                <button type="submit" class="mt-4">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                @endforeach
+
+            <div class="col-span-9">
+                <form method="POST" action="{{ route('profile.update', ['id' => Auth::user()->id]) }}"
+                    enctype="multipart/form-data">
+                    @csrf
+                    <h3 class=" flex font-semibold text-gray-900">Username </h3>
+                    <input type="text" name="name" value="{{ Auth::user()->name }}"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+
+                    <h3 class=" flex font-semibold text-gray-900 mt-4">Alamat </h3>
+                    <input type="text" name="address" value="{{ Auth::user()->address }}"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+
+                    <h3 class=" flex font-semibold text-gray-900 mt-4">Kota </h3>
+                    <select id="" name="city"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                        required>
+                        <option value="{{ $city[0]['id'] }}"> {{ $city[0]['name'] }}</option>
+                        @foreach ($allCities as $item)
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                        @endforeach
+
+                    </select>
+                    {{-- <input type="text" name="address" value=""
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"> --}}
+
+                    <h3 class=" flex font-semibold text-gray-900 mt-4">Nomor Handphone </h3>
+                    <input type="text" name="phone" value="{{ Auth::user()->phone }}"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    <button type="submit"
+                        class=" bg-blue-600 border my-4 border-blue-600 text-white px-4 py-2 font-medium rounded  gap-2 hover:bg-transparent hover:text-blue-600 transition">
+                        Submit
+                    </button>
+                </form>
 
             </div>
-            <!-- ./wishlist -->
-
         </div>
     </div>
+    </div>
+@endsection
+@section('script')
+    <script type="text/javascript">
+        function toggleModal(modalID) {
+            document.getElementById(modalID).classList.toggle("hidden");
+            document.getElementById(modalID + "-backdrop").classList.toggle("hidden");
+            document.getElementById(modalID).classList.toggle("flex");
+            document.getElementById(modalID + "-backdrop").classList.toggle("flex");
+        }
+    </script>
 @endsection

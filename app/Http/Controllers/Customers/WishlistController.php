@@ -15,7 +15,8 @@ class WishlistController extends Controller
     {
         $wishlist = Wishlist::all(); // already declated a has many from categories, its mean it is beloangsto categories\
         // return dd($wishlist->users->name);
-        return view('customers.wishlist.wishlist', compact('wishlist'));
+        
+        return view('customers.profile.wishlist', compact('wishlist'));
     }
 
     public function store(Request $request)
@@ -28,7 +29,7 @@ class WishlistController extends Controller
         ]);
         return redirect('/wishlist');
     }
-
+    
     /**
      * Display the specified resource.
      *

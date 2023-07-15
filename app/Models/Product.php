@@ -26,5 +26,9 @@ class Product extends Model
     {
         return $this->hasOne(Wishlist::class);
     }
+    public function reviews()
+    {
+        return $this->hasOne(Review::class);
+    }
     // foreign key yang dititipkan pada tabel, akan menggunakan relasi belongsTo. Sedangkan tabel utama yang menitipkan, di modelsnya menggunakan relasi hasMany / hasOne!!!!
 }

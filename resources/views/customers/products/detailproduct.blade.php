@@ -62,19 +62,21 @@
                     <h2 class="text-3xl font-semibold tracking-tight mb-2">{{ $products->nama }}</h2>
                     @if (Auth::check())
                         @if (Auth::user()->role == 'Customers')
-                            <form action="{{ route('products.wishlist', ['id' => $products->id]) }}" method="POST">
-                                @csrf
-                                {{-- @if ($wishlist[0]['products_id'] == $getIdProducts) --}}
+                            {{-- @foreach ($wishlist as $w) --}}
+                                {{-- @if ($w->products_id == $products->id) --}}
+                                <form action="{{ route('products.wishlist', ['id' => $products->id]) }}" method="POST">
+                                    @csrf
+                                    {{-- @if ($wishlist[0]['products_id'] == $getIdProducts) --}}
                                     <input type="hidden" name="products" value="{{ $products->id }}">
                                     <button type="submit"
                                         class="font-sm px-8 py-2 rounded  flex items-center gap-2 hover:text-blue-600 transition underline">
                                         Wishlist<i class="fa-solid fa-heart justify-between"></i>
                                     </button>
+                                </form>
                                 {{-- @else
-                                    produk sudah ditambahkan
+                                    asd
                                 @endif --}}
-
-                            </form>
+                            {{-- @endforeach --}}
                         @endif
                     @endif
                 </div>

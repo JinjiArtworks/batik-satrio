@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Customers;
 
+use App\Models\City;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -42,10 +43,14 @@ class CartController extends Controller
     }
     public function index()
     {
-        $user = Auth::user();
+        $user = Auth::user()->id;
+        $usersCity = Auth::user()->city_id;
+        $city  = City::whereId($usersCity)->get('name');
+        // return dd($city[0]['name']);
+        $allCities = City::all();
         $cart = session()->get('cart');
         // return dd($user);
-        return view('customers.cart.cart', compact('cart'));
+        return view('customers.cart.cart', compact('cart','city','allCities'));
     }
 
     public function destroy($id)
@@ -56,5 +61,17 @@ class CartController extends Controller
         }
         session()->put('cart', $cart);
         return redirect('/cart')->with('success', 'Keranjang berhasil dihapus!');
+    }
+    public function update(Request $request)
+    {
+        $user = Auth::user()->id;
+        User::where('id', $user)
+            ->update(
+                [
+                    'address' => $request->address,
+                    'city_id' => $request->city,
+                ]
+            );
+        return redirect()->back();
     }
 }

@@ -9,6 +9,7 @@ use App\Http\Controllers\Customers\HistoryController;
 use App\Http\Controllers\Customers\HistoryOrderController;
 use App\Http\Controllers\Customers\HomeController;
 use App\Http\Controllers\Customers\ProductController;
+use App\Http\Controllers\Customers\ProfileController;
 use App\Http\Controllers\Customers\WishlistController;
 use App\Http\Controllers\Staff\DashboardController;
 use App\Http\Controllers\Staff\HistoryController as StaffHistoryController;
@@ -29,23 +30,16 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/cart', function () {
 //     return view('customers.cart');
 // });
-Route::get('/wishlist', function () {
-    return view('customers.wishlist.wishlist');
-});
-Route::get('/checkout', function () {
-    return view('customers.checkout');
-});
 
 
-Route::get('/detail-riwayat-pesanan', function () {
-    return view('stores.history.detail-history');
-});
 // Route::get('/edit-product', function () {
 //     return view('staff.products.edit');
 // });
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-
+Route::get('/sejarah', function () {
+    return view('customers.sejarah.index');
+});
 Route::group(['as' => 'homepage.'], function () {
     Route::get('/belanja', [ProductController::class, 'index'])->name('shop');
     Route::get('/detail-product/{id}', [ProductController::class, 'detail']);
@@ -59,11 +53,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/wishlist', [WishlistController::class, 'index'])->name('index');
         Route::get('/remove-wishilist', [WishlistController::class, 'destroy'])->name('remove');
     });
-
+    Route::group(['as' => 'profile.'], function () {
+        Route::get('/profile', [ProfileController::class, 'index'])->name('index');
+        Route::post('/update-profile', [ProfileController::class, 'update'])->name('update');
+    });
     Route::group(['as' => 'cart.'], function () {
         Route::get('/cart', [CartController::class, 'index'])->name('index');
-        Route::post('/add-to-cart/{id}', [CartController::class, 'addCart'])->name('add');
         Route::get('/remove-from-cart/{id}', [CartController::class, 'destroy'])->name('remove');
+        Route::post('/add-to-cart/{id}', [CartController::class, 'addCart'])->name('add');
+        Route::post('/update-cart', [CartController::class, 'update'])->name('update');
     });
     Route::group(['as' => 'checkout.'], function () {
         Route::post('/checkout-batik', [CheckoutController::class, 'index'])->name('index');
@@ -72,6 +70,7 @@ Route::middleware(['auth'])->group(function () {
     Route::group(['as' => 'history-order.'], function () {
         Route::get('/history-order', [HistoryOrderController::class, 'index'])->name('index');
         Route::get('/history-detail/{id}', [HistoryOrderController::class, 'detail'])->name('detail');
+        Route::post('/send-review/{id}', [HistoryOrderController::class, 'store'])->name('review');
     });
 
     Route::group(['as' => 'custom.'], function () {

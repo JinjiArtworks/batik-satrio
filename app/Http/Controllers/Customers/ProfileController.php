@@ -2,39 +2,28 @@
 
 namespace App\Http\Controllers\Customers;
 
-use App\Models\Categories;
+use App\Models\City;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use App\Models\Product;
-use App\Models\Wishlist;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
-class ProductController extends Controller
+class ProfileController extends Controller
 {
     public function index()
     {
-        $products = Product::paginate(5);
-        // return dd($products);
-        return view('customers.products.shop', compact('products'));
-    }
-    public function detail($id)
-    {
-        $products = Product::find($id);
-        $wishlist = Wishlist::whereProductsId($id)->get();
-        // return dd($products->id);
-        // $getIdProducts = $products->id;
-        return view('customers.products.detailproduct', compact('products','wishlist'));
+        $user = Auth::user()->id;
+        $usersCity = Auth::user()->city_id;
+        $city  = City::whereId($usersCity)->get('name');
+        // return dd($city[0]['name']);
+        $allCities = City::all();
+        return view('customers.profile.profile', compact('user','city','allCities'));
     }
 
     public function store(Request $request)
     {
         // Send into Wishlist
-        $user = Auth::user()->id;
-        $product = Wishlist::create([
-            'users_id' => $user,
-            'products_id' => $request->products,
-        ]);
-        return redirect('/wishlist');
+
     }
 
     /**
@@ -66,9 +55,19 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $user = Auth::user()->id;
+        User::where('id', $user)
+            ->update(
+                [
+                    'name' => $request->name,
+                    'address' => $request->address,
+                    'phone' => $request->phone,
+                    'city_id' => $request->city,
+                ]
+            );
+        return redirect('/profile');
     }
 
     /**
@@ -77,8 +76,8 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+       
     }
 }
