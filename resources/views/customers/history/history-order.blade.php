@@ -98,7 +98,7 @@
                 </div>
             </div>
             <div class="col-span-9 space-y-4">
-
+                
                 @foreach ($orders as $item)
                     @if ($item->jenis_pesanan == 'Custom')
                         <div class="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">

@@ -5,17 +5,20 @@ use App\Http\Controllers\Customers\CheckoutController;
 use App\Http\Controllers\Customers\Custom\CheckoutCustomController;
 use App\Http\Controllers\Customers\Custom\CustomBatikController;
 use App\Http\Controllers\Customers\Custom\ListOrderController;
-use App\Http\Controllers\Customers\HistoryController;
 use App\Http\Controllers\Customers\HistoryOrderController;
 use App\Http\Controllers\Customers\HomeController;
 use App\Http\Controllers\Customers\ProductController;
 use App\Http\Controllers\Customers\ProfileController;
-use App\Http\Controllers\Customers\ReturnController;
 use App\Http\Controllers\Customers\WishlistController;
 use App\Http\Controllers\Staff\DashboardController;
 use App\Http\Controllers\Staff\HistoryController as StaffHistoryController;
 use App\Http\Controllers\Staff\ListProductController;
+use App\Http\Controllers\Staff\Resources\AddBahanController;
+use App\Http\Controllers\Staff\Resources\AddModelController;
+use App\Http\Controllers\Staff\Resources\AddMotifController;
+use App\Http\Controllers\Staff\Resources\AddTeknikController;
 use App\Http\Controllers\Staff\ReturnOrderController;
+use App\Http\Controllers\Staff\Resources\ListItemController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -133,6 +136,34 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/update-return/{id}', [ReturnOrderController::class, 'update'])->name('update');
         Route::post('/confirm-return/{id}', [ReturnOrderController::class, 'confirmReturn'])->name('confirm');
         Route::get('/delete-return/{id}', [ReturnOrderController::class, 'destroy'])->name('delete');
+    });
+    Route::group(['as' => 'resources.'], function () {
+        Route::get('data-resources', [ListItemController::class, 'index'])->name('dashboard');
+        // MODELS
+        Route::get('add-models', [AddModelController::class, 'index'])->name('dashboard');
+        Route::post('store-models', [AddModelController::class, 'store'])->name('store-model');
+        Route::get('edit-models/{id}', [AddModelController::class, 'edit'])->name('edit-model');
+        Route::put('update-models/{id}', [AddModelController::class, 'update'])->name('update-model');
+        Route::get('delete-models/{id}', [AddModelController::class, 'destroy'])->name('delete-model');
+
+        Route::get('add-motif', [AddMotifController::class, 'index'])->name('dashboard');
+        Route::post('store-motif', [AddMotifController::class, 'store'])->name('store-motif');
+        Route::get('edit-motif/{id}', [AddMotifController::class, 'edit'])->name('edit-motif');
+        Route::put('update-motif/{id}', [AddMotifController::class, 'update'])->name('update-motif');
+        Route::get('delete-motif/{id}', [AddMotifController::class, 'destroy'])->name('delete-motif');
+
+        Route::get('add-bahan', [AddBahanController::class, 'index'])->name('dashboard');
+        Route::post('store-bahan', [AddBahanController::class, 'store'])->name('store-bahan');
+        Route::get('edit-bahan/{id}', [AddBahanController::class, 'edit'])->name('edit-bahan');
+        Route::put('update-bahan/{id}', [AddBahanController::class, 'update'])->name('update-bahan');
+        Route::get('delete-bahan/{id}', [AddBahanController::class, 'destroy'])->name('delete-bahan');
+
+        // Teknik
+        Route::get('add-teknik', [AddTeknikController::class, 'index'])->name('dashboard');
+        Route::post('store-teknik', [AddTeknikController::class, 'store'])->name('store-teknik');
+        Route::get('edit-teknik/{id}', [AddTeknikController::class, 'edit'])->name('edit-teknik');
+        Route::put('update-teknik/{id}', [AddTeknikController::class, 'update'])->name('update-teknik');
+        Route::get('delete-teknik/{id}', [AddTeknikController::class, 'destroy'])->name('delete-teknik');
     });
 });
 

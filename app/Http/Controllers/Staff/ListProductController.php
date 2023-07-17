@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
+use App\Models\Bahan;
 use App\Models\Categories;
+use App\Models\Models;
 use App\Models\Motif;
 use App\Models\Product;
+use App\Models\Teknik;
 use Illuminate\Http\Request;
 
 class ListProductController extends Controller
@@ -26,8 +29,11 @@ class ListProductController extends Controller
         $product = Product::all();
         $categories = Categories::all();
         $motif = Motif::all();
+        $models = Models::all();
+        $bahan = Bahan::all();
+        $teknik = Teknik::all();
         // return dd($categories);
-        return view('staff.products.create', compact('product', 'categories', 'motif'));
+        return view('staff.products.create', compact('product', 'categories', 'motif','models','bahan','teknik'));
     }
     public function store(Request $request)
     {
@@ -45,12 +51,12 @@ class ListProductController extends Controller
                 'terjual' => 0,
                 'stok' => $request->stock,
                 'diskon' => $request->discount,
-                // 'harga_grosir' => default_null
-                'model' => $request->model,
+                'harga_grosir' => $request->price_grosir,
                 'ukuran' => $request->size,
                 'berat' => 350,
-                'teknik' => $request->teknik,
-                'bahan' => $request->bahan,
+                'model_id' => $request->model,
+                'teknik_id' => $request->teknik,
+                'bahan_id' => $request->bahan,
             ]);
         }
         return redirect('/data-product');

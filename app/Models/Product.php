@@ -18,6 +18,18 @@ class Product extends Model
     {
         return $this->belongsTo(Motif::class);
     }
+    public function model()
+    {
+        return $this->belongsTo(Models::class);
+    }
+    public function teknik()
+    {
+        return $this->belongsTo(Teknik::class);
+    }
+    public function bahan()
+    {
+        return $this->belongsTo(Bahan::class);
+    }
     public function orderdetail()
     {
         return $this->hasOne(OrderDetail::class);
