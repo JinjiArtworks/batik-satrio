@@ -3,8 +3,11 @@
     <div>
         <ul class="mt-6">
             <li class="relative px-6 py-3">
+                <span class="absolute inset-y-0 left-0 w-1 rounded-tr-lg   rounded-br-lg"
+                aria-hidden="true"></span>
                 <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
                     href="/data-reports">
+
                     <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"
                         stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                         <path
@@ -17,9 +20,9 @@
         </ul>
         <ul>
             <li class="relative px-6 py-3">
-                <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                <span class="absolute inset-y-0 left-0 w-1 rounded-tr-lg bg-purple-600  rounded-br-lg"
                     aria-hidden="true"></span>
-                <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800  transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                     href="/data-product">
                     <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"
                         stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
@@ -30,7 +33,9 @@
                     <span class="ml-4">Produk</span>
                 </a>
             </li>
+
             <li class="relative px-6 py-3">
+                <span class="absolute inset-y-0 left-0 w-1 rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>
                 <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                     href="/data-history">
                     <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"
@@ -38,6 +43,17 @@
                         <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
                     </svg>
                     <span class="ml-4">Riwayat Pesanan</span>
+                </a>
+            </li>
+            <li class="relative px-6 py-3">
+                <span class="absolute inset-y-0 left-0 w-1  rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>
+                <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                    href="/data-return">
+                    <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                        <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                    </svg>
+                    <span class="ml-4">Ajuan Pengembalian</span>
                 </a>
             </li>
         </ul>
@@ -68,7 +84,9 @@
                                 class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                                 <th class="px-4 py-3">Nama</th>
                                 <th class="px-4 py-3">Kategori</th>
+                                <th class="px-4 py-3">Ukuran</th>
                                 <th class="px-4 py-3">Stock</th>
+                                <th class="px-4 py-3">Terjual</th>
                                 <th class="px-4 py-3">Harga</th>
                                 <th class="px-4 py-3">Aksi</th>
                             </tr>
@@ -96,12 +114,18 @@
                                         {{ $item->categories->nama }}
                                     </td>
                                     <td class="px-4 py-3 text-sm">
+                                        {{ $item->ukuran }}
+                                    </td>
+                                    <td class="px-4 py-3 text-sm">
                                         {{ $item->stok }}
+                                    </td>
+                                    <td class="px-4 py-3 text-sm">
+                                        {{ $item->terjual }}
                                     </td>
                                     <td class="px-4 py-3 text-sm">
                                         @currency($item->harga)
                                     </td>
-                                    
+
                                     <form action="{{ route('products.edit', ['id' => $item->id]) }}">
                                         <td class="px-4 py-3 text-sm">
                                             <button type="submit" class="flex items-center px-2 py-1 pl-0 space-x-1 ">
@@ -135,7 +159,7 @@
                                             </button>
                                         </td>
                                     </form>
-                                    <form action="/detail-products" method="get">
+                                    <form action="{{ route('products.details', ['id' => $item->id]) }}">
                                         <td class="px-4 py-3 text-sm">
                                             <button type="submit"
                                                 class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">

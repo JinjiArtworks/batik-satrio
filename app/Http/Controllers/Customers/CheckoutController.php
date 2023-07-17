@@ -101,10 +101,12 @@ class CheckoutController extends Controller
             $details->harga = $item['price'];
             $details->save();
             $product = Product::find($item['id']);
+            // return dd($product);
             $product::where('id', $item['id'])
                 ->update(
                     [
                         'stok' => $product["stok"] - $item["quantity"],
+                        'terjual' => $product["terjual"] + $item["quantity"],
                     ]
                 );
         }

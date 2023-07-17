@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -10,14 +12,13 @@ class HistoryController extends Controller
 {
     public function index()
     {
-        $product = Product::all();
-        return view('staff.history.history-order', compact('product'));
+        $orders = Order::all();
+        return view('staff.history.history-order', compact('orders'));
     }
-    public function edit($id)
+    public function detail($id)
     {
-        // $product = Product::find($id);
-        // $categories = Categories::all();
-        // return view('staff.products.edit', compact('product', 'jenis', 'categories', 'tipe'));
+        $orderdetails = OrderDetail::whereOrderId($id)->first(); // already declated a has many from categories, its mean it is beloangsto categories
+        return view('staff.history.detail-history', compact('orderdetails'));
     }
     public function update(Request $request, $id)
     {

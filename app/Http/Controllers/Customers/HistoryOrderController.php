@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Customers;
 
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\Returns;
 use App\Models\Review;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -21,15 +22,21 @@ class HistoryOrderController extends Controller
     }
     public function detail($id)
     {
-        $details = OrderDetail::whereOrderId($id)->get(); // already declated a has many from categories, its mean it is beloangsto categories
+        $details = OrderDetail::whereOrderId($id)->first(); // already declated a has many from categories, its mean it is beloangsto categories
+        // return dd($details);
         $getId = $id;
         $reviews = Review::all();
+        $mytime = Carbon::now()->today()->toDateTimeString();
+        // return dd($mytime);
+        // $NewDate = Date('Y-m-d', strtotime('+3 days'));
+        // return dd($NewDate);
+        // return dd($details->order->tanggal);
+        // return dd($mytime);
         // $test = OrderDetail::whereOrderId($id)->get('price'); // already declated a has many from categories, its mean it is beloangsto categories
         // $sumPendapatan = collect($details)->sum('price');
         // return dd($details);
-        return view('customers.history.history-detail', compact('details', 'getId','reviews'));
+        return view('customers.history.history-detail', compact('details', 'getId', 'reviews','mytime'));
     }
-
 
     public function store(Request $request, $id)
     {
@@ -43,49 +50,51 @@ class HistoryOrderController extends Controller
         ]);
         return redirect('history-order');
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function storeReturns(Request $request, $id)
     {
-        //
+        // return dd($request->all());
+
+        if ($request->bukti != null) {
+            $destinationPath = '/images';
+            $request->bukti->move(public_path($destinationPath), $request->bukti->getClientOriginalName());
+            $returns = Returns::create([
+                'orders_id' => $request->order_id,
+                'tanggal' => Carbon::now(),
+                'alasan' => $request->alasan,
+                'bukti' => $request->bukti->getClientOriginalName(),
+
+            ]);
+            Order::where('id', $id)
+                ->update(
+                    [
+                        'status' => 'Menunggu Konfirmasi Penjual'
+                    ]
+                );
+            // return dd($returns);
+
+        }
+        return redirect('history-order');
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function storeReturnsBack($id)
     {
-        //
+        Order::where('id', $id)
+            ->update(
+                [
+                    'status' => 'Pesanan Dikirim Balik Kepada Penjual'
+                ]
+            );
+        return redirect('history-order');
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function acceptOrder($id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $mytime = Carbon::now()->today()->toDateTimeString();
+        Order::where('id', $id)
+            ->update(
+                [
+                    'status' => 'Selesai',
+                    'updated_at' => $mytime
+                ]
+            );
+        return redirect('history-order');
     }
 }

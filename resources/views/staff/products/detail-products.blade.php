@@ -3,6 +3,7 @@
     <div>
         <ul class="mt-6">
             <li class="relative px-6 py-3">
+                <span class="absolute inset-y-0 left-0 w-1rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>
                 <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
                     href="/data-reports">
 
@@ -18,7 +19,9 @@
         </ul>
         <ul>
             <li class="relative px-6 py-3">
-                <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                <span class="absolute inset-y-0 left-0  bg-purple-600  w-1rounded-tr-lg rounded-br-lg"
+                    aria-hidden="true"></span>
+                <a class="inline-flex items-center w-full  text-sm text-gray-800 font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                     href="/data-product">
                     <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"
                         stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
@@ -31,9 +34,8 @@
             </li>
 
             <li class="relative px-6 py-3">
-                <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
-                    aria-hidden="true"></span>
-                <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                <span class="absolute inset-y-0 left-0 w-1rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>
+                <a class="inline-flex items-center w-full text-sm font-semibold  transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                     href="/data-history">
                     <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"
                         stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
@@ -43,8 +45,7 @@
                 </a>
             </li>
             <li class="relative px-6 py-3">
-                <span class="absolute inset-y-0 left-0 w-1 rounded-tr-lg rounded-br-lg"
-                    aria-hidden="true"></span>
+                <span class="absolute inset-y-0 left-0 w-1 rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>
                 <a class="inline-flex items-center w-full text-sm font-semibold  transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                     href="/data-return">
                     <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"
@@ -61,7 +62,7 @@
     <main class="h-full overflow-y-auto">
         <div class="container px-6 mx-auto grid">
             <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-                Riwayat Pesanan
+                Detail Riwayat Pesanan
             </h2>
             <div class="w-full overflow-hidden rounded-lg shadow-xs">
                 <div class="w-full overflow-x-auto">
@@ -69,62 +70,43 @@
                         <thead>
                             <tr
                                 class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                                <th class="px-4 py-3">Nama</th>
-                                <th class="px-4 py-3">Tanggal Order</th>
-                                <th class="px-4 py-3">Total </th>
-                                <th class="px-4 py-3">Status Pesanan</th>
+                                <th class="px-4 py-3">Motif Produk</th>
+                                <th class="px-4 py-3">Model Produk</th>
+                                <th class="px-4 py-3">Bahan Produk</th>
+                                <th class="px-4 py-3">Teknik Pembuatan Produk</th>
+                                <th class="px-4 py-3">Diskon</th>
+                                <th class="px-4 py-3">Berat Produk</th>
+                                <th class="px-4 py-3">Harga Grosir</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                            @foreach ($orders as $item)
-                                @if ($item->status == 'Selesai')
-                                    <tr class="text-gray-700 dark:text-gray-400">
-                                        <td class="px-4 py-3">
-                                            <div class="flex items-center text-sm">
-                                                <!-- Avatar with inset shadow -->
-                                                <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
-                                                    <img class="object-cover w-full h-full rounded-full"
-                                                        src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
-                                                        alt="" loading="lazy" />
-                                                    <div class="absolute inset-0 rounded-full shadow-inner"
-                                                        aria-hidden="true">
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <p class="font-semibold">{{ $item->nama }}</p>
-                                                    <p class="text-xs text-gray-600 dark:text-gray-400">
-                                                        10x Developer
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </td>
+                            <tr class="text-gray-700 dark:text-gray-400">
 
-                                        <td class="px-4 py-3 text-sm">
-                                            {{ $item->tanggal }}
-                                        </td>
-                                        <td class="px-4 py-3 text-sm">
-                                            @currency($item->total)
-                                        </td>
-                                        <td class="px-4 py-3 text-xs">
-                                            <span
-                                                class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
-                                                {{ $item->status }}
-                                            </span>
-                                        </td>
-
-                                        <form method="GET" action="{{ route('history.details', ['id' => $item->id]) }}">
-                                            <td class="px-4 py-3 text-sm">
-                                                <button type="submit"
-                                                    class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                                    Details
-                                                </button>
-                                            </td>
-                                        </form>
-                                    </tr>
-                                    
-                                @endif
-                            @endforeach
-
+                                <td class="px-4 py-3 text-sm">
+                                    {{ $products->motif->nama }}
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    {{-- {{ $products->model->nama }} --}}
+                                    {{ $products->model }} 
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    {{-- {{ $products->bahan->nama }} --}}
+                                    {{ $products->bahan }} 
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    {{-- {{ $products->teknik->nama }} --}}
+                                    {{ $products->teknik }} 
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    @currency($products->diskon)
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    {{ $products->berat }} gram
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    @currency($products->harga_grosir)
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

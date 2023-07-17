@@ -51,9 +51,7 @@
                 <input type="hidden" name='gender_id' value='2'>
                 <div
                     class=" mr-4 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-56">
-                    <a href="/custom-batik/2">
-                        <img class="p-2 w-full" src="{{ asset('images/pria.png') }}" alt="product image" />
-                    </a>
+                    <img class="p-2 w-full" src="{{ asset('images/pria.png') }}" alt="product image" />
                     <div class="px-5 pb-5">
                         <button type="submit">
                             <h5 class="font-semibold text-gray-900 dark:text-white">Batik Pria</h5>

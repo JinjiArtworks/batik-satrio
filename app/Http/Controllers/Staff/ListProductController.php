@@ -15,6 +15,11 @@ class ListProductController extends Controller
         $products = Product::all();
         return view('staff.products.data-products', compact('products'));
     }
+    public function details($id)
+    {
+        $products = Product::whereId($id)->first();
+        return view('staff.products.detail-products', compact('products'));
+    }
     // Add products
     public function create()
     {

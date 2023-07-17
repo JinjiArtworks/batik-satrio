@@ -17,10 +17,7 @@ class DashboardController extends Controller
     }
     public function detail($id)
     {
-        // $about = OrderDetail::where('product_id', 'order_id')->first();
-        $orderdetails = OrderDetail::where('order_id', $id)->first();
-        // $orderdetail = OrderDetail::whereOrderId($id);
-        // return dd($orderdetail->product->nama);
+        $orderdetails = OrderDetail::whereOrderId($id)->first(); // already declated a has many from categories, its mean it is beloangsto categories
         // return dd($orderdetails->order->harga);
         return view('staff.reports.detail-reports', compact('orderdetails'));
     }
@@ -30,6 +27,16 @@ class DashboardController extends Controller
             ->update(
                 [
                     'status' => 'Pesanan Dikirim',
+                ]
+            );
+        return redirect('/data-reports');
+    }
+    public function updateCustom(Request $request, $id)
+    {
+        Order::where('id', $id)
+            ->update(
+                [
+                    'status' => $request->action,
                 ]
             );
         return redirect('/data-reports');

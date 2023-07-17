@@ -52,9 +52,9 @@
         <input type="hidden" value="444" name="origin">
         <input type="hidden" value="{{ Auth::user()->city_id }}" name="destination"> --}}
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <input type="hidden" value="50000" name="harga">
-        <input type="hidden" value="{{ $gender_id }}" name="gender_id">
-        
+            <input type="hidden" value="50000" name="harga">
+            <input type="hidden" value="{{ $gender_id }}" name="gender_id">
+
             <h3 class=" font-semibold text-gray-900 mt-4">Pilih Model Baju</h3>
             <ul class="items-center w-full text-sm font-medium text-gray-900  rounded-lg sm:flex ">
                 <li class="w-full">
@@ -219,13 +219,15 @@
                     </div>
                 </li>
             </ul>
+            @if (Auth::user()->role == 'Customer')
+                <div class="flex justify justify-end">
+                    <button type="submit"
+                        class="bg-blue-600 border my-4  border-blue-600 text-white px-4 py-2 font-medium rounded  gap-2 hover:bg-transparent hover:text-blue-600 transition">
+                        Checkout
+                    </button>
+                </div>
+            @endif
 
-            <div class="flex justify justify-end">
-                <button type="submit"
-                    class="bg-blue-600 border my-4  border-blue-600 text-white px-4 py-2 font-medium rounded  gap-2 hover:bg-transparent hover:text-blue-600 transition">
-                    Checkout
-                </button>
-            </div>
         </div>
     </form>
 @endsection

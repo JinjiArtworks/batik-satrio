@@ -10,10 +10,12 @@ use App\Http\Controllers\Customers\HistoryOrderController;
 use App\Http\Controllers\Customers\HomeController;
 use App\Http\Controllers\Customers\ProductController;
 use App\Http\Controllers\Customers\ProfileController;
+use App\Http\Controllers\Customers\ReturnController;
 use App\Http\Controllers\Customers\WishlistController;
 use App\Http\Controllers\Staff\DashboardController;
 use App\Http\Controllers\Staff\HistoryController as StaffHistoryController;
 use App\Http\Controllers\Staff\ListProductController;
+use App\Http\Controllers\Staff\ReturnOrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -71,6 +73,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/history-order', [HistoryOrderController::class, 'index'])->name('index');
         Route::get('/history-detail/{id}', [HistoryOrderController::class, 'detail'])->name('detail');
         Route::post('/send-review/{id}', [HistoryOrderController::class, 'store'])->name('review');
+        Route::post('/send-returns/{id}', [HistoryOrderController::class, 'storeReturns'])->name('returns');
+        Route::post('/send-returns-back/{id}', [HistoryOrderController::class, 'storeReturnsBack'])->name('sendReturnsBack');
+        Route::post('/accept-item/{id}', [HistoryOrderController::class, 'acceptOrder'])->name('acceptOrder');
     });
 
     Route::group(['as' => 'custom.'], function () {
@@ -94,17 +99,21 @@ Route::middleware(['auth'])->group(function () {
     //     Route::get('/delete-category/{id}', [CategoryController::class, 'destroy'])->name('delete');
     // });
 });
-// staff
 
+
+
+// staff
 Route::middleware(['auth'])->group(function () {
     Route::group(['as' => 'reports.'], function () {
         Route::get('data-reports', [DashboardController::class, 'index'])->name('dashboard');
         Route::get('detail-reports/{id}', [DashboardController::class, 'detail'])->name('details');
         Route::put('update-reports/{id}', [DashboardController::class, 'update'])->name('update');
+        Route::put('update-custom-reports/{id}', [DashboardController::class, 'updateCustom'])->name('update-custom');
         Route::get('delete-reports/{id}', [DashboardController::class, 'destroy'])->name('delete');
     });
     Route::group(['as' => 'products.'], function () {
         Route::get('data-product', [ListProductController::class, 'index'])->name('dashboard');
+        Route::get('/details-products/{id}', [ListProductController::class, 'details'])->name('details');
         Route::get('create-product', [ListProductController::class, 'create'])->name('create');
         Route::get('edit-product/{id}', [ListProductController::class, 'edit'])->name('edit');
         Route::post('store-product', [ListProductController::class, 'store'])->name('store');
@@ -113,9 +122,17 @@ Route::middleware(['auth'])->group(function () {
     });
     Route::group(['as' => 'history.'], function () {
         Route::get('/data-history', [StaffHistoryController::class, 'index'])->name('dashboard');
-        Route::get('/edit-history/{id}', [HistoryController::class, 'edit'])->name('edit');
-        Route::put('/update-history/{id}', [HistoryController::class, 'update'])->name('update');
-        Route::get('/delete-history/{id}', [HistoryController::class, 'destroy'])->name('delete');
+        Route::get('/details-history/{id}', [StaffHistoryController::class, 'detail'])->name('details');
+        // Route::put('/update-history/{id}', [HistoryController::class, 'update'])->name('update');
+        // Route::get('/delete-history/{id}', [HistoryController::class, 'destroy'])->name('delete');
+    });
+
+    Route::group(['as' => 'return.'], function () {
+        Route::get('/data-return', [ReturnOrderController::class, 'index'])->name('index');
+        Route::get('/details-return/{id}', [ReturnOrderController::class, 'detail'])->name('details');
+        Route::put('/update-return/{id}', [ReturnOrderController::class, 'update'])->name('update');
+        Route::post('/confirm-return/{id}', [ReturnOrderController::class, 'confirmReturn'])->name('confirm');
+        Route::get('/delete-return/{id}', [ReturnOrderController::class, 'destroy'])->name('delete');
     });
 });
 

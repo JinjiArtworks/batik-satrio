@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Customers\Custom;
 
+use App\Models\City;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,9 +14,13 @@ class ListOrderController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $usersCity = Auth::user()->city_id;
         $list = session()->get('list');
+        $city  = City::whereId($usersCity)->get('name');
+        // return dd($city[0]['name']);
+        $allCities = City::all();
         // return dd($list);
-        return view('customers.custom.list-order', compact('list'));
+        return view('customers.custom.list-order', compact('list','city','allCities'));
     }
 
     public function addList(Request $request, $id)

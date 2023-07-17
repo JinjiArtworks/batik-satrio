@@ -69,14 +69,17 @@
                             My wishlist
                         </a>
                     </div>
-                    <div class="space-y-1 pl-8 pt-4">
-                        <a href="/profile" class="relative text-blue-600 block capitalize transition" type="button">
-                            <span class="absolute -left-8 top-0 text-base mt-1">
-                                <i class="fa-regular fa-user"></i>
-                            </span>
-                            Ubah Data Profile
-                        </a>
-                    </div>
+                    @if (Auth::user()->role == 'Customer')
+                        <div class="space-y-1 pl-8 pt-4">
+                            <a href="/profile" class="relative text-blue-600 block capitalize transition" type="button">
+                                <span class="absolute -left-8 top-0 text-base mt-1">
+                                    <i class="fa-regular fa-user"></i>
+                                </span>
+                                Ubah Data Profile
+                            </a>
+                        </div>
+                    @endif
+
                     <div class="space-y-1 pl-8 pt-4">
                         <a href="/history-order"
                             class="relative hover:text-blue-600 block font-medium capitalize transition">

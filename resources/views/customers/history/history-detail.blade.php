@@ -1,5 +1,4 @@
 @extends('layouts.customer')
-
 @section('breadcum')
     <ol class="inline-flex items-center space-x-1 md:space-x-3">
         <li class="inline-flex items-center">
@@ -57,21 +56,152 @@
 @section('content')
     <div class="max-w-screen-xl items-center justify-between mx-auto p-4">
         <div class="container grid items-start gap-6 pt-4 pb-10">
-            <div class="col-span-9 space-y-4">
-                <div class="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
-                    <div class="w-full">
-                        <h2 class="text-gray-800 text-xl font-medium">Penerima: {{ Auth::user()->name }}</h2>
-                        <p class="text-gray-500 text-sm">Alamat : {{ Auth::user()->address }} </p>
-                        <p class="text-gray-500 text-sm">Nomor Handphone : {{ Auth::user()->phone }}</p>
+                <div class="col-span-9 space-y-4">
+                    <div class="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
+                        <div class="w-full">
+                            @if ($details->order->status == 'Menunggu Konfirmasi Penjual')
+                                <p class="text-gray-500 text-sm mb-2">Status Pesanan :
+                                    <span
+                                        class="px-2 py-1 leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                                        Proses Pengembalian - {{ $details->order->status }}
+                                    </span>
+                                </p>
+                            @elseif ($details->order->status == 'Pengembalian Diterima')
+                                <form method="POST"
+                                    action="{{ route('history-order.sendReturnsBack', ['id' => $details->order->id]) }}"
+                                    enctype="multipart/form-data">
+                                    @csrf
+                                    <p class="text-gray-500 text-sm mb-2">Status Pesanan :
+                                        <span
+                                            class="px-2 py-1 leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                                            {{ $details->order->status }}
+                                        </span>
+                                        <button type="submit"
+                                            class="ml-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                            Kirim Balik Pesanan
+                                        </button>
+                                    </p>
+                                </form>
+                            @elseif ($details->order->status == 'Pesanan Dikirim')
+                                <form method="POST"
+                                    action="{{ route('history-order.acceptOrder', ['id' => $details->order->id]) }}"
+                                    enctype="multipart/form-data">
+                                    @csrf
+                                    <p class="text-gray-500 text-sm mb-2">Status Pesanan :
+                                        <span class="px-2 py-1 leading-tight text-green-700 bg-green-100 rounded-full ">
+                                            {{ $details->order->status }}
+                                        </span>
+                                        <button type="submit"
+                                            class=" ml-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                            Terima Pesanan
+                                        </button>
+                                    </p>
+                                </form>
+                            @else
+                                <span
+                                    class="px-2 py-1 leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                                    {{ $details->order->status }}
+                                </span>
+                            @endif
+
+                            @if ($details->order->status == 'Selesai')
+                                <!-- Modal toggle -->
+                                {{-- Updated_at dsini yaitu menentukan kapan pesanan tersebut diterima oleh penjual --}}
+                                @if ($details->order->updated_at == $mytime)
+                                    <button data-modal-target="authentication-modal"
+                                        data-modal-toggle="authentication-modal"
+                                        class="ml-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
+                                        type="button">
+                                        Ajukan Pengembalian
+                                    </button>
+                                @endif
+
+                                <div id="authentication-modal" tabindex="-1" aria-hidden="true"
+                                    class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                                    <div class="relative w-full max-w-2xl max-h-full">
+                                        <!-- Modal content -->
+                                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                            <button type="button"
+                                                class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                                data-modal-hide="authentication-modal">
+                                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                    fill="none" viewBox="0 0 14 14">
+                                                    <path stroke="currentColor" stroke-linecap="round"
+                                                        stroke-linejoin="round" stroke-width="2"
+                                                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                                </svg>
+                                                <span class="sr-only">Close modal</span>
+                                            </button>
+                                            <div class="px-6 py-6 lg:px-8">
+                                                <p class="font-semibold mb-4">Order Id : #{{ $details->order->id }}</p>
+                                                <form method="POST"
+                                                    action="{{ route('history-order.returns', ['id' => $details->order->id]) }}"
+                                                    enctype="multipart/form-data">
+                                                    @csrf
+                                                    <input type="hidden" value="{{ $details->order->id }}" name="order_id">
+                                                    <input type="hidden" value="<?php echo date('Y-m-d'); ?>" name="tanggal">
+                                                    <div>
+                                                        <label for="pesanan"
+                                                            class="block mb-2 mt-2 text-sm font-medium text-gray-900 dark:text-white">Pesanan
+                                                            yang dikembalikan :
+                                                        </label>
+                                                        @if ($details->product_id == null)
+                                                            @if ($details->request_gender == 'Wanita')
+                                                                <img src="{{ asset('images/wanita.png') }}"
+                                                                    alt="product 6" class="w-40 border border-gray-300 ">
+                                                            @else
+                                                                <img src="{{ asset('images/pria.png') }}" alt="product 6"
+                                                                    class="w-40">
+                                                            @endif
+                                                        @else
+                                                            <img src="{{ asset('images/' . $details->product->gambar) }}"
+                                                                id="blah" width="150px" height="150px"
+                                                                class="mt-1 mb-2">
+                                                        @endif
+                                                    </div>
+                                                    <div>
+                                                        <label for="alasan"
+                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alasan
+                                                            Mengembalikan : </label>
+                                                        <textarea type="text" name="alasan"
+                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"></textarea>
+                                                    </div>
+                                                    <div>
+                                                        <label for="bukti"
+                                                            class="block mb-2 mt-2 text-sm font-medium text-gray-900 dark:text-white">Bukti
+                                                            Mengembalikan :
+                                                        </label>
+                                                        <img src="{{ asset('images/no-profile.png') }}" id="blah"
+                                                            width="150px" height="150px" class="mt-1 mb-2">
+                                                        <input class=" fomt-sm mt-2" accept="image/*" id="image"
+                                                            type="file" name="bukti" required>
+                                                    </div>
+                                                    <button type="submit"
+                                                        class="w-full mt-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                                        Submit
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+
+                            </p>
+                            <h2 class="text-gray-800 text-xl font-medium">Penerima: {{ Auth::user()->name }}</h2>
+                            <p class="text-gray-500 text-sm">Alamat : {{ Auth::user()->address }} </p>
+                            <p class="text-gray-500 text-sm">Nomor Handphone : {{ Auth::user()->phone }}</p>
+                        </div>
+
+
                     </div>
+
                 </div>
-            </div>
-            @foreach ($details as $item)
-                @if ($item->product_id == null)
+                @if ($details->product_id == null)
                     <div class="col-span-9 space-y-4">
                         <div class="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
                             <div class="w-28">
-                                @if ($item->request_gender == 'Wanita')
+                                @if ($details->request_gender == 'Wanita')
                                     <img src="{{ asset('images/wanita.png') }}" alt="product 6" class="w-full">
                                 @else
                                     <img src="{{ asset('images/pria.png') }}" alt="product 6" class="w-full">
@@ -79,18 +209,18 @@
                             </div>
                             <h2 class="text-gray-800 text-xl font-medium ">Custom Batik
 
-                                @if ($item->request_gender == 'Wanita')
+                                @if ($details->request_gender == 'Wanita')
                                     Wanita
                                 @else
                                     Pria
                                 @endif
                                 <p class="text-gray-500 text-sm">Status: <span
-                                        class="text-green-600">{{ $item->order->status }}</span>
+                                        class="text-green-600">{{ $details->order->status }}</span>
                                 </p>
                             </h2>
-                            <div class="text-gray-600 text-sm">@currency($item->harga)</div>
-                            <div class="text-gray-600 text-sm">x {{ $item->quantity }}</div>
-                            <div class="text-gray-600 text-lg font-semibold">@currency($item->quantity * $item->harga)</div>
+                            <div class="text-gray-600 text-sm">@currency($details->harga)</div>
+                            <div class="text-gray-600 text-sm">x {{ $details->quantity }}</div>
+                            <div class="text-gray-600 text-lg font-semibold">@currency($details->quantity * $details->harga)</div>
 
                         </div>
                     </div>
@@ -98,13 +228,13 @@
                         <table class="table-auto border-collapse w-full text-left text-gray-600 text-sm">
                             <tr>
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Ongkos Kirim</th>
-                                <th class="py-2 px-4 border border-gray-300 ">@currency($item->order->ongkos_kirim)
+                                <th class="py-2 px-4 border border-gray-300 ">@currency($details->order->ongkos_kirim)
                                 </th>
                             </tr>
                             <tr>
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Gender</th>
                                 <th class="py-2 px-4 border border-gray-300 ">
-                                    @if ($item->request_gender == 'Wanita')
+                                    @if ($details->request_gender == 'Wanita')
                                         Wanita
                                     @else
                                         Pria
@@ -113,27 +243,27 @@
                             </tr>
                             <tr>
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Warna Dasar</th>
-                                <th class="py-2 px-4 border border-gray-300 ">{{ $item->request_warna }}</th>
+                                <th class="py-2 px-4 border border-gray-300 ">{{ $details->request_warna }}</th>
                             </tr>
                             <tr>
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Motif </th>
-                                <th class="py-2 px-4 border border-gray-300 ">{{ $item->request_motif }}</th>
+                                <th class="py-2 px-4 border border-gray-300 ">{{ $details->request_motif }}</th>
                             </tr>
                             <tr>
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Model</th>
-                                <th class="py-2 px-4 border border-gray-300 ">{{ $item->request_model }}</th>
+                                <th class="py-2 px-4 border border-gray-300 ">{{ $details->request_model }}</th>
                             </tr>
                             <tr>
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Lengan</th>
-                                <th class="py-2 px-4 border border-gray-300 ">{{ $item->request_lengan }}</th>
+                                <th class="py-2 px-4 border border-gray-300 ">{{ $details->request_lengan }}</th>
                             </tr>
                             <tr>
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Kain</th>
-                                <th class="py-2 px-4 border border-gray-300 ">{{ $item->request_kain }}</th>
+                                <th class="py-2 px-4 border border-gray-300 ">{{ $details->request_kain }}</th>
                             </tr>
                             <tr>
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Ukuran Detail</th>
-                                <th class="py-2 px-4 border border-gray-300 ">{{ $item->request_ukuran }}</th>
+                                <th class="py-2 px-4 border border-gray-300 ">{{ $details->request_ukuran }}</th>
                             </tr>
 
                         </table>
@@ -142,65 +272,66 @@
                     <div class="col-span-9 space-y-4">
                         <div class="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
                             <div class="w-28">
-                                <img src="{{ asset('images/' . $item->product->gambar) }}" alt="product 6" class="w-full">
+                                <img src="{{ asset('images/' . $details->product->gambar) }}" alt="product 6"
+                                    class="w-full">
                             </div>
-                            <h2 class="text-gray-800 text-xl font-medium ">{{ $item->product->nama }}
+                            <h2 class="text-gray-800 text-xl font-medium ">{{ $details->product->nama }}
                                 <p class="text-gray-500 text-sm">Status: <span
-                                        class="text-green-600">{{ $item->order->status }}</span>
+                                        class="text-green-600">{{ $details->order->status }}</span>
                                 </p>
                             </h2>
-                            <div class="text-gray-600 text-sm">@currency($item->harga)</div>
-                            <div class="text-gray-600 text-sm">x {{ $item->quantity }}</div>
-                            <div class="text-gray-600 text-lg font-semibold">@currency($item->quantity * $item->harga)</div>
+                            <div class="text-gray-600 text-sm">@currency($details->harga)</div>
+                            <div class="text-gray-600 text-sm">x {{ $details->quantity }}</div>
+                            <div class="text-gray-600 text-lg font-semibold">@currency($details->quantity * $details->harga)</div>
                         </div>
                         <div class="col-span-9 space-y-4">
                             <table class="table-auto border-collapse w-full text-left text-gray-600 text-sm">
                                 <tr>
                                     <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Ongkos Kirim</th>
-                                    <th class="py-2 px-4 border border-gray-300 ">@currency($item->order->ongkos_kirim)
+                                    <th class="py-2 px-4 border border-gray-300 ">@currency($details->order->ongkos_kirim)
                                     </th>
                                 </tr>
                                 <tr>
                                     <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Kategori</th>
-                                    <th class="py-2 px-4 border border-gray-300 ">{{ $item->product->categories->nama }}
+                                    <th class="py-2 px-4 border border-gray-300 ">{{ $details->product->categories->nama }}
                                     </th>
                                 </tr>
                                 <tr>
                                     <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Motif </th>
-                                    <th class="py-2 px-4 border border-gray-300 ">{{ $item->product->motif->nama }}</th>
+                                    <th class="py-2 px-4 border border-gray-300 ">{{ $details->product->motif->nama }}</th>
                                 </tr>
                                 <tr>
                                     <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Model</th>
-                                    <th class="py-2 px-4 border border-gray-300 ">{{ $item->product->model }}</th>
+                                    <th class="py-2 px-4 border border-gray-300 ">{{ $details->product->model }}</th>
                                 </tr>
                                 <tr>
                                     <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Teknik Pembuatan</th>
-                                    <th class="py-2 px-4 border border-gray-300 ">{{ $item->product->teknik }}</th>
+                                    <th class="py-2 px-4 border border-gray-300 ">{{ $details->product->teknik }}</th>
                                 </tr>
                                 <tr>
                                     <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Bahan</th>
-                                    <th class="py-2 px-4 border border-gray-300 ">{{ $item->product->bahan }}</th>
+                                    <th class="py-2 px-4 border border-gray-300 ">{{ $details->product->bahan }}</th>
                                 </tr>
                                 <tr>
                                     <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Ukuran </th>
-                                    <th class="py-2 px-4 border border-gray-300 ">{{ $item->product->ukuran }}</th>
+                                    <th class="py-2 px-4 border border-gray-300 ">{{ $details->product->ukuran }}</th>
                                 </tr>
 
                             </table>
                         </div>
                     </div>
                 @endif
-            @endforeach
         </div>
+
         {{-- Review hanya untuk produk NON Custom! --}}
-        @if ($item->product_id != null)
+        @if ($details->product_id != null)
             @foreach ($reviews as $r)
                 {{-- Kalo belum ngirim review --}}
-                @if ($r->products_id != $item->product_id)
+                @if ($r->products_id != $r->product_id)
                     <div class="container grid items-start ">
                         <div class="col-span-9 space-y-2">
                             <h3>Kirim Review</h3>
-                            <form action="{{ route('history-order.review', ['id' => $item->product_id]) }}"
+                            <form action="{{ route('history-order.review', ['id' => $details->product_id]) }}"
                                 method="POST">
                                 @csrf
                                 <div class="flex items-center space-x-1 mb-4">
@@ -228,4 +359,14 @@
             @endforeach
         @endif
     </div>
+@endsection
+@section('script')
+    <script type="text/javascript">
+        image.onchange = evt => {
+            const [file] = image.files
+            if (file) {
+                blah.src = URL.createObjectURL(file)
+            }
+        }
+    </script>
 @endsection

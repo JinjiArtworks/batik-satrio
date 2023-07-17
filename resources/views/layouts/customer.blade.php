@@ -54,7 +54,7 @@
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Wishlist</a>
                                 </li>
                                 <li>
-                                    <a href="#"
+                                    <a href="/history-order"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Pesanan</a>
                                 </li>
                                 <form method="POST" action="{{ route('logout') }}">

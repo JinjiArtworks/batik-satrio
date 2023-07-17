@@ -13,9 +13,9 @@ class WishlistController extends Controller
 {
     public function index()
     {
-        $wishlist = Wishlist::all(); // already declated a has many from categories, its mean it is beloangsto categories\
-        // return dd($wishlist->users->name);
-        
+        $user = Auth::user()->id;
+        $wishlist = Wishlist::whereUsersId($user)->get(); // already declated a has many from categories, its mean it is beloangsto categories\
+        // return dd($wishlist);
         return view('customers.profile.wishlist', compact('wishlist'));
     }
 
