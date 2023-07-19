@@ -15,8 +15,8 @@ class ListOrderController extends Controller
     {
         $user = Auth::user();
         $usersCity = Auth::user()->city_id;
-        $list = session()->get('list');
         $city  = City::whereId($usersCity)->get('name');
+        $list = session()->get('list');
         // return dd($city[0]['name']);
         $allCities = City::all();
         // return dd($list);

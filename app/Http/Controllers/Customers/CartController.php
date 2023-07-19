@@ -24,19 +24,46 @@ class CartController extends Controller
                 "name" => $product->nama,
                 "image" => $product->gambar,
                 "price" => $product->harga,
+                "price_grosir" => $product->harga_grosir,
+                "minimal_order" => $product->minimal_order,
+                "diskon" => $product->diskon,
                 "bahan" => $product->bahan,
+                "stok" => $product->stok,
                 "description" => $product->deskripsi,
                 "weight" => $product->berat,
                 "categories" => $product->categories->nama,
                 "motif" => $product->motif->nama,
                 "size" => $request->size,
-                "quantity" => $request->post('quantity'),
-                "total_after_disc" => $product->harga  * $request->post('quantity')
+                "quantity" => $request->quantity,
+                "total_after_disc" => ($product->harga - $product->diskon)  * $request->quantity
             ];
         } else {
-            $cart[$id]["weight"] += $product->berat;
-            $cart[$id]["quantity"] += $request->post('quantity');
-            $cart[$id]["total_after_disc"] += $request->post('quantity') * $product->harga;
+            if ($cart[$id]['size'] != $request->size) {
+                $cart[$id] = [
+                    "id" => $product->id,
+                    "user_id" => $user,
+                    "name" => $product->nama,
+                    "image" => $product->gambar,
+                    "price" => $product->harga,
+                    "price_grosir" => $product->harga_grosir,
+                    "minimal_order" => $product->minimal_order,
+                    "diskon" => $product->diskon,
+                    "bahan" => $product->bahan,
+                    "stok" => $product->stok,
+                    "description" => $product->deskripsi,
+                    "weight" => $product->berat,
+                    "categories" => $product->categories->nama,
+                    "motif" => $product->motif->nama,
+                    "size" => $request->size,
+                    "quantity" => $request->quantity,
+                    "total_after_disc" => ($product->harga - $product->diskon)  * $request->quantity
+                ];
+            } 
+            else {
+                $cart[$id]["weight"] += $product->berat;
+                $cart[$id]["quantity"] += $request->quantity;
+                $cart[$id]["total_after_disc"] += ($product->harga - $product->diskon)  * $request->quantity;
+            }
         }
         session()->put('cart', $cart);
         return redirect('/cart')->with('success', 'Produk berhasil ditambahkan kedalam keranjang');
@@ -49,8 +76,8 @@ class CartController extends Controller
         // return dd($city[0]['name']);
         $allCities = City::all();
         $cart = session()->get('cart');
-        // return dd($user);
-        return view('customers.cart.cart', compact('cart','city','allCities'));
+        // return dd($cart);
+        return view('customers.cart.cart', compact('cart', 'city', 'allCities'));
     }
 
     public function destroy($id)

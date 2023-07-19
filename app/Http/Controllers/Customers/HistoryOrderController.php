@@ -22,8 +22,9 @@ class HistoryOrderController extends Controller
     }
     public function detail($id)
     {
-        $details = OrderDetail::whereOrderId($id)->first(); // already declated a has many from categories, its mean it is beloangsto categories
+        $details = OrderDetail::whereOrderId($id)->get(); // already declated a has many from categories, its mean it is beloangsto categories
         // return dd($details);
+        $detailStatus = OrderDetail::whereOrderId($id)->first(); // already declated a has many from categories, its mean it is beloangsto categories
         $getId = $id;
         $reviews = Review::all();
         $mytime = Carbon::now()->today()->toDateTimeString();
@@ -35,7 +36,7 @@ class HistoryOrderController extends Controller
         // $test = OrderDetail::whereOrderId($id)->get('price'); // already declated a has many from categories, its mean it is beloangsto categories
         // $sumPendapatan = collect($details)->sum('price');
         // return dd($details);
-        return view('customers.history.history-detail', compact('details', 'getId', 'reviews','mytime'));
+        return view('customers.history.history-detail', compact('details', 'getId', 'reviews','mytime','detailStatus'));
     }
 
     public function store(Request $request, $id)

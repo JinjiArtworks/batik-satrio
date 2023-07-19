@@ -75,183 +75,191 @@
             <h2 class=" mt-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
                 Detail Pesanan
             </h2>
-            @if ($orderdetails->order->jenis_pesanan == 'Custom')
-                <div class="w-full overflow-hidden rounded-lg shadow-xs">
-                    <div class="w-full overflow-x-auto">
-                        <table class="w-full whitespace-no-wrap">
-                            <thead>
-                                <tr
-                                    class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                                    <th class="px-4 py-3">Order Nomor </th>
-                                    <th class="px-4 py-3">Quantity </th>
-                                    <th class="px-4 py-3">Total</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                                <div class="py-4 px-4">
-                                    <label class="text-sm flex flex-wrap">
-                                        <span class="text-gray-700 dark:text-gray-400">
-                                            Status Pesanan :
-                                        </span><span
-                                            class="px-2 py-1 ml-2 font-semibold text-sm leading-tight text-blue-700 bg-blue-100 rounded-full dark:bg-blue-700 dark:text-green-100">
-                                            {{ $orderdetails->order->status }}
-                                        </span>
-                                    </label>
-                                </div>
-                                <tr class="text-gray-700 dark:text-gray-400">
-                                    <td class="px-4 py-3 text-sm font-semibold">
-                                        #{{ $orderdetails->order->id }}
-                                    </td>
-                                    <td class="px-4 py-3 text-sm">
-                                        {{ $orderdetails->quantity }}
-                                    </td>
-                                    <td class="px-4 py-3 text-sm">
-                                        @currency($orderdetails->order->total)
-                                    </td>
-                                    @if ($orderdetails->order->status == 'Menunggu Konfirmasi')
-                                        <form method="POST"
-                                            action="{{ route('reports.update-custom', ['id' => $orderdetails->order->id]) }}">
-                                            @csrf
-                                            {{ method_field('put') }}
-                                            <td class="px-4 py-3 text-sm">
-                                                <select name="action"
-                                                    class="block w-full mt-1 text-sm form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple ">
-                                                    <option value="Terima Pesanan">Terima Pesanan</option>
-                                                    <option value="Tolak Pesanan">Tolak Pesanan</option>
-                                                </select>
-                                                <button type="submit"
-                                                    class="px-3 py-1 mt-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                                    Konfirmasi</button>
-                                            </td>
-                                        </form>
-                                    @elseif ($orderdetails->order->status == 'Pesanan Custom Diterima')
-                                        <form method="POST"
-                                            action="{{ route('reports.update', ['id' => $orderdetails->order->id]) }}">
-                                            @csrf
-                                            {{ method_field('put') }}
-                                            <td class="px-4 py-3 text-sm">
-                                                <button type="submit"
-                                                    class="px-3 py-1 mt-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                                    Kirim Pesanan</button>
-                                            </td>
-                                        </form>
-                                    @endif
-                                </tr>
-                            </tbody>
-                        </table>
+                @if ($orderdetails->order->jenis_pesanan == 'Custom')
+                    <div class="w-full overflow-hidden rounded-lg shadow-xs">
+                        <div class="w-full overflow-x-auto">
+                            <table class="w-full whitespace-no-wrap">
+                                <thead>
+                                    <tr
+                                        class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                        <th class="px-4 py-3">Order Nomor </th>
+                                        <th class="px-4 py-3">Quantity </th>
+                                        <th class="px-4 py-3">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                                    <div class="py-4 px-4">
+                                        <label class="text-sm flex flex-wrap">
+                                            <span class="text-gray-700 dark:text-gray-400">
+                                                Status Pesanan :
+                                            </span><span
+                                                class="px-2 py-1 ml-2 font-semibold text-sm leading-tight text-blue-700 bg-blue-100 rounded-full dark:bg-blue-700 dark:text-green-100">
+                                                {{ $orderdetails->order->status }}
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <tr class="text-gray-700 dark:text-gray-400">
+                                        <td class="px-4 py-3 text-sm font-semibold">
+                                            #{{ $orderdetails->order->id }}
+                                        </td>
+                                        <td class="px-4 py-3 text-sm">
+                                            {{ $orderdetails->quantity }}
+                                        </td>
+                                        <td class="px-4 py-3 text-sm">
+                                            @currency($orderdetails->order->total)
+                                        </td>
+                                        @if ($orderdetails->order->status == 'Menunggu Konfirmasi')
+                                            <form method="POST"
+                                                action="{{ route('reports.update-custom', ['id' => $orderdetails->order->id]) }}">
+                                                @csrf
+                                                {{ method_field('put') }}
+                                                <td class="px-4 py-3 text-sm">
+                                                    <select name="action"
+                                                        class="block w-full mt-1 text-sm form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple ">
+                                                        <option value="Terima Pesanan">Terima Pesanan</option>
+                                                        <option value="Tolak Pesanan">Tolak Pesanan</option>
+                                                    </select>
+                                                    <button type="submit"
+                                                        class="px-3 py-1 mt-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                                                        Konfirmasi</button>
+                                                </td>
+                                            </form>
+                                        @elseif ($orderdetails->order->status == 'Pesanan Custom Diterima')
+                                            <form method="POST"
+                                                action="{{ route('reports.update', ['id' => $orderdetails->order->id]) }}">
+                                                @csrf
+                                                {{ method_field('put') }}
+                                                <td class="px-4 py-3 text-sm">
+                                                    <button type="submit"
+                                                        class="px-3 py-1 mt-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                                                        Kirim Pesanan</button>
+                                                </td>
+                                            </form>
+                                        @endif
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
-                <div class="w-full overflow-hidden mt-8">
-                    <div class="container items-start gap-6">
-                        <table class="table-auto border-collapse w-full text-left text-gray-600 text-sm  mb-6">
-                            <tr>
-                                <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Warna Dasar</th>
-                                <th class="py-2 px-4 border border-gray-300 ">{{ $orderdetails->request_warna }}</th>
-                            </tr>
-                            <tr>
-                                <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Motif </th>
-                                <th class="py-2 px-4 border border-gray-300 ">{{ $orderdetails->request_motif }}</th>
-                            </tr>
-                            <tr>
-                                <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Model</th>
-                                <th class="py-2 px-4 border border-gray-300 ">{{ $orderdetails->request_model }}</th>
-                            </tr>
-                            <tr>
-                                <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Lengan</th>
-                                <th class="py-2 px-4 border border-gray-300 ">{{ $orderdetails->request_lengan }}</th>
-                            </tr>
-                            <tr>
-                                <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Kain</th>
-                                <th class="py-2 px-4 border border-gray-300 ">{{ $orderdetails->request_kain }}</th>
-                            </tr>
-                            <tr>
-                                <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Ukuran Detail</th>
-                                <th class="py-2 px-4 border border-gray-300 ">{{ $orderdetails->request_ukuran }}</th>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            @else
-                <div class="w-full overflow-hidden rounded-lg shadow-xs">
-                    <div class="w-full overflow-x-auto">
-                        <table class="w-full whitespace-no-wrap">
-                            <thead>
-                                <tr
-                                    class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                                    <th class="px-4 py-3">Order Nomor </th>
-                                    <th class="px-4 py-3">Nama Produk</th>
-                                    <th class="px-4 py-3">Ukuran Produk</th>
-                                    <th class="px-4 py-3">Harga Produk</th>
-                                    <th class="px-4 py-3">Quantity</th>
-                                    <th class="px-4 py-3">Motif Produk</th>
-                                    <th class="px-4 py-3">Kategori Produk</th>
-                                    <th class="px-4 py-3">Jenis Pesanan</th>
-                                    <th class="px-4 py-3">Total</th>
+                    <div class="w-full overflow-hidden mt-8">
+                        <div class="container items-start gap-6">
+                            <table class="table-auto border-collapse w-full text-left text-gray-600 text-sm  mb-6">
+                                <tr>
+                                    <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Total Pesanan </th>
+                                    <th class="py-2 px-4 border border-gray-300 ">@currency($orderdetails->harga * $orderdetails->quantity)</th>
                                 </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                                <div class="py-4 px-4">
-                                    <label class="text-sm flex flex-wrap">
-                                        <span class="text-gray-700 dark:text-gray-400">
-                                            Status Pesanan :
-                                        </span><span
-                                            class="px-2 py-1 ml-2 font-semibold text-sm leading-tight text-blue-700 bg-blue-100 rounded-full dark:bg-blue-700 dark:text-green-100">
-                                            {{ $orderdetails->order->status }}
-                                        </span>
-                                    </label>
-                                </div>
-                                <tr class="text-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Ongkos Kirim </th>
+                                    <th class="py-2 px-4 border border-gray-300 ">@currency($orderdetails->order->ongkos_kirim)</th>
+                                </tr>
+                                <tr>
+                                    <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Warna Dasar</th>
+                                    <th class="py-2 px-4 border border-gray-300 ">{{ $orderdetails->request_warna }}</th>
+                                </tr>
+                                <tr>
+                                    <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Motif </th>
+                                    <th class="py-2 px-4 border border-gray-300 ">{{ $orderdetails->request_motif }}</th>
+                                </tr>
+                                <tr>
+                                    <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Model</th>
+                                    <th class="py-2 px-4 border border-gray-300 ">{{ $orderdetails->request_model }}</th>
+                                </tr>
+                                <tr>
+                                    <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Lengan</th>
+                                    <th class="py-2 px-4 border border-gray-300 ">{{ $orderdetails->request_lengan }}</th>
+                                </tr>
+                                <tr>
+                                    <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Kain</th>
+                                    <th class="py-2 px-4 border border-gray-300 ">{{ $orderdetails->request_kain }}</th>
+                                </tr>
+                                <tr>
+                                    <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Ukuran Detail</th>
+                                    <th class="py-2 px-4 border border-gray-300 ">{{ $orderdetails->request_ukuran }}</th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                @else
+                    <div class="w-full overflow-hidden rounded-lg shadow-xs">
+                        <div class="w-full overflow-x-auto">
+                            <table class="w-full whitespace-no-wrap">
+                                <thead>
+                                    <tr
+                                        class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                        <th class="px-4 py-3">Order Nomor </th>
+                                        <th class="px-4 py-3">Nama Produk</th>
+                                        <th class="px-4 py-3">Ukuran Produk</th>
+                                        <th class="px-4 py-3">Harga Produk</th>
+                                        <th class="px-4 py-3">Quantity</th>
+                                        <th class="px-4 py-3">Motif Produk</th>
+                                        <th class="px-4 py-3">Kategori Produk</th>
+                                        <th class="px-4 py-3">Jenis Pesanan</th>
+                                        <th class="px-4 py-3">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                                    <div class="py-4 px-4">
+                                        <label class="text-sm flex flex-wrap">
+                                            <span class="text-gray-700 dark:text-gray-400">
+                                                Status Pesanan :
+                                            </span><span
+                                                class="px-2 py-1 ml-2 font-semibold text-sm leading-tight text-blue-700 bg-blue-100 rounded-full dark:bg-blue-700 dark:text-green-100">
+                                                {{ $orderdetails->order->status }}
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <tr class="text-gray-700 dark:text-gray-400">
 
-                                    <td class="px-4 py-3 text-sm">
-                                        {{ $orderdetails->order->id }}
-                                    </td>
-                                    <td class="px-4 py-3 text-sm">
-                                        {{ $orderdetails->product->nama }}
-                                    </td>
-                                    <td class="px-4 py-3 text-sm">
-                                        {{ $orderdetails->product->ukuran }}
-                                    </td>
-                                    <td class="px-4 py-3 text-sm">
-                                        @currency($orderdetails->product->harga)
-                                    </td>
-                                    <td class="px-4 py-3 text-sm">
-                                        {{ $orderdetails->quantity }}
-                                    </td>
-                                    <td class="px-4 py-3 text-sm">
-                                        {{ $orderdetails->product->motif->nama }}
-                                    </td>
-                                    <td class="px-4 py-3 text-sm">
-                                        {{ $orderdetails->product->categories->nama }}
-                                    </td>
-                                    <td class="px-4 py-3 text-sm">
-                                        {{ $orderdetails->order->jenis_pesanan }}
-                                    </td>
-                                    <td class="px-4 py-3 text-sm">
-                                        @currency($orderdetails->order->total)
-                                    </td>
-                                    @if ($orderdetails->order->status == 'Sedang Diproses')
-                                        <form method="POST"
-                                            action="{{ route('reports.update', ['id' => $orderdetails->order->id]) }}">
-                                            @csrf
-                                            {{ method_field('put') }}
-                                            <td class="px-4 py-3 text-sm">
-                                                <button type="submit"
-                                                    class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                                    Kirim Pesanan
-                                                </button>
-                                            </td>
-                                        </form>
-                                    @endif
+                                        <td class="px-4 py-3 text-sm">
+                                            {{ $orderdetails->order->id }}
+                                        </td>
+                                        <td class="px-4 py-3 text-sm">
+                                            {{ $orderdetails->product->nama }}
+                                        </td>
+                                        <td class="px-4 py-3 text-sm">
+                                            {{ $orderdetails->product->ukuran }}
+                                        </td>
+                                        <td class="px-4 py-3 text-sm">
+                                            @currency($orderdetails->product->harga)
+                                        </td>
+                                        <td class="px-4 py-3 text-sm">
+                                            {{ $orderdetails->quantity }}
+                                        </td>
+                                        <td class="px-4 py-3 text-sm">
+                                            {{ $orderdetails->product->motif->nama }}
+                                        </td>
+                                        <td class="px-4 py-3 text-sm">
+                                            {{ $orderdetails->product->categories->nama }}
+                                        </td>
+                                        <td class="px-4 py-3 text-sm">
+                                            {{ $orderdetails->order->jenis_pesanan }}
+                                        </td>
+                                        <td class="px-4 py-3 text-sm">
+                                            @currency($orderdetails->order->total)
+                                        </td>
+                                        @if ($orderdetails->order->status == 'Sedang Diproses')
+                                            <form method="POST"
+                                                action="{{ route('reports.update', ['id' => $orderdetails->order->id]) }}">
+                                                @csrf
+                                                {{ method_field('put') }}
+                                                <td class="px-4 py-3 text-sm">
+                                                    <button type="submit"
+                                                        class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                                                        Kirim Pesanan
+                                                    </button>
+                                                </td>
+                                            </form>
+                                        @endif
 
-                                </tr>
-                            </tbody>
-                        </table>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
-            @endif
+                @endif
+
         </div>
     </main>
-
 @endsection
 @section('script')
     <script type="text/javascript">

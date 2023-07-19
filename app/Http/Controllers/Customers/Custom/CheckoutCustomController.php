@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Customers\Custom;
 
+use App\Models\City;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderDetail;
@@ -23,7 +24,8 @@ class CheckoutCustomController extends Controller
         $courierName = $request->courier;
         // return dd($courierName);
         $list = session()->get('list');
-        // return dd($list);
+        $usersCity = Auth::user()->city_id;
+        $city  = City::whereId($usersCity)->get('name');
         if ($request->origin && $request->destination && $request->weight && $request->courier) {
             $origin = $request->origin;
             $destination = $request->destination;
@@ -72,7 +74,7 @@ class CheckoutCustomController extends Controller
         );
         $snapToken = \Midtrans\Snap::getSnapToken($params);
         // dd($params);
-        return view('customers.custom.checkout', ['snap_token' => $snapToken],  compact('list', 'cekongkir', 'courierName'));
+        return view('customers.custom.checkout', ['snap_token' => $snapToken],  compact('list', 'cekongkir', 'courierName','city'));
     }
 
     public function store(Request $request)

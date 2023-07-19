@@ -43,12 +43,30 @@
 @section('content')
     @php
         $total = 0;
+        $total_XXL = 0;
         if ($cart != null) {
             foreach ($cart as $key => $value) {
-                $total = $value['total_after_disc'] + $total;
+                $total_grosir = $value['price_grosir'] * $value['quantity'];
+                if ($value['price_grosir'] == null) {
+                    if ($value['size'] == 'XXL') {
+                        $XXL = $value['quantity'] * 10000;
+                        $total_XXL = $value['total_after_disc'] + $XXL * $value['quantity'];
+                    } else {
+                        $total += $value['total_after_disc'];
+                    }
+                } else {
+                    if ($value['size'] == 'XXL') {
+                        $XXL = $value['quantity'] * 10000;
+                        $total += $total_grosir + $XXl;
+                    } else {
+                        $total += $total_grosir;
+                    }
+                }
             }
-            $grandTotal = $total + $cekongkir;
-        
+            // echo $total_XXL;
+            // echo $total;
+            $subTotal = $total + $total_XXL;
+            $grandTotal = $total + $cekongkir + $total_XXL;
             // echo $grandTotal;
         }
     @endphp
@@ -59,9 +77,11 @@
             <input type="hidden" name="json" id="json_callback">
             <input type="hidden" value="{{ Auth::user()->alamat }}" name="address">
             <input type="hidden" value="{{ $grandTotal }}" name="grandTotal">
+            <input type="hidden" value="{{ $total_XXL }}" name="total_XXL">
             <input type="hidden" value="{{ $courierName }}" name="courierName">
             <input type="hidden" value="{{ $cekongkir }}" name="ongkir">
-           
+            <input type="hidden" value="{{ $XXL }}" name="extra">
+
             <div class="grid grid-cols-12 container items-start gap-6">
                 <div class="col-span-4 border border-gray-200 p-4 rounded">
                     <h4 class="text-gray-800 text-lg mb-2 font-medium">Detail Informasi</h4>
@@ -69,49 +89,92 @@
                     <div class="mt-1 text-gray-800 font-medium py-3 ">
                         <p class="font-bold">Nama Penerima : </p>
                         <span>
-                            <p>{{ Auth::user()->name }} - {{ Auth::user()->phone }}</p>
+                            <p>{{ Auth::user()->name }} </p>
                         </span>
                     </div>
                     <div class="mt-1 text-gray-800 font-medium py-3 ">
                         <p class="font-bold">Alamat Penerima : </p>
                         <span>
-                            <p>{{ Auth::user()->alamat }}</p>
+                            <p>{{ Auth::user()->address }} - {{ $city[0]['name'] }}</p>
                         </span>
                     </div>
-                   
+                    <div class="mt-1 text-gray-800 font-medium py-3 ">
+                        <p class="font-bold">Nomor Handphone : </p>
+                        <span>
+                            <p>{{ Auth::user()->phone }}</p>
+                        </span>
+                    </div>
                 </div>
                 <div class="col-span-8 border border-gray-200 p-4 rounded">
                     <h4 class="text-gray-800 text-lg mb-2 font-medium">Detail Pesanan</h4>
                     <hr class=" border-gray-200 sm:mx-auto dark:border-gray-700 mb-4" />
                     @foreach ($cart as $key => $c)
-                        <div class="space-y-2">
+                        <div class="space-y-2 mt-2">
                             <div class="flex justify-between">
                                 <img class="object-cover w-20 h-22" src="{{ asset('images/' . $c['image']) }}">
                                 <div>
                                     <h5 class="text-gray-800 text-lg font-semibold">{{ $c['name'] }}</h5>
-                                    <p class="text-sm text-gray-600">Size: {{ $c['size'] }}</p>
+                                    <p class="text-sm dark:text-gray-400">Size : {{ $c['size'] }}
+                                        @if ($c['size'] == 'XXL')
+                                            + (@currency($XXL))
+                                        @endif
+                                    </p>
                                 </div>
+                                @if ($c['price_grosir'] == null)
+                                    @if ($c['diskon'] != null)
+                                        @if ($c['size'] == 'XXL')
+                                            <p class="text-gray-600">
+                                                @currency($c['price'] - $c['diskon'] + $XXL)
+                                            </p>
+                                        @else
+                                            <p class="text-gray-600">
+                                                @currency($c['price'] - $c['diskon'])
+                                            </p>
+                                        @endif
+                                    @else
+                                        @if ($c['size'] == 'XXL')
+                                            <p class="text-gray-600">
+                                                @currency($c['price'] + $XXL)
+                                            </p>
+                                        @else
+                                            <p class="text-gray-600">
+                                                @currency($c['price'])
+                                            </p>
+                                        @endif
+                                    @endif
+                                @else
+                                    <p class="text-gray-600">
+                                        @currency($c['price_grosir'])
+                                    </p>
+                                @endif
                                 <p class="text-gray-600">
                                     x {{ $c['quantity'] }}
                                 </p>
-                                <p class="text-gray-800 font-medium">@currency($c['total_after_disc'])</p>
+                                @if ($c['price_grosir'] == null)
+                                    @if ($c['size'] == 'XXL')
+                                        <p class="text-gray-800 font-medium">@currency($total_XXL)</p>
+                                    @else
+                                        <p class="text-gray-800 font-medium">@currency($c['total_after_disc'])</p>
+                                    @endif
+                                @else
+                                    <p class="text-gray-800 font-medium">@currency($c['price_grosir'] * $c['quantity'])</p>
+                                @endif
                             </div>
                         </div>
-                        <div class="flex justify-between border-b border-gray-200 mt-1 text-gray-800 font-medium py-3 ">
-                            <p>Sub Total</p>
-                            <p>@currency($total)</p>
-                        </div>
-
-                        <div class="flex justify-between border-b border-gray-200 mt-1 text-gray-800 font-medium py-3 ">
-                            <p>Biaya Pengiriman</p>
-                            <p>@currency($cekongkir)</p>
-                        </div>
-
-                        <div class="flex justify-between text-gray-800 font-medium py-3 ">
-                            <p class="font-bold">Total</p>
-                            <p class="font-bold">@currency($grandTotal)</p>
-                        </div>
                     @endforeach
+                    <div class="flex justify-between border-b border-gray-200 mt-1 text-gray-800 font-medium py-3 ">
+                        <p>Sub Total</p>
+                        <p>@currency($total + $total_XXL)</p>
+                    </div>
+                    <div class="flex justify-between border-b border-gray-200 mt-1 text-gray-800 font-medium py-3 ">
+                        <p>Biaya Pengiriman</p>
+                        <p>@currency($cekongkir)</p>
+                    </div>
+
+                    <div class="flex justify-between text-gray-800 font-medium py-3 ">
+                        <p class="font-bold">Total</p>
+                        <p class="font-bold">@currency($grandTotal)</p>
+                    </div>
                     <div class="flex items-center mb-4 mt-2">
                         <input type="checkbox" name="aggrement" id="aggrement"
                             class="text-primary focus:ring-0 rounded-sm cursor-pointer w-3 h-3" required>
@@ -122,6 +185,7 @@
                 </div>
             </div>
         </form>
+
         <button id="pay-button"
             class="pay block mt-4 w-full px-2 py-2 text-center bg-blue-600 border border-blue-600 text-white font-medium rounded gap-2 hover:bg-transparent hover:text-blue-600 transition">
             Checkout

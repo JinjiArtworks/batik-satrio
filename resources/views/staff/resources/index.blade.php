@@ -78,7 +78,7 @@
                 <div
                     class="mr-4 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-56">
                     <a href="/add-models">
-                        <img class="p-2 w-full" src="{{ asset('images/3x3.JPG') }}" alt="product image" />
+                        <img class="p-2 w-full" src="{{ asset('images/no-profile.png') }}" alt="product image" />
                     </a>
                     <div class="flex justify-center ">
                         <h5 class="font-semibold text-gray-900 dark:text-white">Model Batik</h5>
@@ -87,7 +87,7 @@
                 <div
                     class="mr-4 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-56">
                     <a href="/add-motif">
-                        <img class="p-2 w-full" src="{{ asset('images/3x3.JPG') }}" alt="product image" />
+                        <img class="p-2 w-full" src="{{ asset('images/no-profile.png') }}" alt="product image" />
                     </a>
                     <div class="flex justify-center ">
                         <h5 class="font-semibold text-gray-900 dark:text-white">Motif Batik</h5>
@@ -96,7 +96,7 @@
                 <div
                 class="mr-4 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-56">
                 <a href="/add-bahan">
-                    <img class="p-2 w-full" src="{{ asset('images/3x3.JPG') }}" alt="product image" />
+                    <img class="p-2 w-full" src="{{ asset('images/no-profile.png') }}" alt="product image" />
                 </a>
                 <div class="flex justify-center ">
                     <h5 class="font-semibold text-gray-900 dark:text-white">Bahan Batik</h5>
@@ -105,7 +105,7 @@
             <div
                 class="mr-4 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-56">
                 <a href="/add-teknik">
-                    <img class="p-2 w-full" src="{{ asset('images/3x3.JPG') }}" alt="product image" />
+                    <img class="p-2 w-full" src="{{ asset('images/no-profile.png') }}" alt="product image" />
                 </a>
                 <div class="flex justify-center ">
                     <h5 class="font-semibold text-gray-900 dark:text-white">Teknik Batik</h5>

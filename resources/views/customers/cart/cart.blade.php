@@ -43,14 +43,32 @@
 @section('content')
     @php
         $total = 0;
+        $total_XXL = 0;
         $berat = 0;
         $totalBerat = 0;
+        $grandTotal = 0;
         if ($cart != null) {
             foreach ($cart as $key => $value) {
-                $total = $value['total_after_disc'] + $total;
+                $total_grosir = $value['price_grosir'] * $value['quantity'];
+                if ($value['price_grosir'] == null) {
+                    if ($value['size'] == 'XXL') {
+                        $XXL = $value['quantity'] * 10000;
+                        $total_XXL = $value['total_after_disc'] + $XXL * $value['quantity'];
+                    } else {
+                        $total += $value['total_after_disc'];
+                    }
+                } else {
+                    if ($value['size'] == 'XXL') {
+                        $XXL = $value['quantity'] * 10000;
+                        $total += $total_grosir + $XXl;
+                    } else {
+                        $total += $total_grosir;
+                    }
+                }
                 $berat = $value['weight'] * $value['quantity'];
                 $totalBerat += $berat;
             }
+            $grandTotal = $total + $total_XXL;
         }
     @endphp
     @if ($cart == null)
@@ -78,17 +96,60 @@
                                 <div class="flex justify-between w-full pb-2 space-x-2">
                                     <div class="space-y-1">
                                         <h3 class="text-lg font-semibold leadi sm:pr-8">{{ $c['name'] }} </h3>
-                                        <p class="text-sm dark:text-gray-400">Size : {{ $c['size'] }}</p>
+                                        <p class="text-sm dark:text-gray-400">Size : {{ $c['size'] }}
+                                            @if ($c['size'] == 'XXL')
+                                                + (@currency($XXL))
+                                            @endif
+                                        </p>
                                     </div>
                                     <div class="text-right">
                                         <p class="text-sm font-semibold">x{{ $c['quantity'] }}</p>
                                     </div>
-                                    <div class="text-right">
-                                        <p class="text-sm font-semibold">@currency($c['price'])</p>
-                                    </div>
-                                    <div class="text-right">
-                                        <p class="text-sm font-semibold">@currency($c['total_after_disc'])</p>
-                                    </div>
+                                    @if ($c['price_grosir'] == null)
+                                        @if ($c['diskon'] != null)
+                                            @if ($c['size'] == 'XXL')
+                                                <div class="text-right">
+                                                    <p class="text-sm font-semibold">@currency($c['price'] - $c['diskon'] + $XXL)</p>
+                                                </div>
+                                                <div class="text-right">
+                                                    <p class="text-sm font-semibold">@currency($total_XXL)</p>
+                                                </div>
+                                            @else
+                                                <div class="text-right">
+                                                    <p class="text-sm font-semibold">@currency($c['price'] - $c['diskon'])</p>
+                                                </div>
+                                                <div class="text-right">
+                                                    <p class="text-sm font-semibold">@currency(($c['price'] - $c['diskon']) * $c['quantity'])</p>
+                                                </div>
+                                            @endif
+                                        @else
+                                            @if ($c['size'] == 'XXL')
+                                                <div class="text-right">
+                                                    <p class="text-sm font-semibold">@currency($c['price'] - $c['diskon'] + $XXL)</p>
+                                                </div>
+                                                <div class="text-right">
+                                                    <p class="text-sm font-semibold">@currency($total_XXL)</p>
+                                                </div>
+                                            @else
+                                                <div class="text-right">
+                                                    <p class="text-sm font-semibold">@currency($c['price'] - $c['diskon'])</p>
+                                                </div>
+                                                <div class="text-right">
+                                                    <p class="text-sm font-semibold">@currency(($c['price'] - $c['diskon']) * $c['quantity'])</p>
+
+                                                </div>
+                                            @endif
+                                        @endif
+                                    @else
+                                        <div class="text-right">
+                                            <p class="text-sm font-semibold">@currency($c['price_grosir'])</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="text-sm font-semibold">@currency($c['price_grosir'] * $c['quantity'])</p>
+                                        </div>
+                                    @endif
+
+
                                     <div class="text-right">
                                         <form action="{{ route('cart.remove', ['id' => $c['id']]) }}" method="GET">
                                             <button type="submit"
@@ -141,8 +202,6 @@
                             Ubah
                         </button>
 
-
-
                         <div class="flex mt-4  text-gray-800 font-medium ">
                             <p class="font-bold ">Ekspedisi : </p>
                             <div class="items-center ml-2">
@@ -158,19 +217,29 @@
                     </div>
                     <div class="space-y-1 text-right mt-4">
                         <p>Total belanja:
-                            <span class="font-semibold">@currency($total)</span>
+                            <span class="font-semibold">@currency($total + $total_XXL)</span>
                         </p>
                     </div>
                     <div class="flex justify-end space-x-4 mt-4">
                         {{-- <form action="POST"> --}}
                         <input type="hidden" value="{{ $totalBerat }}" name="weight">
-                        <input type="hidden" value="{{ $total }}" name="total">
+                        <input type="hidden" value="{{ $grandTotal }}" name="grandTotal">
                         <input type="hidden" value="444" name="origin">
                         <input type="hidden" value="{{ Auth::user()->city_id }}" name="destination">
-                        <button type="submit"
-                            class="bg-blue-600 border border-blue-600 text-white px-4 py-2 font-medium rounded flex items-center gap-2 hover:bg-transparent hover:text-blue-600 transition">
-                            Checkout
-                        </button>
+                        @if ($c['quantity'] <= $c['stok'])
+                            <button type="submit"
+                                class="bg-blue-600 border border-blue-600 text-white px-4 py-2 font-medium rounded flex items-center gap-2 hover:bg-transparent hover:text-blue-600 transition">
+                                Checkout
+                            </button>
+                        @else
+                            <button type="submit" disabled
+                                class="bg-blue-600 border border-blue-600 text-white px-4 py-2 font-medium rounded flex items-center gap-2 hover:bg-transparent hover:text-blue-600 transition">
+                                Checkout
+                            </button>
+                            {{-- Lakukan pengecekan di sweet alerts --}}
+                            <span>Stock tidak tersedia </span>
+                        @endif
+
                     </div>
                 </div>
             </div>

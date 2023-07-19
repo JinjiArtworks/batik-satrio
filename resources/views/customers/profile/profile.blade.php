@@ -69,7 +69,7 @@
                             My wishlist
                         </a>
                     </div>
-                    @if (Auth::user()->role == 'Customer')
+                    @if (Auth::user()->role == 'Customers')
                         <div class="space-y-1 pl-8 pt-4">
                             <a href="/profile" class="relative text-blue-600 block capitalize transition" type="button">
                                 <span class="absolute -left-8 top-0 text-base mt-1">

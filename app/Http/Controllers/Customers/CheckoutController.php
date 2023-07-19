@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Customers;
 
+use App\Models\City;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderDetail;
@@ -21,7 +22,8 @@ class CheckoutController extends Controller
         $user = Auth::user();
         $courierName = $request->courier;
         $cart = session()->get('cart');
-        // return dd($courierName);
+        $usersCity = Auth::user()->city_id;
+        $city  = City::whereId($usersCity)->get('name');
         if ($request->origin && $request->destination && $request->weight && $request->courier) {
             $origin = $request->origin;
             $destination = $request->destination;
@@ -57,7 +59,7 @@ class CheckoutController extends Controller
         \Midtrans\Config::$is3ds = true;
 
         // return dd($request->all());
-        $grandTotal =  $request->total + $cekongkir;
+        $grandTotal =  $request->grandTotal + $cekongkir;
         $params = array(
             'transaction_details' => array(
                 'order_id' => rand(),
@@ -70,7 +72,7 @@ class CheckoutController extends Controller
         );
         $snapToken = \Midtrans\Snap::getSnapToken($params);
         // dd($params);
-        return view('customers.cart.checkout', ['snap_token' => $snapToken],  compact('cart', 'cekongkir', 'courierName'));
+        return view('customers.cart.checkout', ['snap_token' => $snapToken],  compact('cart', 'cekongkir', 'courierName', 'city'));
     }
 
     public function store(Request $request)
@@ -98,7 +100,14 @@ class CheckoutController extends Controller
             $details->product_id = $item['id'];
             $details->order_id = $orders->id;
             $details->quantity = $item['quantity'];
-            $details->harga = $item['price'];
+            if ($item['size'] == 'XXL') {
+                $details->harga = $item['price'] + $request->extra;
+            } else {
+                $details->harga = $item['price'] - $item['diskon'];
+            }
+            $details->harga_grosir = $item['price_grosir'];
+            $details->diskon = $item['diskon'];
+            $details->minimal_order = $item['minimal_order'];
             $details->save();
             $product = Product::find($item['id']);
             // return dd($product);

@@ -84,7 +84,7 @@
                         </span>
                         <input
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                            type="text" name="name" placeholder="Nama Produk" />
+                            type="text" name="name" placeholder="Nama Produk" required />
                         {{-- <span class="text-xs text-gray-600 dark:text-gray-400">
                         Your password must be at least 6 characters long.
                     </span> --}}
@@ -101,7 +101,7 @@
                         <span class="text-gray-700 dark:text-gray-400">
                             Kategori
                         </span>
-                        <select name="categories"
+                        <select name="categories" required
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                             @foreach ($categories as $item)
                                 <option value="{{ $item->id }}">{{ $item->nama }}</option>
@@ -112,7 +112,7 @@
                         <span class="text-gray-700 dark:text-gray-400">
                             Motif
                         </span>
-                        <select name="motif"
+                        <select name="motif" required
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                             @foreach ($motif as $item)
                                 <option value="{{ $item->id }}">{{ $item->nama }}</option>
@@ -123,7 +123,7 @@
                         <span class="text-gray-700 dark:text-gray-400">
                             Model
                         </span>
-                        <select name="model"
+                        <select name="model" required
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                             @foreach ($models as $item)
                                 <option value="{{ $item->id }}">{{ $item->nama }}</option>
@@ -134,7 +134,7 @@
                         <span class="text-gray-700 dark:text-gray-400">
                             Bahan
                         </span>
-                        <select name="bahan"
+                        <select name="bahan" required
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                             @foreach ($bahan as $item)
                                 <option value="{{ $item->id }}">{{ $item->nama }}</option>
@@ -145,7 +145,7 @@
                         <span class="text-gray-700 dark:text-gray-400">
                             Teknik Pembuatan
                         </span>
-                        <select name="teknik"
+                        <select name="teknik" required
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                             @foreach ($teknik as $item)
                                 <option value="{{ $item->id }}">{{ $item->nama }}</option>
@@ -156,7 +156,7 @@
                         <span class="text-gray-700 dark:text-gray-400">
                             Ukuran
                         </span>
-                        <select name="size"
+                        <select name="size"required
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                             <option value="S">S</option>
                             <option value="M">M</option>
@@ -170,7 +170,7 @@
                         <span class="text-gray-700 dark:text-gray-400">
                             Deskripsi
                         </span>
-                        <textarea
+                        <textarea required
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                             type="text" name="description" placeholder="Deskripsi Produk"></textarea>
                     </label>
@@ -186,7 +186,7 @@
                         <span class="text-gray-700 dark:text-gray-400">
                             Harga Grosir
                         </span>
-                        <input
+                        <input required
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                             type="number" name="price_grosir" placeholder="Harga Produk" />
                         <span class="text-xs text-gray-600 dark:text-gray-400">
@@ -197,7 +197,7 @@
                         <span class="text-gray-700 dark:text-gray-400">
                             Stok
                         </span>
-                        <input
+                        <input required
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                             type="number" name="stock" placeholder="Stok Produk" />
                     </label>

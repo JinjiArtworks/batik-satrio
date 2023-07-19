@@ -13,9 +13,10 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::paginate(5);
+        $products = Product::all();
+        $cat = Categories::all();
         // return dd($products);
-        return view('customers.products.shop', compact('products'));
+        return view('customers.products.shop', compact('products','cat'));
     }
     public function detail($id)
     {
@@ -23,7 +24,7 @@ class ProductController extends Controller
         $wishlist = Wishlist::whereProductsId($id)->get();
         // return dd($products->id);
         // $getIdProducts = $products->id;
-        return view('customers.products.detailproduct', compact('products','wishlist'));
+        return view('customers.products.detailproduct', compact('products', 'wishlist'));
     }
 
     public function store(Request $request)
@@ -37,48 +38,24 @@ class ProductController extends Controller
         return redirect('/wishlist');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function search(Request $request)
     {
-        //
+        $cat = Categories::all();
+        if ($request->has('search')) {
+            $products = Product::where('nama', 'LIKE', '%' . $request->search . '%')->get();
+        } else {
+            $products = Product::get();;
+        }
+        return view('customers.products.shop', compact('products','cat'));
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+    // public function searchByCat(Request $request)
+    // {
+    //     $cat = Categories::all();
+    //     if ($request->has('cat')) {
+    //         $products = Product::where('categories_id', 'LIKE', '%' . $request->cat . '%')->paginate(5);
+    //     } else {
+    //         $products = Product::paginate(5);
+    //     }
+    //     return view('customers.products.shop', compact('products','cat'));
+    // }
 }

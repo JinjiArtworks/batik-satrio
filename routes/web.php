@@ -53,6 +53,8 @@ Route::group(['as' => 'homepage.'], function () {
 Route::middleware(['auth'])->group(function () {
     Route::group(['as' => 'products.'], function () {
         Route::post('/store-wishlist', [ProductController::class, 'store'])->name('wishlist');
+        Route::get('/belanja', [ProductController::class, 'search'])->name('search');
+        // Route::get('/belanja', [ProductController::class, 'searchByCat'])->name('searchByCat');
     });
     Route::group(['as' => 'wishlist.'], function () {
         Route::get('/wishlist', [WishlistController::class, 'index'])->name('index');

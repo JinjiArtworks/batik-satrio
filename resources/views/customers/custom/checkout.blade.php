@@ -67,13 +67,13 @@
                     <div class="mt-1 text-gray-800 font-medium py-3 ">
                         <p class="font-bold">Nama Penerima : </p>
                         <span>
-                            <p>{{ Auth::user()->name }} - {{ Auth::user()->phone }}</p>
+                            <p>{{ Auth::user()->name }} </p>
                         </span>
                     </div>
                     <div class="mt-1 text-gray-800 font-medium py-3 ">
                         <p class="font-bold">Alamat Penerima : </p>
                         <span>
-                            <p>{{ Auth::user()->address }}</p>
+                            <p>{{ Auth::user()->address }} - {{ $city[0]['name'] }}</p>
                         </span>
                     </div>
                     <div class="mt-1 text-gray-800 font-medium py-3 ">

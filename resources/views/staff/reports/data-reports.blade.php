@@ -89,10 +89,10 @@
                     </div>
                     <div>
                         <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                            Total clients
+                            Total Customers
                         </p>
                         <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                            6389
+                            {{ $totalClients }}
                         </p>
                     </div>
                 </div>
@@ -107,10 +107,10 @@
                     </div>
                     <div>
                         <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                            Account balance
+                            Total Pendapatan
                         </p>
                         <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                            $ 46,760.89
+                            @currency($pendapatanBersih)
                         </p>
                     </div>
                 </div>
@@ -125,10 +125,11 @@
                     </div>
                     <div>
                         <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                            New sales
+                            Total Pesanan
                         </p>
                         <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                            376
+                            {{ $totalOrders }}
+
                         </p>
                     </div>
                 </div>
@@ -143,10 +144,10 @@
                     </div>
                     <div>
                         <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                            Pending contacts
+                            Ajuan Pengembalian 
                         </p>
                         <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                            35
+                            {{ $totalReturns }}
                         </p>
                     </div>
                 </div>

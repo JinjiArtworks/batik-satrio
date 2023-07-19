@@ -63,17 +63,17 @@
                     @if (Auth::check())
                         @if (Auth::user()->role == 'Customers')
                             {{-- @foreach ($wishlist as $w) --}}
-                                {{-- @if ($w->products_id == $products->id) --}}
-                                <form action="{{ route('products.wishlist', ['id' => $products->id]) }}" method="POST">
-                                    @csrf
-                                    {{-- @if ($wishlist[0]['products_id'] == $getIdProducts) --}}
-                                    <input type="hidden" name="products" value="{{ $products->id }}">
-                                    <button type="submit"
-                                        class="font-sm px-8 py-2 rounded  flex items-center gap-2 hover:text-blue-600 transition underline">
-                                        Wishlist<i class="fa-solid fa-heart justify-between"></i>
-                                    </button>
-                                </form>
-                                {{-- @else
+                            {{-- @if ($w->products_id == $products->id) --}}
+                            <form action="{{ route('products.wishlist', ['id' => $products->id]) }}" method="POST">
+                                @csrf
+                                {{-- @if ($wishlist[0]['products_id'] == $getIdProducts) --}}
+                                <input type="hidden" name="products" value="{{ $products->id }}">
+                                <button type="submit"
+                                    class="font-sm px-8 py-2 rounded  flex items-center gap-2 hover:text-blue-600 transition underline">
+                                    Wishlist<i class="fa-solid fa-heart justify-between"></i>
+                                </button>
+                            </form>
+                            {{-- @else
                                     asd
                                 @endif --}}
                             {{-- @endforeach --}}
@@ -83,25 +83,38 @@
                 <hr class=" border-gray-200 sm:mx-auto dark:border-gray-700 mb-5" />
                 <div class="space-y-2">
                     <p class="text-gray-800 font-semibold space-x-2">
-                        <span>Stock: </span>
+                        <span>stok: </span>
                         <span class="text-green-600">{{ $products->stok }} pcs</span>
                     </p>
                     <p class="space-x-2">
                         <span class="text-gray-800 font-semibold">Motif: </span>
                         <span class="text-gray-600">{{ $products->motif->nama }}</span>
                     </p>
+                    @if ($products->minimal_order != null)
+                        <p class="space-x-2">
+                            <span class="text-gray-800 font-semibold">Minimal Order: </span>
+                            <span class="text-gray-600">{{ $products->minimal_order }}</span>
+                        </p>
+                    @endif
+
                     <p class="space-x-2">
                         <span class="text-gray-800 font-semibold">Category: </span>
                         <span class="text-gray-600">{{ $products->categories->nama }}</span>
                     </p>
                     <p class="space-x-2">
-                        <span class="text-gray-800 font-semibold">SKU: </span>
-                        <span class="text-gray-600">BE45VGRT</span>
+                        <span class="text-gray-800 font-semibold">Terjual: </span>
+                        <span class="text-gray-600">{{ $products->terjual }}</span>
                     </p>
                 </div>
                 <div class="flex items-baseline mb-1 space-x-2 font-roboto mt-4">
-                    <p class="text-xl text-green-600 font-semibold">@currency($products->harga)</p>
-                    {{-- <p class="text-base text-gray-400 line-through">$55.00</p> --}}
+                    @if ($products->harga_grosir == null)
+                        <p class="text-xl text-green-600 font-semibold">@currency($products->harga - $products->diskon)</p>
+                        @if ($products->diskon != null)
+                            <p class="text-base text-gray-400 line-through">@currency($products->harga)</p>
+                        @endif
+                    @else
+                        <p class="text-xl text-green-600 font-semibold">@currency($products->harga_grosir)</p>
+                    @endif
                 </div>
 
                 <p class="mt-4 text-gray-600">{{ $products->deskripsi }}.</p>
@@ -109,28 +122,77 @@
                     @csrf
                     <div class="pt-4">
                         <h3 class="text-sm text-gray-800 uppercase mb-1">Size</h3>
-                        <div class="flex items-center gap-2">
-                            <div class="size-selector">
-                                <input type="radio" name="size" id="size-sm" class="hidden"value="S"required>
-                                <label for="size-sm"
-                                    class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">S</label>
+                        @if ($products->ukuran == 'All Size')
+                            <div class="flex items-center gap-2">
+                                <div class="size-selector">
+                                    <input type="radio" name="size" id="size-sm"
+                                        class="hidden"value="S"required>
+                                    <label for="size-sm"
+                                        class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">S</label>
+                                </div>
+                                <div class="size-selector">
+                                    <input type="radio" name="size" id="size-m"
+                                        class="hidden"value="M"required>
+                                    <label for="size-m"
+                                        class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">M</label>
+                                </div>
+                                <div class="size-selector">
+                                    <input type="radio" name="size" id="size-l" class="hidden"value="L"
+                                        required>
+                                    <label for="size-l"
+                                        class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">L</label>
+                                </div>
+                                <div class="size-selector">
+                                    <input type="radio" name="size" id="size-xl" class="hidden"
+                                        value="XL"required>
+                                    <label for="size-xl"
+                                        class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">XL</label>
+                                </div>
+                                <div class="size-selector">
+                                    <input type="radio" name="size" id="size-xxl" class="hidden"
+                                        value="XXL"required>
+                                    <label for="size-xxl"
+                                        class="text-xs border border-gray-200 rounded-sm h-6 w-8 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">XXL</label>
+                                </div>
                             </div>
-                            <div class="size-selector">
-                                <input type="radio" name="size" id="size-m" class="hidden"value="M"required>
-                                <label for="size-m"
-                                    class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">M</label>
+                        @elseif ($products->ukuran == 'S')
+                            <div class="flex items-center gap-2">
+                                <div class="size-selector">
+                                    <input type="radio" name="size" id="size-sm"
+                                        class="hidden"value="S"required>
+                                    <label for="size-sm"
+                                        class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">S</label>
+                                </div>
                             </div>
-                            <div class="size-selector">
-                                <input type="radio" name="size" id="size-l" class="hidden"value="L" required>
-                                <label for="size-l"
-                                    class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">L</label>
+                        @elseif ($products->ukuran == 'M')
+                            <div class="flex items-center gap-2">
+                                <div class="size-selector">
+                                    <input type="radio" name="size" id="size-sm"
+                                        class="hidden"value="M"required>
+                                    <label for="size-sm"
+                                        class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">M</label>
+                                </div>
                             </div>
-                            <div class="size-selector">
-                                <input type="radio" name="size" id="size-xl" class="hidden" value="XL"required>
-                                <label for="size-xl"
-                                    class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">XL</label>
+                        @elseif ($products->ukuran == 'L')
+                            <div class="flex items-center gap-2">
+                                <div class="size-selector">
+                                    <input type="radio" name="size" id="size-sm"
+                                        class="hidden"value="L"required>
+                                    <label for="size-sm"
+                                        class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">L</label>
+                                </div>
                             </div>
-                        </div>
+                        @elseif ($products->ukuran == 'XL')
+                            <div class="flex items-center gap-2">
+                                <div class="size-selector">
+                                    <input type="radio" name="size" id="size-sm"
+                                        class="hidden"value="XL"required>
+                                    <label for="size-sm"
+                                        class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">XL</label>
+                                </div>
+                            </div>
+                        @endif
+
                     </div>
 
                     {{-- <div class="pt-4">
@@ -157,20 +219,36 @@
 
                         </div>
                     </div> --}}
-
-                    <div class="mt-4">
-                        <h3 class="text-sm text-gray-800 uppercase mb-1">Quantity</h3>
-                        <div class="flex border border-gray-300 text-gray-600 divide-x divide-gray-300 w-max">
-                            <a
-                                class="btn btn-reduce h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none">
-                                -</a>
-                            <input class="count" type="number" name="quantity" value="1" data-max="120"
-                                pattern="[0-9]*" style="width: 5rem">
-                            <a
-                                class="btn btn-increase h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none">
-                                +</a>
+                    @if ($products->harga_grosir == null)
+                        <div class="mt-4">
+                            <h3 class="text-sm text-gray-800 uppercase mb-1">Quantity</h3>
+                            <div class="flex border border-gray-300 text-gray-600 divide-x divide-gray-300 w-max">
+                                <a
+                                    class="btn btn-reduce h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none">
+                                    -</a>
+                                <input class="count" type="number" name="quantity" value="1" data-max="120"
+                                    pattern="[0-9]*" style="width: 5rem">
+                                <a
+                                    class="btn btn-increase h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none">
+                                    +</a>
+                            </div>
                         </div>
-                    </div>
+                    @else
+                        <div class="mt-4">
+                            <h3 class="text-sm text-gray-800 uppercase mb-1">Quantity</h3>
+                            <div class="flex border border-gray-300 text-gray-600 divide-x divide-gray-300 w-max">
+                                <a
+                                    class="btn btn-reduce h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none">
+                                    -</a>
+                                <input class="count2" type="number" name="quantity" data-max="120" pattern="[0-9]*"
+                                    style="width: 5rem" value="{{ $products->minimal_order }}">
+                                <a
+                                    class="btn btn-increase h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none">
+                                    +</a>
+                            </div>
+                        </div>
+                    @endif
+
                     @if (Auth::check())
                         @if (Auth::user()->role == 'Customers')
                             <div class="mt-6 flex gap-3 border-gray-200 pb-5 pt-5">
@@ -196,29 +274,28 @@
             <h3 class="border-b border-gray-200 font-roboto text-gray-800 pb-3 font-medium">Product details</h3>
             <div class="w-full pt-6">
                 <div class="text-gray-600">
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur necessitatibus deleniti natus
-                        dolore cum maiores suscipit optio itaque voluptatibus veritatis tempora iste facilis non aut
-                        sapiente dolor quisquam, ex ab.</p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, quae accusantium voluptatem
-                        blanditiis sapiente voluptatum. Autem ab, dolorum assumenda earum veniam eius illo fugiat possimus
-                        illum dolor totam, ducimus excepturi.</p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error quia modi ut expedita! Iure molestiae
-                        labore cumque nobis quasi fuga, quibusdam rem? Temporibus consectetur corrupti rerum veritatis
-                        numquam labore amet.</p>
+                    <p>{{ $products->deskripsi }}</p>
+
                 </div>
 
                 <table class="table-auto border-collapse w-full text-left text-gray-600 text-sm mt-6">
                     <tr>
-                        <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Color</th>
-                        <th class="py-2 px-4 border border-gray-300 ">Blank, Brown, Red</th>
+                        <th class="py-2 px-4 border border-gray-300 w-40 ">Color</th>
+                        <th class="py-2 px-4 border border-gray-300 font-medium">Blank, Brown, Red</th>
                     </tr>
                     <tr>
-                        <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Bahan</th>
-                        <th class="py-2 px-4 border border-gray-300 ">{{ $products->bahan }}</th>
+                        <th class="py-2 px-4 border border-gray-300 w-40 ">Bahan</th>
+                        <th class="py-2 px-4 border border-gray-300 font-medium">{{ $products->bahan->nama }}</th>
                     </tr>
                     <tr>
-                        <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Berat</th>
-                        <th class="py-2 px-4 border border-gray-300 ">{{ $products->berat }} gram</th>
+                        <th class="py-2 px-4 border border-gray-300 w-40 ">Teknik Pembuatan</th>
+                        <th class="py-2 px-4 border border-gray-300 font-medium">{{ $products->teknik->nama }}
+                            <span class="flex">{{ $products->teknik->deskripsi }}</span>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="py-2 px-4 border border-gray-300 w-40 ">Berat</th>
+                        <th class="py-2 px-4 border border-gray-300 font-medium">{{ $products->berat }} gram</th>
                     </tr>
                 </table>
             </div>
@@ -248,8 +325,53 @@
             $(document).on('click', '.add-to-cart', function() {
                 if ($('.count').val() > {{ $products->stok }}) {
                     event.preventDefault();
-                    alert('stock tidak tersedia');
+                    alert('stok tidak tersedia');
                 }
+            });
+        });
+    </script>
+
+    {{-- Grosir --}}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(document).on('click', '.btn-increase', function() {
+                $('.count2').val(parseInt($('.count2').val()) + {{ $products->minimal_order }});
+                if ($('.count2').val() > {{ $products->stok }}) {
+                    $(':input[type="submit"]').prop('disabled', true);
+                }
+            });
+            $(document).on('click', '.btn-reduce', function() {
+                $('.count2').val(parseInt($('.count2').val()) - {{ $products->minimal_order }});
+                if ($('.count2').val() <= 0) {
+                    $('.count2').val({{ $products->minimal_order }});
+                    $(':input[type="submit"]').prop('disabled', true);
+                }
+                if ($('.count2').val() <= {{ $products->minimal_order }}) {
+                    $(':input[type="submit"]').prop('disabled', false);
+
+                }
+                if ($('.count2').val() <= {{ $products->stok }}) {
+                    $(':input[type="submit"]').prop('disabled', false);
+                }
+            });
+            // btn
+
+            $(document).on('click', '.add-to-cart', function() {
+                if ($('.count2').val() > {{ $products->stok }}) {
+                    event.preventDefault();
+                    Swal.fire({
+                        title: 'stok Tidak Tersedia',
+                        icon: 'error',
+                    })
+                }
+                if ($('.count2').val() < {{ $products->minimal_order }}) {
+                    event.preventDefault();
+                    Swal.fire({
+                        title: 'Minimum Order adalah {{ $products->minimal_order }} pcs',
+                        icon: 'warning',
+                    })
+                }
+
             });
         });
     </script>
