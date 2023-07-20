@@ -7,6 +7,7 @@ use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
+use App\Models\Province;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -23,12 +24,18 @@ class CheckoutController extends Controller
         $courierName = $request->courier;
         $cart = session()->get('cart');
         $usersCity = Auth::user()->city_id;
+        $usersProvince = Auth::user()->province_id;
         $city  = City::whereId($usersCity)->get('name');
-        if ($request->origin && $request->destination && $request->weight && $request->courier) {
+        $provinces  = Province::whereId($usersProvince)->get('name');
+
+        if ($request->origin && $request->destination && $request->weight && $request->courier && $request->province) {
             $origin = $request->origin;
             $destination = $request->destination;
             $weight = $request->weight;
             $courier = $request->courier;
+            $province = $request->province;
+            $service = $request->service;
+            // return dd($service);
             $response = Http::asForm()->withHeaders([
                 'key' => '91f6ce360df9a6e2ca7badaae61f5b78'
             ])->post('https://api.rajaongkir.com/starter/cost', [
@@ -36,16 +43,32 @@ class CheckoutController extends Controller
                 'destination' => $destination,
                 'weight' => $weight,
                 'courier' => $courier,
+                'province' => $province,
+                'service' => $service,
             ]);
+            $OKE = $response['rajaongkir']['results'][0]['costs'][0]['service'];
             // $resultz = json_decode($response);
-            // return ($resultz);
-            $cekongkir = $response['rajaongkir']['results'][0]['costs'][0]['cost'][0]['value'];
+            // return ($OKE);
+            if ($courier == 'jne') {
+                if ($service == 'OKE') {
+                    $cekongkir = $response['rajaongkir']['results'][0]['costs'][0]['cost'][0]['value'];
+                    return dd($cekongkir);
+                } else if ($service == 'REG') {
+                    $cekongkir = $response['rajaongkir']['results'][0]['costs'][1]['cost'][0]['value'];
+                    return dd($cekongkir);
+                }
+                // } else if ($service == 'YES') {
+                //     $cekongkir = $response['rajaongkir']['results'][0]['costs'][0]['cost'][1]['value'];
+                //     return dd($cekongkir);
+
+            }
             // return dd($cekongkir);
         } else {
             $origin = '';
             $destination = '';
             $weight = '';
             $courier = '';
+            $province = '';
             $cekongkir = null;
         }
         $userName = $user->name;
@@ -72,7 +95,7 @@ class CheckoutController extends Controller
         );
         $snapToken = \Midtrans\Snap::getSnapToken($params);
         // dd($params);
-        return view('customers.cart.checkout', ['snap_token' => $snapToken],  compact('cart', 'cekongkir', 'courierName', 'city'));
+        return view('customers.cart.checkout', ['snap_token' => $snapToken],  compact('cart', 'cekongkir', 'courierName', 'city', 'provinces'));
     }
 
     public function store(Request $request)

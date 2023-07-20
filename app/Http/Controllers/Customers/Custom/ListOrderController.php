@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Customers\Custom;
 
 use App\Models\City;
+use App\Models\Ekspedisi;
 use App\Models\Product;
+use App\Models\Province;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -15,12 +17,17 @@ class ListOrderController extends Controller
     {
         $user = Auth::user();
         $usersCity = Auth::user()->city_id;
+        $usersProvince = Auth::user()->province_id;
+
         $city  = City::whereId($usersCity)->get('name');
+        $province  = Province::whereId($usersProvince)->get('name');
+
         $list = session()->get('list');
-        // return dd($city[0]['name']);
+        $allEkspedisi = Ekspedisi::all();
         $allCities = City::all();
+        $allProvince = Province::all();
         // return dd($list);
-        return view('customers.custom.list-order', compact('list','city','allCities'));
+        return view('customers.custom.list-order', compact('list', 'city', 'allCities','allProvince','allEkspedisi','province'));
     }
 
     public function addList(Request $request, $id)

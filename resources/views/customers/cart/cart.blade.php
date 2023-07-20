@@ -183,7 +183,6 @@
         </div>
         <form method="POST" action="{{ route('checkout.index') }}" enctype="multipart/form-data">
             @csrf
-
             <div class="max-w-screen-xl items-center justify-between mx-auto">
                 <div class="container items-start gap-6">
                     <div class="col-span-12 border border-gray-200 p-4 rounded">
@@ -192,7 +191,8 @@
                         <div class="flex mt-4  text-gray-800 font-medium ">
                             <p class="font-bold ">Alamat Tujuan : </p>
                             <div class="items-center ml-2">
-                                <p>{{ Auth::user()->address }} , Kota {{ $city[0]['name'] }}</p>
+                                <p>{{ Auth::user()->address }}, Kota {{ $city[0]['name'] }},
+                                    {{ $province[0]['name'] }}</p>
                             </div>
                         </div>
 
@@ -207,13 +207,17 @@
                             <div class="items-center ml-2">
                                 <select id="courier" name="courier"
                                     class="bg-gray-50  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    <option value="jne">JNE</option>
+                                    @foreach ($allEkspedisi as $item)
+                                        <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                    @endforeach
                                 </select>
-
+                                <select id="service" name="service"
+                                    class="bg-gray-50  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option value="OKE">OKE (4-5 Hari)</option>
+                                    <option value="REG">REG (2-3 Hari)</option>
+                                </select>
                             </div>
                         </div>
-                        {{-- pakai modal untuk ubah alamat --}}
-
                     </div>
                     <div class="space-y-1 text-right mt-4">
                         <p>Total belanja:
@@ -226,6 +230,7 @@
                         <input type="hidden" value="{{ $grandTotal }}" name="grandTotal">
                         <input type="hidden" value="444" name="origin">
                         <input type="hidden" value="{{ Auth::user()->city_id }}" name="destination">
+                        <input type="hidden" value="{{ Auth::user()->province_id }}" name="province">
                         @if ($c['quantity'] <= $c['stok'])
                             <button type="submit"
                                 class="bg-blue-600 border border-blue-600 text-white px-4 py-2 font-medium rounded flex items-center gap-2 hover:bg-transparent hover:text-blue-600 transition">
@@ -279,6 +284,18 @@
                                     required>
                                     <option value="{{ $city[0]['id'] }}"> {{ $city[0]['name'] }}</option>
                                     @foreach ($allCities as $item)
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div>
+                                <label for="province"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-4">Province</label>
+                                <select id="" name="province"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                    required>
+                                    <option value="{{ $province[0]['id'] }}"> {{ $province[0]['name'] }}</option>
+                                    @foreach ($allProvince as $item)
                                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                                     @endforeach
                                 </select>

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Customers;
 
 use App\Models\City;
+use App\Models\Ekspedisi;
 use App\Models\Product;
+use App\Models\Province;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -70,14 +72,18 @@ class CartController extends Controller
     }
     public function index()
     {
-        $user = Auth::user()->id;
+
+        $user = Auth::user();
+        $usersProvince = Auth::user()->province_id;
+
         $usersCity = Auth::user()->city_id;
         $city  = City::whereId($usersCity)->get('name');
-        // return dd($city[0]['name']);
+        $province  = Province::whereId($usersProvince)->get('name');
         $allCities = City::all();
+        $allEkspedisi = Ekspedisi::all();
+        $allProvince = Province::all();
         $cart = session()->get('cart');
-        // return dd($cart);
-        return view('customers.cart.cart', compact('cart', 'city', 'allCities'));
+        return view('customers.cart.cart', compact('cart', 'city', 'allCities','allProvince','province','allEkspedisi'));
     }
 
     public function destroy($id)
@@ -97,6 +103,7 @@ class CartController extends Controller
                 [
                     'address' => $request->address,
                     'city_id' => $request->city,
+                    'province_id' => $request->province,
                 ]
             );
         return redirect()->back();

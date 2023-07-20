@@ -80,7 +80,7 @@
             <input type="hidden" value="{{ $total_XXL }}" name="total_XXL">
             <input type="hidden" value="{{ $courierName }}" name="courierName">
             <input type="hidden" value="{{ $cekongkir }}" name="ongkir">
-            <input type="hidden" value="{{ $XXL }}" name="extra">
+            {{-- <input type="hidden" value="{{ $XXL }}" name="extra"> --}}
 
             <div class="grid grid-cols-12 container items-start gap-6">
                 <div class="col-span-4 border border-gray-200 p-4 rounded">
@@ -95,7 +95,7 @@
                     <div class="mt-1 text-gray-800 font-medium py-3 ">
                         <p class="font-bold">Alamat Penerima : </p>
                         <span>
-                            <p>{{ Auth::user()->address }} - {{ $city[0]['name'] }}</p>
+                            <p>{{ Auth::user()->address }} - {{ $city[0]['name'] }} - {{ $provinces[0]['name'] }}</p>
                         </span>
                     </div>
                     <div class="mt-1 text-gray-800 font-medium py-3 ">
@@ -171,15 +171,9 @@
                         <p>@currency($cekongkir)</p>
                     </div>
 
-                    <div class="flex justify-between text-gray-800 font-medium py-3 ">
+                    <div class="flex justify-between text-gray-800 font-medium mt-4 ">
                         <p class="font-bold">Total</p>
                         <p class="font-bold">@currency($grandTotal)</p>
-                    </div>
-                    <div class="flex items-center mb-4 mt-2">
-                        <input type="checkbox" name="aggrement" id="aggrement"
-                            class="text-primary focus:ring-0 rounded-sm cursor-pointer w-3 h-3" required>
-                        <label for="aggrement" class="text-gray-600 ml-3 cursor-pointer text-sm">I agree to the <a
-                                href="#" class="text-blue-600">terms & conditions</a></label>
                     </div>
 
                 </div>

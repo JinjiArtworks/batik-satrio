@@ -108,7 +108,7 @@
                                         <td class="px-4 py-3 text-sm">
                                             @currency($orderdetails->order->total)
                                         </td>
-                                        @if ($orderdetails->order->status == 'Menunggu Konfirmasi')
+                                        @if ($orderdetails->order->status == 'Menunggu Konfirmasi Penjual')
                                             <form method="POST"
                                                 action="{{ route('reports.update-custom', ['id' => $orderdetails->order->id]) }}">
                                                 @csrf
@@ -116,8 +116,8 @@
                                                 <td class="px-4 py-3 text-sm">
                                                     <select name="action"
                                                         class="block w-full mt-1 text-sm form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple ">
-                                                        <option value="Terima Pesanan">Terima Pesanan</option>
-                                                        <option value="Tolak Pesanan">Tolak Pesanan</option>
+                                                        <option value="Pesanan Custom Diterima">Terima Pesanan</option>
+                                                        <option value="Pesanan Custom Ditolak">Tolak Pesanan</option>
                                                     </select>
                                                     <button type="submit"
                                                         class="px-3 py-1 mt-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">

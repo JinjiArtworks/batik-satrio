@@ -31,6 +31,7 @@ class CheckoutCustomController extends Controller
             $destination = $request->destination;
             $weight = $request->weight;
             $courier = $request->courier;
+            $province = $request->province;
             $response = Http::asForm()->withHeaders([
                 'key' => '91f6ce360df9a6e2ca7badaae61f5b78'
             ])->post('https://api.rajaongkir.com/starter/cost', [
@@ -38,6 +39,7 @@ class CheckoutCustomController extends Controller
                 'destination' => $destination,
                 'weight' => $weight,
                 'courier' => $courier,
+                'province_id' => $province,
             ]);
             // $resultz = json_decode($response);
             // return ($resultz);
@@ -74,7 +76,7 @@ class CheckoutCustomController extends Controller
         );
         $snapToken = \Midtrans\Snap::getSnapToken($params);
         // dd($params);
-        return view('customers.custom.checkout', ['snap_token' => $snapToken],  compact('list', 'cekongkir', 'courierName','city'));
+        return view('customers.custom.checkout', ['snap_token' => $snapToken],  compact('list', 'cekongkir', 'courierName', 'city'));
     }
 
     public function store(Request $request)
@@ -94,6 +96,7 @@ class CheckoutCustomController extends Controller
         $orders->jenis_pembayaran = $json->payment_type; // belum, gunakan payment gateway untuk dapat jenis pembayarannya
         $orders->jenis_pesanan = 'Custom';
         $orders->status = 'Menunggu Konfirmasi';
+        $orders->preorder = '3 Hari';
         $orders->ekspedisi = $request->courierName; // belum, gunakan raja ongkir
         $orders->total = $request->grandTotal;
         $saved =  $orders->save();
