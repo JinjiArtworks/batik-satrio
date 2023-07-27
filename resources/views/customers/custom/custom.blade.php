@@ -47,21 +47,69 @@
     </div>
     <form method="POST" action="{{ route('custom.add', ['id' => $gender_id]) }}" enctype="multipart/form-data">
         @csrf
-        {{-- <input type="hidden" value="350" name="weight">
-        <input type="hidden" value="jne" name="courier">
-        <input type="hidden" value="444" name="origin">
-        <input type="hidden" value="{{ Auth::user()->city_id }}" name="destination"> --}}
+        {{-- <input type="hidden" value="{{ $get_results }}" name="hasil_request"> --}}
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <input type="hidden" value="50000" name="harga">
             <input type="hidden" value="{{ $gender_id }}" name="gender_id">
-            <h3 class=" font-semibold text-gray-900 mt-4">Pilih Model Baju</h3>
+            <input type="hidden" value="{{ $motif }}" name="motif">
+            <input type="hidden" value="{{ $warna }}" name="warna">
+            <input type="hidden" value="{{ $gender }}" name="gender">
+            <input type="hidden" value="{{ $getImages }}" name="images">
+            {{-- {{ dd($images->gambar) }} --}}
+            <ul class="items-center w-full text-sm font-medium text-gray-900  rounded-lg sm:flex ">
+                <li class="w-full">
+                    <div class="flex w-full space-x-2 sm:space-x-4">
+                        <img class="flex-shrink-0 object-cover w-20 h-22 dark:border-transparent rounded outline-none sm:w-32 sm:h-32 dark:bg-gray-500"
+                            src="{{ asset('images/' . $getImages) }}">
+                        <div class="flex flex-col justify-between w-full pb-4">
+                            <div class="flex justify-between w-full pb-2 space-x-2">
+                                <div class="space-y-1">
+                                    <h3 class="text-lg font-semibold leadi sm:pr-8"> Custom Batik
+                                        @if ($gender_id == 1)
+                                            Wanita
+                                        @else
+                                            Pria
+                                        @endif
+                                    </h3>
+                                    <p class="text-sm  dark:text-gray-400"> Motif : {{ $motif }}</p>
+                                    <p class="text-sm  dark:text-gray-400">Warna : {{ $warna }}</p>
+                                </div>
+                                {{--                               
+                                <div class="text-right">
+                                    <form action="{{ route('custom.remove', ['id' => $c['id']]) }}" method="GET">
+                                        <button type="submit"
+                                            class="flex items-center px-2 py-1 pl-0 space-x-1 text-red-600">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                                class="w-4 h-4 fill-current">
+                                                <path
+                                                    d="M96,472a23.82,23.82,0,0,0,23.579,24H392.421A23.82,23.82,0,0,0,416,472V152H96Zm32-288H384V464H128Z">
+                                                </path>
+                                                <rect width="32" height="200" x="168" y="216">
+                                                </rect>
+                                                <rect width="32" height="200" x="240" y="216">
+                                                </rect>
+                                                <rect width="32" height="200" x="312" y="216">
+                                                </rect>
+                                                <path
+                                                    d="M328,88V40c0-13.458-9.488-24-21.6-24H205.6C193.488,16,184,26.542,184,40V88H64v32H448V88ZM216,48h80V88H216Z">
+                                                </path>
+                                            </svg>
+                                        </button>
+                                    </form>
+                                </div> --}}
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <h3 class="font-semibold text-gray-900 mt-4">Pilih Model Baju</h3>
             <ul class="items-center w-full text-sm font-medium text-gray-900  rounded-lg sm:flex ">
                 <li class="w-full">
                     <div class="flex items-center mb-4">
                         <select name="model"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                             required>
-                            <option selected>-- Pilih Jenis Kain --</option>
+                            <option value="">-- Pilih Jenis Kain --</option>
                             <option value="Slim Fit">Slim Fit</option>
                             <option value="Reguler">Reguler</option>
                         </select>
@@ -75,7 +123,7 @@
                         <select name="kain"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                             required>
-                            <option selected>-- Pilih Bahan Kain --</option>
+                            <option value="">-- Pilih Bahan Kain --</option>
                             <option value="Sutra">Kain Sutra</option>
                             <option value="Mori">Kain Mori</option>
                         </select>
@@ -90,7 +138,7 @@
                         <select id="lengan" name="lengan"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                             required>
-                            <option selected>-- Pilih Ukuran Lengan-- </option>
+                            <option value="">-- Pilih Ukuran Lengan-- </option>
                             <option value="Lengan Panjang">Lengan Panjang</option>
                             <option value="Lengan Pendek">Lengan Pendek</option>
                         </select>
@@ -120,113 +168,12 @@
                     </div>
                 </li>
             </ul>
-
-            {{-- <h3 class=" font-semibold text-gray-900 ">Masukkan Ukuran dan Quantity </h3>
-            <ul class="items-center w-full text-sm font-medium text-gray-900  rounded-lg sm:flex ">
-                <li class="w-full">
-                    <div class="flex items-center mb-4">
-                        <textarea
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                            name="size" placeholder="Contoh : Ukuran XL = 3 Pcs" required></textarea>
-                </li>
-            </ul> --}}
-            <h3 class=" font-semibold text-gray-900 ">Pilih Warna Dasar</h3>
-            <ul
-                class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex ">
-                <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
-                    <div class="flex items-center pl-3">
-                        <input id="horizontal-list-radio-license" type="radio" value="Coklat" name="warna"
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 ">
-                        <label for="horizontal-list-radio-license" class="w-full ml-2 text-sm font-medium text-gray-900 ">
-                            <img src="../images/products/product3.jpg" alt="product2" class="w-60 mt-4 cursor-pointer">
-                            <p class="font-semibold flex justify-center">Coklat</p>
-                        </label>
-                    </div>
-                </li>
-                <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
-                    <div class="flex items-center pl-3">
-                        <input id="horizontal-list-radio-license" type="radio" value="Biru" name="warna"
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 ">
-                        <label for="horizontal-list-radio-license" class="w-full ml-2 text-sm font-medium text-gray-900 ">
-                            <img src="../images/products/product3.jpg" alt="product2" class="w-60 mt-4 cursor-pointer">
-                            <p class="font-semibold flex justify-center">Biru</p>
-                        </label>
-                    </div>
-                </li>
-                <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
-                    <div class="flex items-center pl-3">
-                        <input id="horizontal-list-radio-license" type="radio" value="Putih" name="warna"
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 ">
-                        <label for="horizontal-list-radio-license" class="w-full ml-2 text-sm font-medium text-gray-900 ">
-                            <img src="../images/products/product3.jpg" alt="product2" class="w-60 mt-4 cursor-pointer">
-                            <p class="font-semibold flex justify-center">Putih</p>
-                        </label>
-                    </div>
-                </li>
-                <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
-                    <div class="flex items-center pl-3">
-                        <input id="horizontal-list-radio-license" type="radio" value="Hitam" name="warna"
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 ">
-                        <label for="horizontal-list-radio-license" class="w-full ml-2 text-sm font-medium text-gray-900 ">
-                            <img src="../images/products/product3.jpg" alt="product2" class="w-60 mt-4 cursor-pointer">
-                            <p class="font-semibold flex justify-center">Hitam</p>
-                        </label>
-                    </div>
-                </li>
-            </ul>
-            <h3 class=" mt-4 font-semibold text-gray-900 ">Pilih Motif</h3>
-            <ul
-                class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex ">
-                <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
-                    <div class="flex items-center pl-3">
-                        <input id="horizontal-list-radio-license" type="radio" value="Semar" name="motif"
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 ">
-                        <label for="horizontal-list-radio-license" class="w-full ml-2 text-sm font-medium text-gray-900 ">
-                            <img src="{{ asset('images/motif2.jpg') }}" alt="product2" class="w-60 mt-4 cursor-pointer">
-                            <p class="font-semibold flex justify-center">Batik Semar</p>
-                        </label>
-                    </div>
-                </li>
-                <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
-                    <div class="flex items-center pl-3">
-                        <input id="horizontal-list-radio-license" type="radio" value="Keraton" name="motif"
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 ">
-                        <label for="horizontal-list-radio-license" class="w-full ml-2 text-sm font-medium text-gray-900 ">
-                            <img src="{{ asset('images/motif3.jpg') }}" alt="product2" class="w-60 mt-4 cursor-pointer">
-                            <p class="font-semibold flex justify-center">Batik Keraton</p>
-                        </label>
-                    </div>
-                </li>
-                <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
-                    <div class="flex items-center pl-3">
-                        <input id="horizontal-list-radio-license" type="radio" value="Mega Mendung" name="motif"
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 ">
-                        <label for="horizontal-list-radio-license" class="w-full ml-2 text-sm font-medium text-gray-900 ">
-                            <img src="{{ asset('images/mega.png') }}" alt="product2" class="w-60 mt-4 cursor-pointer">
-                            <p class="font-semibold flex justify-center">Mega Mendung</p>
-                        </label>
-                    </div>
-                </li>
-                <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
-                    <div class="flex items-center pl-3">
-                        <input id="horizontal-list-radio-license" type="radio" value="Batik Jogja" name="motif"
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 ">
-                        <label for="horizontal-list-radio-license" class="w-full ml-2 text-sm font-medium text-gray-900 ">
-                            <img src="{{ asset('images/semar.jpg') }}" alt="product2" class="w-60 mt-4 cursor-pointer">
-                            <p class="font-semibold flex justify-center">Batik Jogja</p>
-                        </label>
-                    </div>
-                </li>
-            </ul>
-            @if (Auth::user()->role == 'Customers')
-                <div class="flex justify justify-end">
-                    <button type="submit"
-                        class="bg-blue-600 border my-4  border-blue-600 text-white px-4 py-2 font-medium rounded  gap-2 hover:bg-transparent hover:text-blue-600 transition">
-                        Checkout
-                    </button>
-                </div>
-            @endif
-
+            <div class="flex justify justify-end" id="check_results">
+                <button type="submit"
+                    class="bg-blue-600 border  border-blue-600 text-white px-4 py-2 font-medium rounded  gap-2 hover:bg-transparent hover:text-blue-600 transition">
+                    Checkout
+                </button>
+            </div>
         </div>
     </form>
 @endsection

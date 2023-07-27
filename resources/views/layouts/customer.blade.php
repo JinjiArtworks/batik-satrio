@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -12,9 +12,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"
         type='text/css'>
+    <link rel="stylesheet"
+        href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css" />
 </head>
 
-<body >
+<body>
     <nav class="bg-white border-gray-200 dark:bg-gray-900" data-theme="light">
         <div class=" max-w-screen-lg flex flex-wrap items-center justify-between mx-auto p-4">
             <a href="/" class="flex items-center">

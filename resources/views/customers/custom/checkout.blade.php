@@ -134,11 +134,7 @@
                     @foreach ($list as $key => $c)
                         <div class="space-y-2">
                             <div class="flex justify-between">
-                                @if ($c['id'] == 1)
-                                    <img class="object-cover w-20 h-22" src="{{ asset('images/wanita.png') }}">
-                                @else
-                                    <img class="object-cover w-20 h-22" src="{{ asset('images/pria.png') }}">
-                                @endif
+                                <img class="object-cover w-20 h-22" src="{{ asset('images/'.$c['images']) }}">
                                 <div>
                                     <h5 class="text-gray-800 text-lg font-semibold">Custom Batik {{ $c['motif'] }}
                                         @if ($c['id'] == 1)

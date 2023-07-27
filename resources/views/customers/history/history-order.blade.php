@@ -68,15 +68,16 @@
                         </a>
                     </div>
                     @if (Auth::user()->role == 'Customers')
-                    <div class="space-y-1 pl-8 pt-4">
-                        <a href="/profile" class="relative hover:text-blue-600 block capitalize transition" type="button">
-                            <span class="absolute -left-8 top-0 text-base mt-1">
-                                <i class="fa-regular fa-user"></i>
-                            </span>
-                            Ubah Data Profile
-                        </a>
-                    </div>
-                @endif
+                        <div class="space-y-1 pl-8 pt-4">
+                            <a href="/profile" class="relative hover:text-blue-600 block capitalize transition"
+                                type="button">
+                                <span class="absolute -left-8 top-0 text-base mt-1">
+                                    <i class="fa-regular fa-user"></i>
+                                </span>
+                                Ubah Data Profile
+                            </a>
+                        </div>
+                    @endif
 
                     <div class="space-y-1 pl-8 pt-4">
                         <a href="/history-order" class="relative text-blue-600 block font-medium capitalize transition">
@@ -98,16 +99,13 @@
                 </div>
             </div>
             <div class="col-span-9 space-y-4">
-                
+
                 @foreach ($orders as $item)
                     @if ($item->jenis_pesanan == 'Custom')
                         <div class="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
                             <div class="w-28">
-                                @if ($item->orderdetail->request_gender == 'Wanita')
-                                    <img src="{{ asset('images/wanita.png') }}" alt="product 6" class="w-full">
-                                @else
-                                    <img src="{{ asset('images/pria.png') }}" alt="product 6" class="w-full">
-                                @endif
+                                <img src="{{ asset('images/' . $item->orderdetail->request_result) }}" alt="product 6"
+                                    class="w-full">
                             </div>
                             <div class="w-1/3">
                                 <h2 class="text-gray-800 text-xl font-medium ">Produk Custom
@@ -129,11 +127,11 @@
                     @else
                         <div class="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
                             <div class="w-28">
-                                <img src="{{ asset('images/no-profile.png') }}" alt="product 6"
-                                    class="w-full">
+                                <img src="{{ asset('images/no-profile.png') }}" alt="product 6" class="w-full">
                             </div>
                             <div class="w-1/3">
-                                <h2 class="text-gray-800 text-xl font-medium ">Nomor Pesanan #{{ $item->orderdetail->order_id }}
+                                <h2 class="text-gray-800 text-xl font-medium ">Nomor Pesanan
+                                    #{{ $item->orderdetail->order_id }}
                                 </h2>
                                 <p class="text-gray-500 text-sm">Status: <span
                                         class="text-green-600">{{ $item->status }}</span>

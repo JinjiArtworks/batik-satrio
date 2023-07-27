@@ -250,14 +250,12 @@
                                                 </td>
                                             </form>
                                         @endif
-
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 @endif
-
         </div>
     </main>
 @endsection

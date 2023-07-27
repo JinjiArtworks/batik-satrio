@@ -52,10 +52,10 @@ class CheckoutController extends Controller
             if ($courier == 'jne') {
                 if ($service == 'OKE') {
                     $cekongkir = $response['rajaongkir']['results'][0]['costs'][0]['cost'][0]['value'];
-                    return dd($cekongkir);
+                    // return dd($cekongkir);
                 } else if ($service == 'REG') {
                     $cekongkir = $response['rajaongkir']['results'][0]['costs'][1]['cost'][0]['value'];
-                    return dd($cekongkir);
+                    // return dd($cekongkir);
                 }
                 // } else if ($service == 'YES') {
                 //     $cekongkir = $response['rajaongkir']['results'][0]['costs'][0]['cost'][1]['value'];

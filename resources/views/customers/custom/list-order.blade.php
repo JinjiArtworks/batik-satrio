@@ -72,13 +72,8 @@
                 <ul class="flex flex-col divide-y divide-gray-700">
                     <li class="flex flex-col py-6 sm:flex-row sm:justify-between">
                         <div class="flex w-full space-x-2 sm:space-x-4">
-                            @if ($c['id'] == 1)
-                                <img class="flex-shrink-0 object-cover w-20 h-22 dark:border-transparent rounded outline-none sm:w-32 sm:h-32 dark:bg-gray-500"
-                                    src="{{ asset('images/wanita.png') }}">
-                            @else
-                                <img class="flex-shrink-0 object-cover w-20 h-22 dark:border-transparent rounded outline-none sm:w-32 sm:h-32 dark:bg-gray-500"
-                                    src="{{ asset('images/pria.png') }}">
-                            @endif
+                            <img class="flex-shrink-0 object-cover w-20 h-22 dark:border-transparent rounded outline-none sm:w-32 sm:h-32 dark:bg-gray-500"
+                                src="{{ asset('images/' . $c['images']) }}">
                             <div class="flex flex-col justify-between w-full pb-4">
                                 <div class="flex justify-between w-full pb-2 space-x-2">
                                     <div class="space-y-1">
@@ -189,7 +184,7 @@
                             <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Weight</th>
                             <th class="py-2 px-4 border border-gray-300 ">{{ $totalBerat }} gram</th>
                         </tr>
-                        <tr>    
+                        <tr>
                             <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Pre Order</th>
                             <th class="py-2 px-4 border border-gray-300 ">3 Hari</th>
                         </tr>
@@ -216,6 +211,11 @@
                                     @foreach ($allEkspedisi as $item)
                                         <option value="{{ $item->name }}">{{ $item->name }}</option>
                                     @endforeach
+                                </select>
+                                <select id="service" name="service"
+                                    class="bg-gray-50  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option value="OKE">OKE (4-5 Hari)</option>
+                                    <option value="REG">REG (2-3 Hari)</option>
                                 </select>
                             </div>
                         </div>

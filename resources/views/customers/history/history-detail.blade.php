@@ -198,11 +198,8 @@
                     <div class="col-span-9 space-y-4">
                         <div class="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
                             <div class="w-28">
-                                @if ($item->request_gender == 'Wanita')
-                                    <img src="{{ asset('images/wanita.png') }}" alt="product 6" class="w-full">
-                                @else
-                                    <img src="{{ asset('images/pria.png') }}" alt="product 6" class="w-full">
-                                @endif
+                                <img src="{{ asset('images/' . $item->request_result) }}" alt="product 6"
+                                    class="w-full">
                             </div>
                             <h2 class="text-gray-800 text-xl font-medium ">Custom Batik
 

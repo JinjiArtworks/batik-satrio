@@ -32,6 +32,7 @@ class CheckoutCustomController extends Controller
             $weight = $request->weight;
             $courier = $request->courier;
             $province = $request->province;
+            $service = $request->service;
             $response = Http::asForm()->withHeaders([
                 'key' => '91f6ce360df9a6e2ca7badaae61f5b78'
             ])->post('https://api.rajaongkir.com/starter/cost', [
@@ -41,6 +42,22 @@ class CheckoutCustomController extends Controller
                 'courier' => $courier,
                 'province_id' => $province,
             ]);
+            $OKE = $response['rajaongkir']['results'][0]['costs'][0]['service'];
+            // $resultz = json_decode($response);
+            // return ($OKE);
+            if ($courier == 'jne') {
+                if ($service == 'OKE') {
+                    $cekongkir = $response['rajaongkir']['results'][0]['costs'][0]['cost'][0]['value'];
+                    // return dd($cekongkir);
+                } else if ($service == 'REG') {
+                    $cekongkir = $response['rajaongkir']['results'][0]['costs'][1]['cost'][0]['value'];
+                    // return dd($cekongkir);
+                }
+                // } else if ($service == 'YES') {
+                //     $cekongkir = $response['rajaongkir']['results'][0]['costs'][0]['cost'][1]['value'];
+                //     return dd($cekongkir);
+
+            }
             // $resultz = json_decode($response);
             // return ($resultz);
             $cekongkir = $response['rajaongkir']['results'][0]['costs'][0]['cost'][0]['value'];
@@ -111,6 +128,7 @@ class CheckoutCustomController extends Controller
             $details->request_model = $item['model'];
             $details->request_motif = $item['motif'];
             $details->request_lengan = $item['lengan'];
+            $details->request_result = $item['images'];
             $details->harga = $item['harga'];
             $details->save();
         }

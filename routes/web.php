@@ -85,10 +85,13 @@ Route::middleware(['auth'])->group(function () {
 
     Route::group(['as' => 'custom.'], function () {
         Route::get('/list-produk-custom', [CustomBatikController::class, 'index'])->name('index');
+        Route::post('/custom-check/{id}', [CustomBatikController::class, 'check'])->name('check');
+        Route::post('/custom-check-results/{id}', [CustomBatikController::class, 'results'])->name('results');
         Route::post('/custom-batik/{id}', [CustomBatikController::class, 'details'])->name('details');
 
         Route::get('/list-order', [ListOrderController::class, 'index'])->name('orders');
         Route::post('/add-to-list/{id}', [ListOrderController::class, 'addList'])->name('add');
+        Route::post('/add-custom-list/{id}', [ListOrderController::class, 'addCustom'])->name('add-custom');
         Route::get('/remove-from-list/{id}', [ListOrderController::class, 'destroy'])->name('remove');
 
         Route::post('/checkout-custom', [CheckoutCustomController::class, 'checkout'])->name('checkout');

@@ -31,7 +31,7 @@
 @section('content')
     <div class="max-w-screen-xl flex flex-wrap items-center justify-center mx-auto p-4 ">
         @if ($list == null)
-            <form action="{{ route('custom.details', ['id' => 1]) }}" method="POST">
+            <form action="{{ route('custom.check', ['id' => 1]) }}" method="POST">
                 @csrf
                 <input type="hidden" name='gender' value='Wanita'>
                 <input type="hidden" name='gender_id' value='1'>
@@ -45,7 +45,7 @@
                     </div>
                 </div>
             </form>
-            <form action="{{ route('custom.details', ['id' => 2]) }}" method="POST">
+            <form action="{{ route('custom.check', ['id' => 2]) }}" method="POST">
                 @csrf
                 <input type="hidden" name='gender' value='Pria'>
                 <input type="hidden" name='gender_id' value='2'>
