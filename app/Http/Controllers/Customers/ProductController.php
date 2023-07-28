@@ -35,7 +35,7 @@ class ProductController extends Controller
             'users_id' => $user,
             'products_id' => $request->products,
         ]);
-        return redirect('/wishlist');
+        return redirect('/wishlist')->with('success', 'Produk berhasil ditambahkan kedalam wishlist');
     }
 
     public function search(Request $request)

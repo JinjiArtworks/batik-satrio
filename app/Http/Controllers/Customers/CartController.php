@@ -60,8 +60,7 @@ class CartController extends Controller
                     "quantity" => $request->quantity,
                     "total_after_disc" => ($product->harga - $product->diskon)  * $request->quantity
                 ];
-            } 
-            else {
+            } else {
                 $cart[$id]["weight"] += $product->berat;
                 $cart[$id]["quantity"] += $request->quantity;
                 $cart[$id]["total_after_disc"] += ($product->harga - $product->diskon)  * $request->quantity;
@@ -72,18 +71,21 @@ class CartController extends Controller
     }
     public function index()
     {
-
         $user = Auth::user();
         $usersProvince = Auth::user()->province_id;
-
         $usersCity = Auth::user()->city_id;
+
         $city  = City::whereId($usersCity)->get('name');
+            // return dd($city);
         $province  = Province::whereId($usersProvince)->get('name');
-        $allCities = City::all();
-        $allEkspedisi = Ekspedisi::all();
+
         $allProvince = Province::all();
+        $allCities = City::all();
+
+        $allEkspedisi = Ekspedisi::all();
+
         $cart = session()->get('cart');
-        return view('customers.cart.cart', compact('cart', 'city', 'allCities','allProvince','province','allEkspedisi'));
+        return view('customers.cart.cart', compact('cart', 'city', 'allCities', 'allProvince', 'province', 'allEkspedisi','usersProvince','usersCity'));
     }
 
     public function destroy($id)
@@ -93,10 +95,11 @@ class CartController extends Controller
             unset($cart[$id]);
         }
         session()->put('cart', $cart);
-        return redirect('/cart')->with('success', 'Keranjang berhasil dihapus!');
+        return redirect('/cart')->with('info', 'Produk berhasil dihapus');
     }
     public function update(Request $request)
     {
+        // return dd($request->all());
         $user = Auth::user()->id;
         User::where('id', $user)
             ->update(
@@ -106,6 +109,6 @@ class CartController extends Controller
                     'province_id' => $request->province,
                 ]
             );
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Alamat berhasil diubah');
     }
 }

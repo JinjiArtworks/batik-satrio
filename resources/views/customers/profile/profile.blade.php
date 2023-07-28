@@ -109,22 +109,48 @@
                     enctype="multipart/form-data">
                     @csrf
                     <h3 class=" flex font-semibold text-gray-900">Username </h3>
-                    <input type="text" name="name" value="{{ Auth::user()->name }}"
+                    <input type="text" name="name" value="{{ Auth::user()->name }}" required
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
 
+
+                    <h3 class=" flex font-semibold text-gray-900 mt-4">Email </h3>
+                    <input type="email" name="email" value="{{ Auth::user()->email }}" required
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+
+
                     <h3 class=" flex font-semibold text-gray-900 mt-4">Alamat </h3>
-                    <input type="text" name="address" value="{{ Auth::user()->address }}"
+                    <input type="text" name="address" value="{{ Auth::user()->address }}" required
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
 
                     <h3 class=" flex font-semibold text-gray-900 mt-4">Kota </h3>
                     <select id="" name="city"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                         required>
-                        <option value="{{ $city[0]['id'] }}"> {{ $city[0]['name'] }}</option>
-                        @foreach ($allCities as $item)
-                            <option value="{{ $item->id }}">{{ $item->name }}</option>
-                        @endforeach
-
+                        @if (Auth::user()->address && $usersProvince && $usersCity != null)
+                            <option value="{{ $usersCity }}"> {{ $city[0]['name'] }}</option>
+                            @foreach ($allCities as $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
+                        @else
+                            @foreach ($allCities as $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                    <h3 class=" flex font-semibold text-gray-900 mt-4">Provinsi </h3>
+                    <select id="" name="province"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                        required>
+                        @if (Auth::user()->address && $usersProvince && $usersCity != null)
+                            <option value="{{ $usersProvince }}"> {{ $province[0]['name'] }}</option>
+                            @foreach ($allProvince as $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
+                        @else
+                            @foreach ($allProvince as $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
+                        @endif
                     </select>
                     {{-- <input type="text" name="address" value=""
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"> --}}

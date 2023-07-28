@@ -69,7 +69,7 @@
                                 {{-- @if ($wishlist[0]['products_id'] == $getIdProducts) --}}
                                 <input type="hidden" name="products" value="{{ $products->id }}">
                                 <button type="submit"
-                                    class="font-sm px-8 py-2 rounded  flex items-center gap-2 hover:text-blue-600 transition underline">
+                                    class="addWishlist font-sm px-8 py-2 rounded  flex items-center gap-2 hover:text-blue-600 transition underline">
                                     Wishlist<i class="fa-solid fa-heart justify-between"></i>
                                 </button>
                             </form>
@@ -83,7 +83,7 @@
                 <hr class=" border-gray-200 sm:mx-auto dark:border-gray-700 mb-5" />
                 <div class="space-y-2">
                     <p class="text-gray-800 font-semibold space-x-2">
-                        <span>stok: </span>
+                        <span>Stok: </span>
                         <span class="text-green-600">{{ $products->stok }} pcs</span>
                     </p>
                     <p class="space-x-2">
@@ -92,18 +92,18 @@
                     </p>
                     @if ($products->minimal_order != null)
                         <p class="space-x-2">
-                            <span class="text-gray-800 font-semibold">Minimal Order: </span>
-                            <span class="text-gray-600">{{ $products->minimal_order }}</span>
+                            <span class="text-gray-800 font-semibold">Minimal Order:</span>
+                            <span class="text-gray-600">{{ $products->minimal_order }} pcs</span>
                         </p>
                     @endif
 
                     <p class="space-x-2">
-                        <span class="text-gray-800 font-semibold">Category: </span>
+                        <span class="text-gray-800 font-semibold">Kategori: </span>
                         <span class="text-gray-600">{{ $products->categories->nama }}</span>
                     </p>
                     <p class="space-x-2">
                         <span class="text-gray-800 font-semibold">Terjual: </span>
-                        <span class="text-gray-600">{{ $products->terjual }}</span>
+                        <span class="text-gray-600">{{ $products->terjual }} pcs</span>
                     </p>
                 </div>
                 <div class="flex items-baseline mb-1 space-x-2 font-roboto mt-4">
@@ -116,8 +116,8 @@
                         <p class="text-xl text-green-600 font-semibold">@currency($products->harga_grosir)</p>
                     @endif
                 </div>
-
-                <p class="mt-4 text-gray-600">{{ $products->deskripsi }}.</p>
+                <p class="mt-6 text-gray-800 font-semibold">Deskripsi: </p>
+                <p class="text-gray-800">{{ $products->deskripsi }} </p>
                 <form action="{{ route('cart.add', ['id' => $products->id]) }}" method="POST">
                     @csrf
                     <div class="pt-4">
@@ -260,7 +260,7 @@
                         @endif
                     @else
                         <div class="mt-6 flex gap-3 border-gray-200 pb-5 pt-5">
-                            <button type="submit"
+                            <button type="submit" id=""
                                 class="add-to-cart bg-blue-600 border border-blue-600 text-white px-8 py-2 font-medium rounded uppercase flex items-center gap-2 hover:bg-transparent hover:text-blue-600 transition">
                                 <i class="fa-solid fa-bag-shopping"></i> Add to cart
                             </button>
@@ -271,11 +271,11 @@
             </div>
         </div>
         <div class="container pb-16 mt-4">
-            <h3 class="border-b border-gray-200 font-roboto text-gray-800 pb-3 font-medium">Product details</h3>
+            <h3 class="border-b border-gray-200 font-roboto text-gray-800 pb-3 font-semibold font-xl uppercase">Product
+                details</h3>
             <div class="w-full pt-6">
                 <div class="text-gray-600">
                     <p>{{ $products->deskripsi }}</p>
-
                 </div>
 
                 <table class="table-auto border-collapse w-full text-left text-gray-600 text-sm mt-6">
@@ -325,7 +325,10 @@
             $(document).on('click', '.add-to-cart', function() {
                 if ($('.count').val() > {{ $products->stok }}) {
                     event.preventDefault();
-                    alert('stok tidak tersedia');
+                    Swal.fire({
+                        title: 'Stock Tidak Tersedia',
+                        icon: 'error',
+                    })
                 }
             });
         });
@@ -360,7 +363,7 @@
                 if ($('.count2').val() > {{ $products->stok }}) {
                     event.preventDefault();
                     Swal.fire({
-                        title: 'stok Tidak Tersedia',
+                        title: 'Stock Tidak Tersedia',
                         icon: 'error',
                     })
                 }
@@ -373,6 +376,24 @@
                 }
 
             });
+        });
+    </script>
+    <script>
+        $('.addWishlist').click(function(event) {
+            event.preventDefault();
+            var form = $(this).closest("form");
+            Swal.fire({
+                title: 'Masukkan Kedalam Wishlist?',
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            })
         });
     </script>
 @endsection

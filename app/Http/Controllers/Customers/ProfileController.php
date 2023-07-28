@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Customers;
 
 use App\Models\City;
+use App\Models\Province;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use App\Models\User;
@@ -14,10 +15,14 @@ class ProfileController extends Controller
     {
         $user = Auth::user()->id;
         $usersCity = Auth::user()->city_id;
+        $usersProvince = Auth::user()->province_id;
+        
         $city  = City::whereId($usersCity)->get('name');
+        $province  = Province::whereId($usersProvince)->get('name');
         // return dd($city[0]['name']);
         $allCities = City::all();
-        return view('customers.profile.profile', compact('user','city','allCities'));
+        $allProvince = Province::all();
+        return view('customers.profile.profile', compact('user','city','province','allCities','allProvince','usersCity','usersProvince'));
     }
 
     public function store(Request $request)
@@ -62,9 +67,11 @@ class ProfileController extends Controller
             ->update(
                 [
                     'name' => $request->name,
+                    'email' => $request->email,
                     'address' => $request->address,
                     'phone' => $request->phone,
                     'city_id' => $request->city,
+                    'province_id' => $request->province,
                 ]
             );
         return redirect('/profile');

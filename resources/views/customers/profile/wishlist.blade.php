@@ -42,9 +42,22 @@
 @endsection
 @section('content')
     <div class="max-w-screen-xl items-center justify-between mx-auto p-4">
-
+        @if ($message = Session::get('success'))
+            <div id="message"
+                class="flex items-center p-4 mb-4 text-sm text-green-800 border border-green-300 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800"
+                role="alert">
+                <svg class="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                </svg>
+                <span class="sr-only">Success</span>
+                <div>
+                    <span class="font-medium"> {{ $message }}</span>
+                </div>
+            </div>
+        @endif
         <div class="container grid grid-cols-12 items-start gap-6 pt-4 pb-16">
-
             <!-- sidebar -->
             <div class="col-span-3">
                 <div class="px-4 py-3 shadow flex items-center gap-4">
@@ -70,18 +83,20 @@
                         </a>
                     </div>
                     @if (Auth::user()->role == 'Customers')
-                    <div class="space-y-1 pl-8 pt-4">
-                        <a href="/profile" class="relative hover:text-blue-600 block capitalize transition" type="button">
-                            <span class="absolute -left-8 top-0 text-base mt-1">
-                                <i class="fa-regular fa-user"></i>
-                            </span>
-                            Ubah Data Profile
-                        </a>
-                    </div>
-                @endif
+                        <div class="space-y-1 pl-8 pt-4">
+                            <a href="/profile" class="relative hover:text-blue-600 block capitalize transition"
+                                type="button">
+                                <span class="absolute -left-8 top-0 text-base mt-1">
+                                    <i class="fa-regular fa-user"></i>
+                                </span>
+                                Ubah Data Profile
+                            </a>
+                        </div>
+                    @endif
 
                     <div class="space-y-1 pl-8 pt-4">
-                        <a href="/history-order" class="relative hover:text-blue-600 block font-medium capitalize transition">
+                        <a href="/history-order"
+                            class="relative hover:text-blue-600 block font-medium capitalize transition">
                             <span class="absolute -left-8 top-0 text-base">
                                 <i class="fa-solid fa-box-archive"></i>
                             </span>
@@ -142,5 +157,8 @@
             document.getElementById(modalID).classList.toggle("flex");
             document.getElementById(modalID + "-backdrop").classList.toggle("flex");
         }
+        setTimeout(function() {
+            $('#message').fadeOut('fast');
+        }, 3000);
     </script>
 @endsection
