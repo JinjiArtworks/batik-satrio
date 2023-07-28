@@ -67,6 +67,35 @@
         </div>
     @else
         <div class="max-w-screen-xl items-center justify-between mx-auto p-4">
+            @if ($message = Session::get('success'))
+                <div id="message"
+                    class="flex items-center p-4 mb-4 text-sm text-green-800 border border-green-300 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800"
+                    role="alert">
+                    <svg class="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                    </svg>
+                    <span class="sr-only">Info</span>
+                    <div>
+                        <span class="font-medium"> {{ $message }}</span>
+                    </div>
+                </div>
+            @elseif ($message = Session::get('info'))
+                <div id="message"
+                    class="flex items-center p-4 mb-4 text-sm text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800"
+                    role="alert">
+                    <svg class="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                    </svg>
+                    <span class="sr-only">Info</span>
+                    <div>
+                        <span class="font-medium">{{ $message }}</span>
+                    </div>
+                </div>
+            @endif
             <h2 class="text-xl font-semibold">Pesanan Custom Batik</h2>
             @foreach ($list as $key => $c)
                 <ul class="flex flex-col divide-y divide-gray-700">
@@ -109,7 +138,7 @@
                                     <div class="text-right">
                                         <form action="{{ route('custom.remove', ['id' => $c['id']]) }}" method="GET">
                                             <button type="submit"
-                                                class="flex items-center px-2 py-1 pl-0 space-x-1 text-red-600">
+                                                class="deleteList flex items-center px-2 py-1 pl-0 space-x-1 text-red-600">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
                                                     class="w-4 h-4 fill-current">
                                                     <path
@@ -195,14 +224,26 @@
                         <div class="flex mt-4  text-gray-800 font-medium ">
                             <p class="font-bold ">Alamat Tujuan : </p>
                             <div class="items-center ml-2">
-                                <p>{{ Auth::user()->address }}, Kota {{ $city[0]['name'] }},
-                                    {{ $province[0]['name'] }}</p>
+                                @if (Auth::user()->address && $usersProvince && $usersCity != null)
+                                    <div class="items-center ml-2">
+                                        <p>{{ Auth::user()->address }}, {{ $city[0]['name'] }},
+                                            {{ $province[0]['name'] }}. </p>
+                                    </div>
+                                @else
+                                    -
+                                @endif
                             </div>
                         </div>
-                        <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal"
-                            class="underline text-blue-700" type="button">
-                            Ubah
-                        </button>
+                        @if (Auth::user()->address && $usersProvince && $usersCity != null)
+                            <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal"
+                                class="underline text-blue-700" type="button">
+                                Ubah
+                            </button>
+                        @else
+                            <a href="/profile" class="underline text-blue-700" type="button">
+                                Tambah Alamat
+                            </a>
+                        @endif
                         <div class="flex mt-4  text-gray-800 font-medium ">
                             <p class="font-bold ">Ekspedisi : </p>
                             <div class="items-center ml-2">
@@ -232,10 +273,17 @@
                         <input type="hidden" value="444" name="origin">
                         <input type="hidden" value="{{ Auth::user()->city_id }}" name="destination">
                         <input type="hidden" value="{{ Auth::user()->province_id }}" name="province">
-                        <button type="submit"
-                            class="bg-blue-600 border border-blue-600 text-white px-4 py-2 font-medium rounded flex items-center gap-2 hover:bg-transparent hover:text-blue-600 transition">
-                            Checkout
-                        </button>
+                        @if (Auth::user()->address && $usersProvince && $usersCity != null)
+                            <button type="submit"
+                                class=" confirm bg-blue-600 border border-blue-600 text-white px-4 py-2 font-medium rounded flex items-center gap-2 hover:bg-transparent hover:text-blue-600 transition">
+                                Checkout
+                            </button>
+                        @else
+                            <button type="submit" disabled
+                                class="confirm bg-blue-600 border border-blue-600 text-white px-4 py-2 font-medium rounded flex items-center gap-2 hover:bg-transparent hover:text-blue-600 transition">
+                                Checkout
+                            </button>
+                        @endif
                     </div>
                 </div>
 
@@ -273,7 +321,7 @@
                                 <select id="" name="city"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                                     required>
-                                    <option value="{{ $city[0]['id'] }}"> {{ $city[0]['name'] }}</option>
+                                    <option value="{{ $usersCity }}"> {{ $city[0]['name'] }}</option>
                                     @foreach ($allCities as $item)
                                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                                     @endforeach
@@ -285,14 +333,14 @@
                                 <select id="" name="province"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                                     required>
-                                    <option value="{{ $province[0]['id'] }}"> {{ $province[0]['name'] }}</option>
+                                    <option value="{{ $usersProvince }}"> {{ $province[0]['name'] }}</option>
                                     @foreach ($allProvince as $item)
                                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <button type="submit"
-                                class="w-full mt-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                class="confirmAddress w-full mt-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                 Submit
                             </button>
                         </form>
@@ -302,4 +350,59 @@
         </div>
     @endif
 
+@endsection
+@section('script')
+    <script>
+        $('.confirm').click(function(event) {
+            event.preventDefault();
+            var form = $(this).closest("form");
+            Swal.fire({
+                title: 'Checkout Produk?',
+                icon: 'success',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            })
+        });
+        $('.deleteList').click(function(event) {
+            event.preventDefault();
+            var form = $(this).closest("form");
+            Swal.fire({
+                title: 'Hapus Pesanan?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            })
+        });
+        $('.confirmAddress').click(function(event) {
+            event.preventDefault();
+            var form = $(this).closest("form");
+            Swal.fire({
+                title: 'Konfirmasi Perubahan? ',
+                icon: 'success',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            })
+        });
+        setTimeout(function() {
+            $('#message').fadeOut('fast');
+        }, 3000);
+    </script>
 @endsection

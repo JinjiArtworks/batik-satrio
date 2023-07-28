@@ -22,12 +22,12 @@ class ListOrderController extends Controller
 
         $city  = City::whereId($usersCity)->get('name');
         $province  = Province::whereId($usersProvince)->get('name');
-        
+
         $allEkspedisi = Ekspedisi::all();
         $allCities = City::all();
         $allProvince = Province::all();
         // return dd($list);
-        return view('customers.custom.list-order', compact('list', 'city', 'allCities', 'allProvince', 'allEkspedisi', 'province'));
+        return view('customers.custom.list-order', compact('list', 'city', 'allCities', 'usersCity', 'usersProvince', 'allProvince', 'allEkspedisi', 'province'));
     }
 
     public function addList(Request $request, $id)
@@ -49,7 +49,7 @@ class ListOrderController extends Controller
             "total_after_disc" => $request->harga  * $request->post('quantity')
         ];
         session()->put('list', $list);
-        return redirect('/list-order')->with('success', 'Produk berhasil ditambahkan kedalam keranjang');
+        return redirect('/list-order')->with('success', 'Pesanan berhasil dibuat.');
     }
 
     public function destroy($id)
@@ -59,6 +59,6 @@ class ListOrderController extends Controller
             unset($list[$id]);
         }
         session()->put('list', $list);
-        return redirect('/list-order')->with('success', 'Keranjang berhasil dihapus!');
+        return redirect('/list-order')->with('success', 'Pesanan berhasil dihapus!');
     }
 }

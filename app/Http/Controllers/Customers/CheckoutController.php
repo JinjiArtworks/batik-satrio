@@ -25,6 +25,7 @@ class CheckoutController extends Controller
         $cart = session()->get('cart');
         $usersCity = Auth::user()->city_id;
         $usersProvince = Auth::user()->province_id;
+        
         $city  = City::whereId($usersCity)->get('name');
         $provinces  = Province::whereId($usersProvince)->get('name');
 

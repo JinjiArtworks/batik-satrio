@@ -30,41 +30,47 @@
 @endsection
 @section('content')
     <div class="max-w-screen-xl flex flex-wrap items-center justify-center mx-auto p-4 ">
-        @if ($list == null)
-            <form action="{{ route('custom.check', ['id' => 1]) }}" method="POST">
-                @csrf
-                <input type="hidden" name='gender' value='Wanita'>
-                <input type="hidden" name='gender_id' value='1'>
-                <div
-                    class=" mr-4 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-56">
-                    <img class="p-2 w-full" src="{{ asset('images/wanita.png') }}" alt="product image" />
-                    <div class="px-5 pb-5">
-                        <button type="submit">
-                            <h5 class="font-semibold text-gray-900 dark:text-white">Batik Wanita</h5>
-                        </button>
+        @if (Auth::user()->role == 'Customers')
+            @if ($list == null)
+                <form action="{{ route('custom.check', ['id' => 1]) }}" method="POST">
+                    @csrf
+                    <input type="hidden" name='gender' value='Wanita'>
+                    <input type="hidden" name='gender_id' value='1'>
+                    <div
+                        class=" mr-4 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-56">
+                        <img class="p-2 w-full" src="{{ asset('images/wanita.png') }}" alt="product image" />
+                        <div class="px-5 pb-5">
+                            <button type="submit">
+                                <h5 class="font-semibold text-gray-900 dark:text-white">Batik Wanita</h5>
+                            </button>
+                        </div>
                     </div>
-                </div>
-            </form>
-            <form action="{{ route('custom.check', ['id' => 2]) }}" method="POST">
-                @csrf
-                <input type="hidden" name='gender' value='Pria'>
-                <input type="hidden" name='gender_id' value='2'>
-                <div
-                    class=" mr-4 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-56">
-                    <img class="p-2 w-full" src="{{ asset('images/pria.png') }}" alt="product image" />
-                    <div class="px-5 pb-5">
-                        <button type="submit">
-                            <h5 class="font-semibold text-gray-900 dark:text-white">Batik Pria</h5>
-                        </button>
+                </form>
+                <form action="{{ route('custom.check', ['id' => 2]) }}" method="POST">
+                    @csrf
+                    <input type="hidden" name='gender' value='Pria'>
+                    <input type="hidden" name='gender_id' value='2'>
+                    <div
+                        class=" mr-4 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-56">
+                        <img class="p-2 w-full" src="{{ asset('images/pria.png') }}" alt="product image" />
+                        <div class="px-5 pb-5">
+                            <button type="submit">
+                                <h5 class="font-semibold text-gray-900 dark:text-white">Batik Pria</h5>
+                            </button>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            @else
+                <p>Anda sudah memesan produk custom sebelumnya. Selesaikan pesanan tersebut untuk memesan produk custom
+                    lainnya.
+                    <span>
+                        <a href='/list-order' class="underline text-blue-600"> Lihat Pesanan Anda</a>
+                    </span>
+                </p>
+            @endif
         @else
-            <p>Anda sudah memesan produk custom sebelumnya. Selesaikan pesanan tersebut untuk memesan produk custom lainnya.
-                <span>
-                    <a href='/list-order' class="underline text-blue-600"> Lihat Pesanan Anda</a>
-                </span>
-            </p>
+            <h2>Anda Login Sebagai Admin. <a href="/data-reports" class="text-blue-700 underline">Lihat Halaman
+                    Dashboard.</a></h2>
         @endif
 
 
