@@ -75,6 +75,29 @@
             <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
                 Laporan Penjualan
             </h2>
+            @if ($message = Session::get('success'))
+                <div id="message"
+                    class="flex items-center  p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
+                    role="alert">
+                    <svg class="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                    </svg>
+                    <span class="font-medium"> {{ $message }}</span>
+                </div>
+            @elseif ($message = Session::get('info'))
+                <div id="message"
+                    class="flex items-center  p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
+                    role="alert">
+                    <svg class="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                    </svg>
+                    <span class="font-medium">{{ $message }}</span>
+                </div>
+            @endif
             <!-- Cards -->
             <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
                 <!-- Card -->
@@ -300,50 +323,13 @@
                 </div>
             </div>
 
-            <!-- Charts -->
-            {{-- <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-                Charts
-            </h2>
-            <div class="grid gap-6 mb-8 md:grid-cols-2">
-                <div class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
-                    <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
-                        Revenue
-                    </h4>
-                    <canvas id="pie"></canvas>
-                    <div class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400">
-                        <!-- Chart legend -->
-                        <div class="flex items-center">
-                            <span class="inline-block w-3 h-3 mr-1 bg-blue-500 rounded-full"></span>
-                            <span>Shirts</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="inline-block w-3 h-3 mr-1 bg-teal-600 rounded-full"></span>
-                            <span>Shoes</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="inline-block w-3 h-3 mr-1 bg-purple-600 rounded-full"></span>
-                            <span>Bags</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
-                    <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
-                        Traffic
-                    </h4>
-                    <canvas id="line"></canvas>
-                    <div class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400">
-                        <!-- Chart legend -->
-                        <div class="flex items-center">
-                            <span class="inline-block w-3 h-3 mr-1 bg-teal-600 rounded-full"></span>
-                            <span>Organic</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="inline-block w-3 h-3 mr-1 bg-purple-600 rounded-full"></span>
-                            <span>Paid</span>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
         </div>
     </main>
+@endsection
+@section('script')
+    <script>
+        setTimeout(function() {
+            $('#message').fadeOut('fast');
+        }, 3000);
+    </script>
 @endsection

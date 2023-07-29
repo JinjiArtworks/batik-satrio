@@ -21,7 +21,7 @@ class AddBahanController extends Controller
             'nama' => $request->name,
             'deskripsi' => $request->deskripsi,
         ]);
-        return redirect('/add-bahan');
+        return redirect('/add-bahan')->with('success', 'Resources berhasil ditambahkan');;
     }
     public function edit($id)
     {
@@ -38,7 +38,7 @@ class AddBahanController extends Controller
                     'deskripsi' => $request->deskripsi,
                 ]
             );
-        return redirect('/add-bahan');
+        return redirect('/add-bahan')->with('success', 'Resources berhasil diubah');
     }
     public function destroy($id)
     {

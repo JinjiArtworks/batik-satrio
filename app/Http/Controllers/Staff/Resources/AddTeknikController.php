@@ -20,7 +20,7 @@ class AddTeknikController extends Controller
             'nama' => $request->name,
             'deskripsi' => $request->deskripsi,
         ]);
-        return redirect('/add-teknik');
+        return redirect('/add-teknik')->with('success', 'Resources berhasil ditambahkan');;
     }
     public function edit($id)
     {
@@ -37,7 +37,7 @@ class AddTeknikController extends Controller
                     'deskripsi' => $request->deskripsi,
                 ]
             );
-        return redirect('/add-teknik');
+        return redirect('/add-teknik')->with('success', 'Resources berhasil diubah');
     }
     public function destroy($id)
     {

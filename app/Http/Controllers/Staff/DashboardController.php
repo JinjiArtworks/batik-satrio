@@ -57,7 +57,7 @@ class DashboardController extends Controller
                     'status' => 'Pesanan Dikirim',
                 ]
             );
-        return redirect('/data-reports');
+        return redirect('/data-reports')->with('success', 'Pesanan Berhasil Dikirim');
     }
     public function updateReturn(Request $request, $id)
     {
@@ -67,6 +67,6 @@ class DashboardController extends Controller
                     'status' => $request->action,
                 ]
             );
-        return redirect('/data-reports');
+        return redirect('/data-reports')->with('success', 'Status Pesanan Berhasil Diubah');
     }
 }

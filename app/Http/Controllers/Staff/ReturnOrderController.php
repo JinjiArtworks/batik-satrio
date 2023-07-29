@@ -25,7 +25,7 @@ class ReturnOrderController extends Controller
                     'status' => $request->status
                 ]
             );
-        return redirect('/data-return');
+        return redirect('/data-return')->with('success', 'Status pesanan berhasil diubah');
     }
     public function confirmReturn($id)
     {
@@ -64,11 +64,11 @@ class ReturnOrderController extends Controller
             Order::where('id', $id)->delete();
         }
 
-        return redirect('/data-return');
+        return redirect('/data-return')->with('success', 'Status pesanan berhasil diubah');;
     }
     public function destroy($id)
     {
         Product::where('id', $id)->delete();
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Pesanan berhasil dihapus');;
     }
 }

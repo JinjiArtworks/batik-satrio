@@ -30,7 +30,7 @@ class AddMotifController extends Controller
             ]);
         }
 
-        return redirect('/add-motif');
+        return redirect('/add-motif')->with('success', 'Resources berhasil ditambahkan');;
     }
     public function edit($id)
     {
@@ -49,7 +49,7 @@ class AddMotifController extends Controller
                     'gambar' => $request->image->getClientOriginalName(),
                 ]
             );
-        return redirect('/add-motif');
+        return redirect('/add-motif')->with('success', 'Resources berhasil diubah');
     }
     public function destroy($id)
     {

@@ -73,6 +73,29 @@
             <h2 class=" mt-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
                 Bahan
             </h2>
+            @if ($message = Session::get('success'))
+                <div id="message"
+                    class="flex items-center  p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
+                    role="alert">
+                    <svg class="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                    </svg>
+                    <span class="font-medium"> {{ $message }}</span>
+                </div>
+            @elseif ($message = Session::get('info'))
+                <div id="message"
+                    class="flex items-center  p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
+                    role="alert">
+                    <svg class="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                    </svg>
+                    <span class="font-medium">{{ $message }}</span>
+                </div>
+            @endif
             <!-- New Table -->
             <div class="w-full overflow-hidden rounded-lg shadow-xs">
                 <div class="w-full overflow-x-auto">
@@ -98,19 +121,19 @@
                                         <form method="GET"
                                             action="{{ route('resources.edit-bahan', ['id' => $item->id]) }}">
                                             <button class="px-4 py-2 text-sm font-medium leading-5 text-white  ">
-                                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"
-                                                    class="w-4 h-4 fill-current text-blue-500">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                                                    viewBox="0 0 512 512" class="w-4 h-4 fill-current text-blue-500">
                                                     <path
                                                         d="M441 58.9L453.1 71c9.4 9.4 9.4 24.6 0 33.9L424 134.1 377.9 88 407 58.9c9.4-9.4 24.6-9.4 33.9 0zM209.8 256.2L344 121.9 390.1 168 255.8 302.2c-2.9 2.9-6.5 5-10.4 6.1l-58.5 16.7 16.7-58.5c1.1-3.9 3.2-7.5 6.1-10.4zM373.1 25L175.8 222.2c-8.7 8.7-15 19.4-18.3 31.1l-28.6 100c-2.4 8.4-.1 17.4 6.1 23.6s15.2 8.5 23.6 6.1l100-28.6c11.8-3.4 22.5-9.7 31.1-18.3L487 138.9c28.1-28.1 28.1-73.7 0-101.8L474.9 25C446.8-3.1 401.2-3.1 373.1 25zM88 64C39.4 64 0 103.4 0 152V424c0 48.6 39.4 88 88 88H360c48.6 0 88-39.4 88-88V312c0-13.3-10.7-24-24-24s-24 10.7-24 24V424c0 22.1-17.9 40-40 40H88c-22.1 0-40-17.9-40-40V152c0-22.1 17.9-40 40-40H200c13.3 0 24-10.7 24-24s-10.7-24-24-24H88z" />
                                                 </svg>
                                             </button>
                                         </form>
                                     </td>
-                                    <form method="GET"
-                                        action="{{ route('resources.delete-bahan', ['id' => $item->id]) }}">
-                                        <td class="px-4 py-3 text-sm">
+                                    <td class="px-4 py-3 text-sm">
+                                        <form method="GET"
+                                            action="{{ route('resources.delete-bahan', ['id' => $item->id]) }}">
                                             <button type="submit"
-                                                class="flex items-center px-2 py-1 pl-0 space-x-1 text-red-600">
+                                                class="confirmDelete flex items-center px-2 py-1 pl-0 space-x-1 text-red-600">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
                                                     class="w-4 h-4 fill-current">
                                                     <path
@@ -127,8 +150,8 @@
                                                     </path>
                                                 </svg>
                                             </button>
-                                        </td>
-                                    </form>
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -166,4 +189,27 @@
             </div>
         </div>
     </main>
+@endsection
+@section('script')
+    <script>
+        $('.confirmDelete').click(function(event) {
+            event.preventDefault();
+            var form = $(this).closest("form");
+            Swal.fire({
+                title: 'Hapus Resources?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            })
+        });
+        setTimeout(function() {
+            $('#message').fadeOut('fast');
+        }, 3000);
+    </script>
 @endsection

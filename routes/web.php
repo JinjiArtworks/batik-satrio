@@ -11,7 +11,7 @@ use App\Http\Controllers\Customers\ProductController;
 use App\Http\Controllers\Customers\ProfileController;
 use App\Http\Controllers\Customers\WishlistController;
 use App\Http\Controllers\Staff\DashboardController;
-use App\Http\Controllers\Staff\HistoryController as StaffHistoryController;
+use App\Http\Controllers\Staff\StaffHistoryController;
 use App\Http\Controllers\Staff\ListProductController;
 use App\Http\Controllers\Staff\Resources\AddBahanController;
 use App\Http\Controllers\Staff\Resources\AddCustomController;
@@ -101,14 +101,6 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/checkout-custom/payments-custom', [CheckoutCustomController::class, 'store'])->name('store');
     });
 
-    // Route::group(['as' => 'categories.'], function () {
-    //     Route::get('/data-category', [CategoryController::class, 'index']);
-    //     Route::get('/create-category', [CategoryController::class, 'create'])->name('create');
-    //     Route::get('/edit-category/{id}', [CategoryController::class, 'edit'])->name('edit');
-    //     Route::post('/store-category', [CategoryController::class, 'store'])->name('store');
-    //     Route::put('/update-category/{id}', [CategoryController::class, 'update'])->name('update');
-    //     Route::get('/delete-category/{id}', [CategoryController::class, 'destroy'])->name('delete');
-    // });
 });
 
 
@@ -133,14 +125,10 @@ Route::middleware(['auth'])->group(function () {
     });
     Route::group(['as' => 'history.'], function () {
         Route::get('/data-history', [StaffHistoryController::class, 'index'])->name('dashboard');
-        Route::get('/details-history/{id}', [StaffHistoryController::class, 'detail'])->name('details');
-        // Route::put('/update-history/{id}', [HistoryController::class, 'update'])->name('update');
-        // Route::get('/delete-history/{id}', [HistoryController::class, 'destroy'])->name('delete');
     });
 
     Route::group(['as' => 'return.'], function () {
         Route::get('/data-return', [ReturnOrderController::class, 'index'])->name('index');
-        Route::get('/details-return/{id}', [ReturnOrderController::class, 'detail'])->name('details');
         Route::put('/update-return/{id}', [ReturnOrderController::class, 'update'])->name('update');
         Route::post('/confirm-return/{id}', [ReturnOrderController::class, 'confirmReturn'])->name('confirm');
         Route::get('/delete-return/{id}', [ReturnOrderController::class, 'destroy'])->name('delete');

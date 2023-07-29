@@ -46,7 +46,7 @@ class AddCustomController extends Controller
 
                 ]
             );
-        return redirect('/add-custom')->with('success', 'Resources berhasil ditambahkan');
+        return redirect('/add-custom')->with('success', 'Resources berhasil diubah');
     }
     public function destroy($id)
     {

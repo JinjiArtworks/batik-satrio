@@ -190,7 +190,7 @@
                         <span class="text-gray-700 dark:text-gray-400">
                             Harga Grosir
                         </span>
-                        <input required
+                        <input 
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                             type="number" name="price_grosir" placeholder="Harga Produk"
                             value="{{ $products->harga_grosir }}" />
@@ -202,7 +202,7 @@
                         <span class="text-gray-700 dark:text-gray-400">
                             Minimal Order
                         </span>
-                        <input required
+                        <input 
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                             type="number" name="price_grosir" placeholder="Harga Produk"
                             value="{{ $products->minimal_order }}" />

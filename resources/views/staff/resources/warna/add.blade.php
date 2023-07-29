@@ -71,8 +71,31 @@
     <main class="h-full overflow-y-auto">
         <div class="container px-6 mx-auto grid">
             <h2 class=" mt-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-                Models
+                Warna Batik
             </h2>
+            @if ($message = Session::get('success'))
+                <div id="message"
+                    class="flex items-center  p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
+                    role="alert">
+                    <svg class="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                    </svg>
+                    <span class="font-medium"> {{ $message }}</span>
+                </div>
+            @elseif ($message = Session::get('info'))
+                <div id="message"
+                    class="flex items-center  p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
+                    role="alert">
+                    <svg class="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                    </svg>
+                    <span class="font-medium">{{ $message }}</span>
+                </div>
+            @endif
             <!-- New Table -->
             <div class="w-full overflow-hidden rounded-lg shadow-xs">
                 <div class="w-full overflow-x-auto">
@@ -112,11 +135,11 @@
                                             </button>
                                         </form>
                                     </td>
-                                    <form method="GET"
-                                        action="{{ route('resources.delete-warna', ['id' => $item->id]) }}">
-                                        <td class="px-4 py-3 text-sm">
+                                    <td class="px-4 py-3 text-sm">
+                                        <form method="GET"
+                                            action="{{ route('resources.delete-warna', ['id' => $item->id]) }}">
                                             <button type="submit"
-                                                class="flex items-center px-2 py-1 pl-0 space-x-1 text-red-600">
+                                                class="confirmDelete flex items-center px-2 py-1 pl-0 space-x-1 text-red-600">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
                                                     class="w-4 h-4 fill-current">
                                                     <path
@@ -133,9 +156,8 @@
                                                     </path>
                                                 </svg>
                                             </button>
-                                        </td>
-                                    </form>
-
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
 
@@ -183,5 +205,26 @@
                 blah.src = URL.createObjectURL(file)
             }
         }
+    </script>
+    <script>
+        $('.confirmDelete').click(function(event) {
+            event.preventDefault();
+            var form = $(this).closest("form");
+            Swal.fire({
+                title: 'Hapus Resources?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            })
+        });
+        setTimeout(function() {
+            $('#message').fadeOut('fast');
+        }, 3000);
     </script>
 @endsection

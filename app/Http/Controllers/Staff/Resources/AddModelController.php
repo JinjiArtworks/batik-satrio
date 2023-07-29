@@ -25,7 +25,7 @@ class AddModelController extends Controller
         Models::create([
             'nama' => $request->name,
         ]);
-        return redirect('/add-models');
+        return redirect('/add-models')->with('success', 'Resources berhasil ditambahkan');;
     }
     public function edit($id)
     {
@@ -42,7 +42,7 @@ class AddModelController extends Controller
                     'nama' => $request->name,
                 ]
             );
-        return redirect('/add-models');
+        return redirect('/add-models')->with('success', 'Resources berhasil diubah');
     }
     public function destroy($id)
     {
