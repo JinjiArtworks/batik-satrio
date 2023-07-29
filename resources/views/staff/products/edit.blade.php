@@ -87,7 +87,8 @@
                         </span>
                         <input
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                            type="text" name="name" placeholder="Nama Produk" value="{{ $products->nama }}" />
+                            type="text" name="name" placeholder="Nama Produk" required
+                            value="{{ $products->nama }}" />
                         {{-- <span class="text-xs text-gray-600 dark:text-gray-400">
                         Your password must be at least 6 characters long.
                     </span> --}}
@@ -96,7 +97,7 @@
                         <span class="text-gray-700 dark:text-gray-400">
                             Gambar
                         </span>
-                        <img src="{{ asset('images/no-profile.png') }}" id="blah" width="150px" height="150px"
+                        <img src="{{ asset('images/' . $products->gambar) }}" id="blah" width="150px" height="150px"
                             class="mt-1 mb-2">
                         <input class="mt-2" accept="image/*" id="image" type="file" name="image"required>
                     </label>
@@ -104,7 +105,7 @@
                         <span class="text-gray-700 dark:text-gray-400">
                             Kategori
                         </span>
-                        <select name="categories"
+                        <select name="categories" required
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                             @foreach ($categories as $item)
                                 <option value="{{ $item->id }}">{{ $item->nama }}</option>
@@ -115,9 +116,42 @@
                         <span class="text-gray-700 dark:text-gray-400">
                             Motif
                         </span>
-                        <select name="motif"
+                        <select name="motif" required
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                             @foreach ($motif as $item)
+                                <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                            @endforeach
+                        </select>
+                    </label>
+                    <label class="block mt-4 text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">
+                            Model
+                        </span>
+                        <select name="model" required
+                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                            @foreach ($models as $item)
+                                <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                            @endforeach
+                        </select>
+                    </label>
+                    <label class="block mt-4 text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">
+                            Bahan
+                        </span>
+                        <select name="bahan" required
+                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                            @foreach ($bahan as $item)
+                                <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                            @endforeach
+                        </select>
+                    </label>
+                    <label class="block mt-4 text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">
+                            Teknik Pembuatan
+                        </span>
+                        <select name="teknik" required
+                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                            @foreach ($teknik as $item)
                                 <option value="{{ $item->id }}">{{ $item->nama }}</option>
                             @endforeach
                         </select>
@@ -126,7 +160,7 @@
                         <span class="text-gray-700 dark:text-gray-400">
                             Ukuran
                         </span>
-                        <select name="size"
+                        <select name="size"required
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                             <option value="S">S</option>
                             <option value="M">M</option>
@@ -140,27 +174,10 @@
                         <span class="text-gray-700 dark:text-gray-400">
                             Deskripsi
                         </span>
-                        <textarea
+                        <textarea required
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                            type="text" name="description" placeholder="Jane Doe">{{ $products->deskripsi }}</textarea>
+                            type="text" name="description" placeholder="Deskripsi Produk">{{ $products->deskripsi }}</textarea>
                     </label>
-                    <label class="block text-sm mt-4">
-                        <span class="text-gray-700 dark:text-gray-400">
-                            Model
-                        </span>
-                        <input
-                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                            type="text" name="model" placeholder="Model Produk" value="{{ $products->model }}" />
-                    </label>
-                    <label class="block text-sm mt-4">
-                        <span class="text-gray-700 dark:text-gray-400">
-                            Bahan
-                        </span>
-                        <input
-                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                            type="text" name="bahan" placeholder="Bahan Produk" value="{{ $products->bahan }}" />
-                    </label>
-
                     <label class="block text-sm mt-4">
                         <span class="text-gray-700 dark:text-gray-400">
                             Harga
@@ -171,9 +188,33 @@
                     </label>
                     <label class="block text-sm mt-4">
                         <span class="text-gray-700 dark:text-gray-400">
+                            Harga Grosir
+                        </span>
+                        <input required
+                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                            type="number" name="price_grosir" placeholder="Harga Produk"
+                            value="{{ $products->harga_grosir }}" />
+                        <span class="text-xs text-gray-600 dark:text-gray-400">
+                            Kosongkan jika tidak ada harga grosir.
+                        </span>
+                    </label>
+                    <label class="block text-sm mt-4">
+                        <span class="text-gray-700 dark:text-gray-400">
+                            Minimal Order
+                        </span>
+                        <input required
+                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                            type="number" name="price_grosir" placeholder="Harga Produk"
+                            value="{{ $products->minimal_order }}" />
+                        <span class="text-xs text-gray-600 dark:text-gray-400">
+                            Kosongkan jika tidak ada minimal order.
+                        </span>
+                    </label>
+                    <label class="block text-sm mt-4">
+                        <span class="text-gray-700 dark:text-gray-400">
                             Stok
                         </span>
-                        <input
+                        <input required
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                             type="number" name="stock" placeholder="Stok Produk" value="{{ $products->stok }}" />
                     </label>
@@ -188,15 +229,6 @@
                         <span class="text-xs text-gray-600 dark:text-gray-400">
                             Kosongkan jika tidak ada diskon.
                         </span>
-                    </label>
-
-                    <label class="block text-sm mt-4">
-                        <span class="text-gray-700 dark:text-gray-400">
-                            Teknik Pembuatan
-                        </span>
-                        <textarea
-                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                            type="text" name="teknik" placeholder="Teknik Pembuatan">{{ $products->teknik }}</textarea>
                     </label>
                     <button type="submit"
                         class="px-3 py-1 mt-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">

@@ -112,7 +112,7 @@ class CheckoutCustomController extends Controller
         $orders->ongkos_kirim = $request->ongkir; // belum, gunakan raja ongkir
         $orders->jenis_pembayaran = $json->payment_type; // belum, gunakan payment gateway untuk dapat jenis pembayarannya
         $orders->jenis_pesanan = 'Custom';
-        $orders->status = 'Menunggu Konfirmasi';
+        $orders->status = 'Menunggu Konfirmasi Penjual';
         $orders->preorder = '3 Hari';
         $orders->ekspedisi = $request->courierName; // belum, gunakan raja ongkir
         $orders->total = $request->grandTotal;

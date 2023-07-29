@@ -211,18 +211,18 @@
             {{-- tabel konfimrasi pengembalian --}}
             <div class="w-full overflow-hidden rounded-lg shadow-xs">
                 <div class="w-full overflow-x-auto">
-                    <table class="w-full whitespace-no-wrap">
-                        <thead>
-                            <tr
-                                class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                                <th class="px-4 py-3">Nama</th>
-                                <th class="px-4 py-3">Tanggal Order</th>
-                                <th class="px-4 py-3">Total </th>
-                                <th class="px-4 py-3">Status Pesanan</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                            @foreach ($ordersConfirm as $item)
+                    @foreach ($ordersConfirm as $item)
+                        <table class="w-full whitespace-no-wrap">
+                            <thead>
+                                <tr
+                                    class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                    <th class="px-4 py-3">Nama</th>
+                                    <th class="px-4 py-3">Tanggal Order</th>
+                                    <th class="px-4 py-3">Total </th>
+                                    <th class="px-4 py-3">Status Pesanan</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                                 <tr class="text-gray-700 dark:text-gray-400">
                                     <td class="px-4 py-3">
                                         <div class="flex items-center text-sm">
@@ -231,8 +231,7 @@
                                                 <img class="object-cover w-full h-full rounded-full"
                                                     src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
                                                     alt="" loading="lazy" />
-                                                <div class="absolute inset-0 rounded-full shadow-inner"
-                                                    aria-hidden="true">
+                                                <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true">
                                                 </div>
                                             </div>
                                             <div>
@@ -256,23 +255,23 @@
                                             {{ $item->status }}
                                         </span>
                                     </td>
-                                    <form method="POST" action="{{ route('return.confirm', ['id' => $item->id]) }}"
-                                        enctype="multipart/form-data">
-                                        @csrf
-                                        <td class="px-4 py-3 text-sm">
-                                            <button type="submit"
-                                                class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                                Konfirmasi Pesanan Diterima Kembali
-                                            </button>
-                                        </td>
-                                    </form>
                                 </tr>
-                            @endforeach
 
-                        </tbody>
-                    </table>
+
+                            </tbody>
+                        </table>
+                        <form method="POST" action="{{ route('return.confirm', ['id' => $item->id]) }}"
+                            enctype="multipart/form-data">
+                            @csrf
+                            <div class="flex justify-end mt-4">
+                                <button type="submit"
+                                    class="accReturnItem px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                                    Terima Pesanan
+                                </button>
+                            </div>
+                        </form>
+                    @endforeach
                 </div>
-
                 <div
                     class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
                     <span class="flex items-center col-span-3">
@@ -346,4 +345,27 @@
             </div>
         </div>
     </main>
+@endsection
+@section('script')
+    <script type="text/javascript">
+        $('.accReturnItem').click(function(event) {
+            event.preventDefault();
+            var form = $(this).closest("form");
+            Swal.fire({
+                title: 'Terima Pesanan?',
+                icon: 'success',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            })
+        });
+        setTimeout(function() {
+            $('#message').fadeOut('fast');
+        }, 3000);
+    </script>
 @endsection

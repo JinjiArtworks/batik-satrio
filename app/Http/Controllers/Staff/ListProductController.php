@@ -33,7 +33,7 @@ class ListProductController extends Controller
         $bahan = Bahan::all();
         $teknik = Teknik::all();
         // return dd($categories);
-        return view('staff.products.create', compact('product', 'categories', 'motif','models','bahan','teknik'));
+        return view('staff.products.create', compact('product', 'categories', 'motif', 'models', 'bahan', 'teknik'));
     }
     public function store(Request $request)
     {
@@ -52,6 +52,7 @@ class ListProductController extends Controller
                 'stok' => $request->stock,
                 'diskon' => $request->discount,
                 'harga_grosir' => $request->price_grosir,
+                'minimal_order' => $request->minimal_order,
                 'ukuran' => $request->size,
                 'berat' => 350,
                 'model_id' => $request->model,
@@ -59,14 +60,17 @@ class ListProductController extends Controller
                 'bahan_id' => $request->bahan,
             ]);
         }
-        return redirect('/data-product');
+        return redirect('/data-product')->with('success', 'Product berhasil ditambahkan');
     }
     public function edit($id)
     {
         $products = Product::find($id);
         $categories = Categories::all();
         $motif = Motif::all();
-        return view('staff.products.edit', compact('products', 'categories', 'motif'));
+        $models = Models::all();
+        $bahan = Bahan::all();
+        $teknik = Teknik::all();
+        return view('staff.products.edit', compact('products', 'categories', 'motif', 'models', 'bahan', 'teknik'));
     }
     public function update(Request $request, $id)
     {
@@ -84,19 +88,20 @@ class ListProductController extends Controller
                     'terjual' => 0,
                     'stok' => $request->stock,
                     'diskon' => $request->discount,
-                    // 'harga_grosir' => default_null
-                    'model' => $request->model,
+                    'harga_grosir' => $request->price_grosir,
+                    'minimal_order' => $request->minimal_order,
+                    'model_id' => $request->model,
+                    'teknik_id' => $request->teknik,
+                    'bahan_id' => $request->bahan,
                     'ukuran' => $request->size,
                     'berat' => 350,
-                    'teknik' => $request->teknik,
-                    'bahan' => $request->bahan,
                 ]
             );
-        return redirect('/data-product');
+        return redirect('/data-product')->with('success', 'Product berhasil diubah.');;
     }
     public function destroy($id)
     {
         Product::where('id', $id)->delete();
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Product berhasil dihapus.');
     }
 }

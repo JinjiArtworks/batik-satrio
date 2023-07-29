@@ -115,9 +115,35 @@
                                         Pria
                                     @endif
                                 </h2>
-                                <p class="text-gray-500 text-sm">Status: <span
-                                        class="text-green-600">{{ $item->status }}</span>
-                                </p>
+                                @if ($item->status == 'Pesanan Custom Ditolak')
+                                    <p class="text-gray-500 text-sm">Status: <span
+                                            class="text-red-600">{{ $item->status }}</span>
+                                    </p>
+                                    <form method="GET" action="{{ route('history-order.delete', ['id' => $item->id]) }}">
+                                        <button type="submit"
+                                            class="deleteOrder flex items-center px-2 py-1 pl-0 space-x-1 text-red-600">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                                class="w-4 h-4 fill-current">
+                                                <path
+                                                    d="M96,472a23.82,23.82,0,0,0,23.579,24H392.421A23.82,23.82,0,0,0,416,472V152H96Zm32-288H384V464H128Z">
+                                                </path>
+                                                <rect width="32" height="200" x="168" y="216">
+                                                </rect>
+                                                <rect width="32" height="200" x="240" y="216">
+                                                </rect>
+                                                <rect width="32" height="200" x="312" y="216">
+                                                </rect>
+                                                <path
+                                                    d="M328,88V40c0-13.458-9.488-24-21.6-24H205.6C193.488,16,184,26.542,184,40V88H64v32H448V88ZM216,48h80V88H216Z">
+                                                </path>
+                                            </svg>
+                                        </button>
+                                    </form>
+                                @else
+                                    <p class="text-gray-500 text-sm">Status: <span
+                                            class="text-green-600">{{ $item->status }}</span>
+                                    </p>
+                                @endif
                             </div>
                             <div class="text-gray-600 text-lg font-semibold">@currency($item->total)</div>
                             <a href="/history-detail/{{ $item->orderdetail->order_id }}"
@@ -146,4 +172,29 @@
                 @endforeach
             </div>
         </div>
-    @endsection
+    </div>
+@endsection
+@section('script')
+    <script type="text/javascript">
+        // Delete Cart
+        $('.deleteOrder').click(function(event) {
+            event.preventDefault();
+            var form = $(this).closest("form");
+            Swal.fire({
+                title: 'Hapus Pesanan?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            })
+        });
+        setTimeout(function() {
+            $('#message').fadeOut('fast');
+        }, 3000);
+    </script>
+@endsection

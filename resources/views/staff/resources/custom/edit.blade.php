@@ -5,7 +5,6 @@
             <li class="relative px-6 py-3">
                 <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
                     href="/data-reports">
-
                     <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"
                         stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                         <path
@@ -70,70 +69,54 @@
 @section('content')
     <main class="h-full overflow-y-auto">
         <div class="container px-6 mx-auto grid">
-            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-                Tambah Resources
+            <h2 class="mt-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+                Ubah custom
             </h2>
-            <!-- Cards -->
-            <div class="flex justify-between">
-                <div
-                    class="mr-4 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-56">
-                    <a href="/add-models">
-                        <img class="p-2 w-full" src="{{ asset('images/no-profile.png') }}" alt="product image" />
-                    </a>
-                    <div class="flex justify-center ">
-                        <h5 class="font-semibold text-gray-900 dark:text-white">Model Batik</h5>
-                    </div>
-                </div>
-                <div
-                    class="mr-4 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-56">
-                    <a href="/add-motif">
-                        <img class="p-2 w-full" src="{{ asset('images/no-profile.png') }}" alt="product image" />
-                    </a>
-                    <div class="flex justify-center ">
-                        <h5 class="font-semibold text-gray-900 dark:text-white">Motif Batik</h5>
-                    </div>
-                </div>
-                <div
-                    class="mr-4 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-56">
-                    <a href="/add-bahan">
-                        <img class="p-2 w-full" src="{{ asset('images/no-profile.png') }}" alt="product image" />
-                    </a>
-                    <div class="flex justify-center ">
-                        <h5 class="font-semibold text-gray-900 dark:text-white">Bahan Batik</h5>
-                    </div>
-                </div>
-                <div
-                    class="mr-4 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-56">
-                    <a href="/add-teknik">
-                        <img class="p-2 w-full" src="{{ asset('images/no-profile.png') }}" alt="product image" />
-                    </a>
-                    <div class="flex justify-center ">
-                        <h5 class="font-semibold text-gray-900 dark:text-white">Teknik Batik</h5>
-                    </div>
-                </div>
-                <div
-                    class="mr-4 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-56">
-                    <a href="/add-warna">
-                        <img class="p-2 w-full" src="{{ asset('images/no-profile.png') }}" alt="product image" />
-                    </a>
-                    <div class="flex justify-center ">
-                        <h5 class="font-semibold text-gray-900 dark:text-white">Warna Batik</h5>
-                    </div>
-                </div>
-
+            <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                <form method="POST" action="{{ route('resources.update-custom', ['id' => $custom->id]) }}"
+                    enctype="multipart/form-data">
+                    @csrf
+                    {{ method_field('put') }}
+                    <label class="block text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">
+                            Nama custom
+                        </span>
+                        <input name="name" value="{{ $custom->nama }}"
+                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input">
+                    </label>
+                    <label class="block text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">
+                            Nama custom
+                        </span>
+                        <textarea name="deskripsi" value="{{ $custom->deskripsi }}"
+                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input">{{ $custom->deskripsi }}</textarea>
+                    </label>
+                    <label class="block text-sm mt-4">
+                        <span class="text-gray-700 dark:text-gray-400">
+                            Gambar
+                        </span>
+                        <img src="{{ asset('images/' . $custom->gambar) }}" id="blah" width="150px" height="150px"
+                            class="mt-1 mb-2">
+                        <input class="mt-2" accept="image/*" id="image" type="file" name="image"required>
+                    </label>
+                    <button type="submit"
+                        class="px-3 py-1 mt-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                        Submit
+                    </button>
+                </form>
             </div>
-            <div class="flex justify-between">
 
-                <div
-                    class="mr-4 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-56">
-                    <a href="/add-custom">
-                        <img class="p-2 w-full" src="{{ asset('images/no-profile.png') }}" alt="product image" />
-                    </a>
-                    <div class="flex justify-center ">
-                        <h5 class="font-semibold text-gray-900 dark:text-white">Contoh Custom Batik</h5>
-                    </div>
-                </div>
-            </div>
         </div>
+
     </main>
+@endsection
+@section('script')
+    <script type="text/javascript">
+        image.onchange = evt => {
+            const [file] = image.files
+            if (file) {
+                blah.src = URL.createObjectURL(file)
+            }
+        }
+    </script>
 @endsection

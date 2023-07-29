@@ -15,13 +15,7 @@ class ReturnOrderController extends Controller
     {
         // $orders = Order::whereStatus('Menunggu Konfirmasi Penjual')->get();
         $ordersConfirm = Order::whereStatus('Pesanan Dikirim Balik Kepada Penjual')->get();
-        return view('staff.return.index', compact( 'ordersConfirm'));
-    }
-    public function detail($id)
-    {
-        $orderdetails = OrderDetail::whereOrderId($id)->first(); // already declated a has many from categories, its mean it is beloangsto categories
-        $returns = Returns::whereOrdersId($id)->first();
-        return view('staff.return.detail', compact('orderdetails', 'returns'));
+        return view('staff.return.index', compact('ordersConfirm'));
     }
     public function update(Request $request, $id)
     {
@@ -41,29 +35,35 @@ class ReturnOrderController extends Controller
         $getAllQty = OrderDetail::whereOrderId($id)->first();
         $getQty = $getAllQty->quantity;
 
-        $getAllStock = Product::whereId($getProductId)->first();
-        $getStok = $getAllStock->stok;
+        if ($getProductId != null) {
+            $getAllStock = Product::whereId($getProductId)->first();
+            $getStok = $getAllStock->stok;
 
-        $getAllTerjual = Product::whereId($getProductId)->first();
-        $getTerjual = $getAllTerjual->terjual;
+            $getAllTerjual = Product::whereId($getProductId)->first();
+            $getTerjual = $getAllTerjual->terjual;
+        }
+
 
         // return dd($getTerjual);
         if ($getProductId != null) {
             Product::where('id', $getProductId)
                 ->update(
                     [
-                        'stok' => $getStok + $getQty, 
-                        'terjual' => $getTerjual - $getQty, 
+                        'stok' => $getStok + $getQty,
+                        'terjual' => $getTerjual - $getQty,
                     ]
                 );
+            Order::where('id', $id)->delete();
+        } else {
+            Order::where('id', $id)
+                ->update(
+                    [
+                        'status' => 'Pengembalian Diterima Penjual'
+                    ]
+                );
+            Order::where('id', $id)->delete();
         }
-        Order::where('id', $id)
-            ->update(
-                [
-                    'status' => 'Pengembalian Diterima Penjual'
-                ]
-            );
-        Order::where('id', $id)->delete();
+
         return redirect('/data-return');
     }
     public function destroy($id)

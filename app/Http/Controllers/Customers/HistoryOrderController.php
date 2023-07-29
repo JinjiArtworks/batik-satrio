@@ -36,7 +36,7 @@ class HistoryOrderController extends Controller
         // $test = OrderDetail::whereOrderId($id)->get('price'); // already declated a has many from categories, its mean it is beloangsto categories
         // $sumPendapatan = collect($details)->sum('price');
         // return dd($details);
-        return view('customers.history.history-detail', compact('details', 'getId', 'reviews','mytime','detailStatus'));
+        return view('customers.history.history-detail', compact('details', 'getId', 'reviews', 'mytime', 'detailStatus'));
     }
 
     public function store(Request $request, $id)
@@ -68,7 +68,7 @@ class HistoryOrderController extends Controller
             Order::where('id', $id)
                 ->update(
                     [
-                        'status' => 'Menunggu Konfirmasi Penjual'
+                        'status' => 'Proses Pengembalian'
                     ]
                 );
             // return dd($returns);
@@ -97,5 +97,10 @@ class HistoryOrderController extends Controller
                 ]
             );
         return redirect('history-order');
+    }
+    public function remove($id)
+    {
+        Order::where('id', $id)->delete();
+        return redirect()->back()->with('success', 'Pesanan berhasil dihapus.');
     }
 }

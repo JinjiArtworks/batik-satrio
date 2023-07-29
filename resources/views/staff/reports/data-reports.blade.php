@@ -144,7 +144,7 @@
                     </div>
                     <div>
                         <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                            Ajuan Pengembalian 
+                            Ajuan Pengembalian
                         </p>
                         <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
                             {{ $totalReturns }}
@@ -165,7 +165,7 @@
                                 <th class="px-4 py-3">Tanggal</th>
                                 <th class="px-4 py-3">Alamat</th>
                                 <th class="px-4 py-3">Jenis Pesanan</th>
-                                <th class="px-4 py-3">Total</th>
+                                <th class="px-4 py-3">Grand Total</th>
                                 <th class="px-4 py-3">Status</th>
                             </tr>
                         </thead>
@@ -197,12 +197,22 @@
                                     </td>
 
                                     <td class="px-4 py-3 text-xs">
-                                        @if ($item->status != 'Pesanan Selesai')
+
+                                        @if ($item->status == 'Selesai')
+                                            <span
+                                                class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                                                {{ $item->status }}
+                                            </span>
+                                        @elseif ($item->status == 'Proses Pengembalian')
+                                            <span class="px-2 py-1 font-semibold leading-tight  bg-blue-100 rounded-full ">
+                                                {{ $item->status }}
+                                            </span>
+                                            <p class="mt-2">*Pembeli Mengajukan Pengembalian.</p>
+                                        @else
                                             <span class="px-2 py-1 font-semibold leading-tight  bg-blue-100 rounded-full ">
                                                 {{ $item->status }}
                                             </span>
                                         @endif
-
                                     </td>
                                     <form method="GET" action="{{ route('reports.details', ['id' => $item->id]) }}">
                                         <td class="px-4 py-3 text-sm">

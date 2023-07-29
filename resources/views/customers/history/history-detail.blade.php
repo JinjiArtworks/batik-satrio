@@ -66,7 +66,7 @@
                                     Proses Pengembalian - {{ $detailStatus->order->status }}
                                 </span>
                             </p>
-                        @elseif ($detailStatus->order->status == 'Pengembalian Diterima')
+                        @elseif ($detailStatus->order->status == 'Ajuan Pengembalian Diterima')
                             <form method="POST"
                                 action="{{ route('history-order.sendReturnsBack', ['id' => $detailStatus->order->id]) }}"
                                 enctype="multipart/form-data">
@@ -77,7 +77,7 @@
                                         {{ $detailStatus->order->status }}
                                     </span>
                                     <button type="submit"
-                                        class="ml-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                        class="sendItemBack ml-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                         Kirim Balik Pesanan
                                     </button>
                                 </p>
@@ -92,7 +92,7 @@
                                         {{ $detailStatus->order->status }}
                                     </span>
                                     <button type="submit"
-                                        class=" ml-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                        class="acceptOrder ml-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                         Terima Pesanan
                                     </button>
                                 </p>
@@ -145,20 +145,14 @@
                                                         yang dikembalikan :
                                                     </label>
                                                     @if ($detailStatus->product_id == null)
-                                                        @if ($detailStatus->request_gender == 'Wanita')
-                                                            <img src="{{ asset('images/wanita.png') }}" alt="product 6"
-                                                                class="w-40 border border-gray-300 ">
-                                                        @else
-                                                            <img src="{{ asset('images/pria.png') }}" alt="product 6"
-                                                                class="w-40">
-                                                        @endif
+                                                        <img src="{{ asset('images/' . $detailStatus->request_result) }}"
+                                                            alt="product 6" class="w-40">
                                                     @else
                                                         <img src="{{ asset('images/' . $detailStatus->product->gambar) }}"
-                                                            id="blah" width="150px" height="150px"
-                                                            class="mt-1 mb-2">
+                                                            alt="product 6" class="w-40">
                                                     @endif
                                                 </div>
-                                                <div>
+                                                <div class="mt-4">
                                                     <label for="alasan"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alasan
                                                         Mengembalikan : </label>
@@ -176,7 +170,7 @@
                                                         type="file" name="bukti" required>
                                                 </div>
                                                 <button type="submit"
-                                                    class="w-full mt-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                                    class="confirmSendItem w-full mt-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                                     Submit
                                                 </button>
                                             </form>
@@ -379,6 +373,61 @@
     </div>
 @endsection
 @section('script')
+    <script type="text/javascript">
+        // Delete Cart
+        $('.acceptOrder').click(function(event) {
+            event.preventDefault();
+            var form = $(this).closest("form");
+            Swal.fire({
+                title: 'Terima Pesanan?',
+                icon: 'success',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            })
+        });
+
+        $('.sendItemBack').click(function(event) {
+            event.preventDefault();
+            var form = $(this).closest("form");
+            Swal.fire({
+                title: 'Kirim Balik Pesanan?',
+                icon: 'success',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            })
+        });
+        $('.confirmSendItem').click(function(event) {
+            event.preventDefault();
+            var form = $(this).closest("form");
+            Swal.fire({
+                title: 'Kirim Balik Pesanan?',
+                icon: 'success',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            })
+        });
+        setTimeout(function() {
+            $('#message').fadeOut('fast');
+        }, 3000);
+    </script>
     <script type="text/javascript">
         image.onchange = evt => {
             const [file] = image.files

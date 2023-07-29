@@ -14,9 +14,11 @@ use App\Http\Controllers\Staff\DashboardController;
 use App\Http\Controllers\Staff\HistoryController as StaffHistoryController;
 use App\Http\Controllers\Staff\ListProductController;
 use App\Http\Controllers\Staff\Resources\AddBahanController;
+use App\Http\Controllers\Staff\Resources\AddCustomController;
 use App\Http\Controllers\Staff\Resources\AddModelController;
 use App\Http\Controllers\Staff\Resources\AddMotifController;
 use App\Http\Controllers\Staff\Resources\AddTeknikController;
+use App\Http\Controllers\Staff\Resources\AddWarnaController;
 use App\Http\Controllers\Staff\ReturnOrderController;
 use App\Http\Controllers\Staff\Resources\ListItemController;
 use Illuminate\Support\Facades\Route;
@@ -77,6 +79,7 @@ Route::middleware(['auth'])->group(function () {
     Route::group(['as' => 'history-order.'], function () {
         Route::get('/history-order', [HistoryOrderController::class, 'index'])->name('index');
         Route::get('/history-detail/{id}', [HistoryOrderController::class, 'detail'])->name('detail');
+        Route::get('/orders-delete/{id}', [HistoryOrderController::class, 'remove'])->name('delete');
         Route::post('/send-review/{id}', [HistoryOrderController::class, 'store'])->name('review');
         Route::post('/send-returns/{id}', [HistoryOrderController::class, 'storeReturns'])->name('returns');
         Route::post('/send-returns-back/{id}', [HistoryOrderController::class, 'storeReturnsBack'])->name('sendReturnsBack');
@@ -116,7 +119,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('data-reports', [DashboardController::class, 'index'])->name('dashboard');
         Route::get('detail-reports/{id}', [DashboardController::class, 'detail'])->name('details');
         Route::put('update-reports/{id}', [DashboardController::class, 'update'])->name('update');
-        Route::put('update-custom-reports/{id}', [DashboardController::class, 'updateCustom'])->name('update-custom');
+        Route::put('update-return-reports/{id}', [DashboardController::class, 'updateReturn'])->name('update-return');
         Route::get('delete-reports/{id}', [DashboardController::class, 'destroy'])->name('delete');
     });
     Route::group(['as' => 'products.'], function () {
@@ -169,6 +172,20 @@ Route::middleware(['auth'])->group(function () {
         Route::get('edit-teknik/{id}', [AddTeknikController::class, 'edit'])->name('edit-teknik');
         Route::put('update-teknik/{id}', [AddTeknikController::class, 'update'])->name('update-teknik');
         Route::get('delete-teknik/{id}', [AddTeknikController::class, 'destroy'])->name('delete-teknik');
+
+        // Teknik
+        Route::get('add-warna', [AddWarnaController::class, 'index'])->name('dashboard');
+        Route::post('store-warna', [AddWarnaController::class, 'store'])->name('store-warna');
+        Route::get('edit-warna/{id}', [AddWarnaController::class, 'edit'])->name('edit-warna');
+        Route::put('update-warna/{id}', [AddWarnaController::class, 'update'])->name('update-warna');
+        Route::get('delete-warna/{id}', [AddWarnaController::class, 'destroy'])->name('delete-warna');
+
+        // Teknik
+        Route::get('add-custom', [AddCustomController::class, 'index'])->name('dashboard');
+        Route::post('store-custom', [AddCustomController::class, 'store'])->name('store-custom');
+        Route::get('edit-custom/{id}', [AddCustomController::class, 'edit'])->name('edit-custom');
+        Route::put('update-custom/{id}', [AddCustomController::class, 'update'])->name('update-custom');
+        Route::get('delete-custom/{id}', [AddCustomController::class, 'destroy'])->name('delete-custom');
     });
 });
 

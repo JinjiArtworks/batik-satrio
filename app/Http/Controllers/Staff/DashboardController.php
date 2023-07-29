@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
+use App\Models\Returns;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -29,21 +30,24 @@ class DashboardController extends Controller
         $totalClients = $getClients->count();
 
         // Total Orders
-        $filterPendapatan = Order::where('status', '=', 'Selesai')->get();
+        $filterPendapatan = Order::where('status', '=', 'Selesai')->orWhere('status','=','Ajuan Pengembalian Ditolak')->get();
         $sumPendapatan = collect($filterPendapatan)->sum('total');
         $totalOngkir = collect($filterPendapatan)->sum('ongkos_kirim');
         $pendapatanBersih = $sumPendapatan - $totalOngkir;
 
-        $getReturns = Order::where('status', '<=', 'Menunggu Konfirmasi Penjual')->get();
+        $getReturns = Order::where('status', '=', 'Proses Pengembalian')->get();
         $totalReturns = $getReturns->count();
         // return dd($totalReturns);
-        return view('staff.reports.data-reports', compact('orders', 'totalOrders', 'totalClients','pendapatanBersih','totalReturns'));
+        return view('staff.reports.data-reports', compact('orders', 'totalOrders', 'totalClients', 'pendapatanBersih', 'totalReturns'));
     }
     public function detail($id)
     {
-        $orderdetails = OrderDetail::whereOrderId($id)->first(); // already declated a has many from categories, its mean it is beloangsto categories
-        // return dd($orderdetails->order->harga);
-        return view('staff.reports.detail-reports', compact('orderdetails'));
+        $orderdetails = OrderDetail::whereOrderId($id)->first(); 
+        // $details = OrderDetail::whereOrderId($id)->get(); // already declated a has many from categories, its mean it is beloangsto categories
+        // {{ $item->order->status }}
+
+        $returnOrder = Returns::whereOrdersId($id)->first();
+        return view('staff.reports.detail-reports', compact('orderdetails','returnOrder'));
     }
     public function update(Request $request, $id)
     {
@@ -55,7 +59,7 @@ class DashboardController extends Controller
             );
         return redirect('/data-reports');
     }
-    public function updateCustom(Request $request, $id)
+    public function updateReturn(Request $request, $id)
     {
         Order::where('id', $id)
             ->update(

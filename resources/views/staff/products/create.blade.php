@@ -186,11 +186,22 @@
                         <span class="text-gray-700 dark:text-gray-400">
                             Harga Grosir
                         </span>
-                        <input required
+                        <input 
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                             type="number" name="price_grosir" placeholder="Harga Produk" />
                         <span class="text-xs text-gray-600 dark:text-gray-400">
-                            Kosongkan jika tidak ada diskon.
+                            Kosongkan jika tidak ada harga grosir.
+                        </span>
+                    </label>
+                    <label class="block text-sm mt-4">
+                        <span class="text-gray-700 dark:text-gray-400">
+                            Minimal Order
+                        </span>
+                        <input 
+                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                            type="number" name="minimal_order" placeholder="Minimal Order" />
+                        <span class="text-xs text-gray-600 dark:text-gray-400">
+                            Kosongkan jika tidak ada minimal order.
                         </span>
                     </label>
                     <label class="block text-sm mt-4">
