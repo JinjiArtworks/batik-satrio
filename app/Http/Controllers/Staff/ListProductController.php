@@ -97,7 +97,7 @@ class ListProductController extends Controller
                     'berat' => 350,
                 ]
             );
-        return redirect('/data-product')->with('success', 'Product berhasil diubah.');;
+        return redirect('/data-product')->with('success', 'Product berhasil diubah.');
     }
     public function destroy($id)
     {
