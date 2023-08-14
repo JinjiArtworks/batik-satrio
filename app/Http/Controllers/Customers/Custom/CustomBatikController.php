@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Customers\Custom;
 use App\Models\Colors;
 use App\Models\Motif;
 use App\Models\Preview;
+use App\Models\Results;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use LDAP\Result;
 
 class CustomBatikController extends Controller
 {
@@ -25,6 +27,20 @@ class CustomBatikController extends Controller
         $previews = Preview::all();
         // return dd($previews);
         return view('customers.custom.custom-check', compact('gender', 'gender_id', 'colors', 'motif', 'previews'));
+    }
+    public function checkResults(Request $request, $id)
+    {
+        // return dd($list);
+        // return dd($request->all());
+        $getWarna = $request->warna;
+        $getMotif = $request->motif;
+        $colors = Colors::whereNama($getWarna)->first();
+        $motif = Motif::whereNama($getMotif)->first();
+        $results = Results::all();
+        $gender = $request->gender;
+        $gender_id = $request->gender_id;
+        // return dd($previews);
+        return view('customers.custom.custom-results', compact('gender', 'gender_id', 'colors', 'motif','results'));
     }
     // public function results(Request $request, $id)
     // {

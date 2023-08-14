@@ -104,8 +104,6 @@ class CheckoutController extends Controller
         $user = Auth::user();
         $json = json_decode($request->get('json'));
         $cart = session()->get('cart');
-        // return dd($cart);
-        // return dd($request->all());
         $orders = new Order();
         $orders->users_id = $user->id;
         $orders->nama = $user->name;

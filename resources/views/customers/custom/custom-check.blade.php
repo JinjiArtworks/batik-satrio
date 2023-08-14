@@ -45,7 +45,7 @@
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 border-b">
         <p>Proses pemesanan custom batik akan dikerjakan dalam waktu 3 hari. Silahkan mengisikan formulir berikut ini.</p>
     </div>
-    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 border-b">
+    {{-- <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 border-b">
         <div class="gallery border-2 rounded mx-auto m-5 bg-white" style="width:1250px;">
             <div class="top flex p-2 border-b select-none">
                 <div class="heading text-gray-800 w-full pl-3 font-semibold my-auto"></div>
@@ -87,8 +87,8 @@
                 </div>
             </div>
         </div>
-    </div>
-    <form method="POST" action="{{ route('custom.details', ['id' => $gender_id]) }}" enctype="multipart/form-data">
+    </div> --}}
+    <form method="POST" action="{{ route('custom.checkResults', ['id' => $gender_id]) }}" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="gender" value="{{ $gender }}">
         <input type="hidden" name="gender_id" value="{{ $gender_id }}">
@@ -103,7 +103,7 @@
                             required>
                             <option value="">-- Pilih Warna Batik --</option>
                             @foreach ($colors as $item)
-                                <option value="{{ $item->nama}}">{{ $item->nama }}</option>
+                                <option value="{{ $item->nama }}">{{ $item->nama }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -124,7 +124,7 @@
                             required>
                             <option value="">-- Pilih Motif Batik --</option>
                             @foreach ($motif as $item)
-                                <option value="{{ $item->nama}}">{{ $item->nama }}</option>
+                                <option value="{{ $item->nama }}">{{ $item->nama }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -138,8 +138,20 @@
             </ul>
             <button type="submit"
                 class="bg-blue-600 border border-blue-600 text-white px-4 py-2 font-medium rounded  gap-2 hover:bg-transparent hover:text-blue-600 transition">
-                Konfirmasi
+                Selanjutnya
             </button>
+{{-- 
+            <h3 class=" font-semibold text-gray-900">Hasil : </h3>
+            <ul class="items-center w-full text-sm font-medium text-gray-900 rounded-lg sm:flex ">
+                <li class="w-full">
+                    @foreach ($motif as $item)
+                        <div id="motif{{ $item->nama }}" class="img_2">
+                            <img src="{{ asset('images/' . $item->gambar) }}"
+                                class="w-48" /><span>{{ $item->nama }}</span>
+                        </div>
+                    @endforeach
+                </li>
+            </ul> --}}
         </div>
     </form>
 @endsection

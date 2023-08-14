@@ -210,7 +210,7 @@
                 <div class="w-full overflow-hidden mt-4 ">
                     @if ($orderdetails->order->status == 'Menunggu Konfirmasi Penjual')
                         <form method="POST"
-                            action="{{ route('reports.update-custom', ['id' => $orderdetails->order->id]) }}">
+                            action="{{ route('reports.updateCustom', ['id' => $orderdetails->order->id]) }}">
                             @csrf
                             {{ method_field('put') }}
                             <h2 class="font-semibold">Aksi : </h2>
@@ -227,7 +227,7 @@
                         </form>
                     @elseif ($orderdetails->order->status == 'Proses Pengembalian')
                         <form method="POST"
-                            action="{{ route('reports.update-custom', ['id' => $orderdetails->order->id]) }}">
+                            action="{{ route('reports.updateCustom', ['id' => $orderdetails->order->id]) }}">
                             @csrf
                             {{ method_field('put') }}
                             <h2 class="font-semibold">Aksi : </h2>

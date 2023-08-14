@@ -69,4 +69,14 @@ class DashboardController extends Controller
             );
         return redirect('/data-reports')->with('success', 'Status Pesanan Berhasil Diubah');
     }
+    public function updateCustom(Request $request, $id)
+    {
+        Order::where('id', $id)
+            ->update(
+                [
+                    'status' => $request->action,
+                ]
+            );
+        return redirect('/data-reports')->with('success', 'Status Pesanan Berhasil Diubah');
+    }
 }

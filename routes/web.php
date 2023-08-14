@@ -89,7 +89,7 @@ Route::middleware(['auth'])->group(function () {
     Route::group(['as' => 'custom.'], function () {
         Route::get('/list-produk-custom', [CustomBatikController::class, 'index'])->name('index');
         Route::post('/custom-check/{id}', [CustomBatikController::class, 'check'])->name('check');
-        Route::post('/custom-check-results/{id}', [CustomBatikController::class, 'results'])->name('results');
+        Route::post('/custom-check-results/{id}', [CustomBatikController::class, 'checkResults'])->name('checkResults');
         Route::post('/custom-batik/{id}', [CustomBatikController::class, 'details'])->name('details');
 
         Route::get('/list-order', [ListOrderController::class, 'index'])->name('orders');
@@ -111,6 +111,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('data-reports', [DashboardController::class, 'index'])->name('dashboard');
         Route::get('detail-reports/{id}', [DashboardController::class, 'detail'])->name('details');
         Route::put('update-reports/{id}', [DashboardController::class, 'update'])->name('update');
+        Route::put('update-custom-status/{id}', [DashboardController::class, 'updateCustom'])->name('updateCustom');
         Route::put('update-return-reports/{id}', [DashboardController::class, 'updateReturn'])->name('update-return');
         Route::get('delete-reports/{id}', [DashboardController::class, 'destroy'])->name('delete');
     });

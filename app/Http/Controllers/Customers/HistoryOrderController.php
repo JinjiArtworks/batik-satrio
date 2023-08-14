@@ -27,6 +27,7 @@ class HistoryOrderController extends Controller
         $detailStatus = OrderDetail::whereOrderId($id)->first(); // already declated a has many from categories, its mean it is beloangsto categories
         $getId = $id;
         $reviews = Review::all();
+        // return dd($reviews);
         $mytime = Carbon::now()->today()->toDateTimeString();
         // return dd($mytime);
         // $NewDate = Date('Y-m-d', strtotime('+3 days'));

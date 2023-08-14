@@ -336,39 +336,36 @@
         </div>
 
         {{-- Review hanya untuk produk NON Custom! --}}
+        {{-- {{ dd($item->product_id) }} --}}
+
         @if ($item->product_id != null)
-            @foreach ($reviews as $r)
+            @if ($item->order->status == 'Selesai')
                 {{-- Kalo belum ngirim review --}}
-                @if ($r->products_id != $r->product_id)
-                    <div class="container grid items-start ">
-                        <div class="col-span-9 space-y-2">
-                            <h3>Kirim Review</h3>
-                            <form action="{{ route('history-order.review', ['id' => $item->product_id]) }}"
-                                method="POST">
-                                @csrf
-                                <div class="flex items-center space-x-1 mb-4">
-                                    <input type="radio" name="rating" value="1">
-                                    <input type="radio" name="rating" value="2">
-                                    <input type="radio" name="rating" value="3">
-                                    <input type="radio" name="rating" value="4">
-                                    <input type="radio" name="rating" value="5">
-                                </div>
-                                <textarea
-                                    class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                    name="comment" placeholder="Berikan Komentar Anda" required></textarea>
-                                <div class="flex justify justify-end">
-                                    <button type="submit"
-                                        class="bg-blue-600 border my-4  border-blue-600 text-white px-4 py-2 font-medium rounded  gap-2 hover:bg-transparent hover:text-blue-600 transition">
-                                        Checkout
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
+                <div class="container grid items-start ">
+                    <div class="col-span-9 space-y-2">
+                        <h3>Kirim Review</h3>
+                        <form action="{{ route('history-order.review', ['id' => $item->product_id]) }}" method="POST">
+                            @csrf
+                            <div class="flex items-center space-x-1 mb-4">
+                                <input type="radio" name="rating" value="1">
+                                <input type="radio" name="rating" value="2">
+                                <input type="radio" name="rating" value="3">
+                                <input type="radio" name="rating" value="4">
+                                <input type="radio" name="rating" value="5">
+                            </div>
+                            <textarea
+                                class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                name="comment" placeholder="Berikan Komentar Anda" required></textarea>
+                            <div class="flex justify justify-end">
+                                <button type="submit"
+                                    class="bg-blue-600 border my-4  border-blue-600 text-white px-4 py-2 font-medium rounded  gap-2 hover:bg-transparent hover:text-blue-600 transition">
+                                    Checkout
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                @else
-                    Anda Sudah Memberikan Review Terhadap Produk Ini
-                @endif
-            @endforeach
+                </div>
+            @endif
         @endif
     </div>
 @endsection

@@ -108,7 +108,6 @@
                                                 </div>
                                             </div>
                                         </td>
-
                                         <td class="px-4 py-3 text-sm">
                                             {{ $item->tanggal }}
                                         </td>
@@ -121,15 +120,6 @@
                                                 {{ $item->status }}
                                             </span>
                                         </td>
-
-                                        <form method="GET" action="{{ route('history.details', ['id' => $item->id]) }}">
-                                            <td class="px-4 py-3 text-sm">
-                                                <button type="submit"
-                                                    class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                                    Details
-                                                </button>
-                                            </td>
-                                        </form>
                                     </tr>
                                 @endif
                             @endforeach
