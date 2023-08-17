@@ -36,7 +36,7 @@
                 </svg>
                 <a href="#"
                     class="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">Custom
-                    Batik {{ $gender }}</a>
+                    Batik </a>
             </div>
         </li>
     </ol>
@@ -88,10 +88,8 @@
             </div>
         </div>
     </div> --}}
-    <form method="POST" action="{{ route('custom.checkResults', ['id' => $gender_id]) }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('custom.checkResults')}}" enctype="multipart/form-data">
         @csrf
-        <input type="hidden" name="gender" value="{{ $gender }}">
-        <input type="hidden" name="gender_id" value="{{ $gender_id }}">
         {{-- begitu hasil sudah di dapatkan, return redirect back ke halaman ini, dan kirimkan data kehalaman itu sendiri --}}
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <h3 class=" font-semibold text-gray-900 mt-4">Pilih Warna Batik</h3>
@@ -138,7 +136,7 @@
             </ul>
             <button type="submit"
                 class="bg-blue-600 border border-blue-600 text-white px-4 py-2 font-medium rounded  gap-2 hover:bg-transparent hover:text-blue-600 transition">
-                Selanjutnya
+                Check Hasil
             </button>
 {{-- 
             <h3 class=" font-semibold text-gray-900">Hasil : </h3>

@@ -106,12 +106,7 @@
                             <div class="flex flex-col justify-between w-full pb-4">
                                 <div class="flex justify-between w-full pb-2 space-x-2">
                                     <div class="space-y-1">
-                                        <h3 class="text-lg font-semibold leadi sm:pr-8"> Custom Batik {{ $c['motif'] }}
-                                            @if ($c['id'] == 1)
-                                                Wanita
-                                            @else
-                                                Pria
-                                            @endif
+                                        <h3 class="text-lg font-semibold leadi sm:pr-8"> Custom Batik
                                         </h3>
                                         <p class="text-sm  dark:text-gray-400">Request Ukuran : {{ $c['size'] }}</p>
                                     </div>
@@ -175,16 +170,6 @@
                             <h4 class="text-gray-800 text-lg font-medium">Detail Pesanan</h4>
                         </tr>
                         <tr>
-                            <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Gender</th>
-                            <th class="py-2 px-4 border border-gray-300 ">
-                                @if ($c['id'] == 1)
-                                    <input type="hidden" name="gender" value="Wanita">Wanita
-                                @else
-                                    <input type="hidden" name="gender" value="Pria">Pria
-                                @endif
-                            </th>
-                        </tr>
-                        <tr>
                             <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Warna Dasar</th>
                             <th class="py-2 px-4 border border-gray-300 ">{{ $c['warna'] }}</th>
                         </tr>
@@ -197,8 +182,8 @@
                             <th class="py-2 px-4 border border-gray-300 ">{{ $c['model'] }}</th>
                         </tr>
                         <tr>
-                            <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Lengan</th>
-                            <th class="py-2 px-4 border border-gray-300 ">{{ $c['lengan'] }}</th>
+                            <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Tipe</th>
+                            <th class="py-2 px-4 border border-gray-300 ">{{ $c['tipe'] }}</th>
                         </tr>
                         <tr>
                             <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Kain</th>

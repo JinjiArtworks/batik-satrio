@@ -89,16 +89,6 @@
                     @foreach ($list as $key => $c)
                         <table class="table-auto border-collapse w-full text-left text-gray-600 text-sm mt-2">
                             <tr>
-                                <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Gender</th>
-                                <th class="py-2 px-4 border border-gray-300 ">
-                                    @if ($c['id'] == 1)
-                                        <input type="hidden" name="gender" value="Wanita">Wanita
-                                    @else
-                                        <input type="hidden" name="gender" value="Pria">Pria
-                                    @endif
-                                </th>
-                            </tr>
-                            <tr>
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Warna Dasar</th>
                                 <th class="py-2 px-4 border border-gray-300 ">{{ $c['warna'] }}</th>
                             </tr>
@@ -112,7 +102,7 @@
                             </tr>
                             <tr>
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Lengan</th>
-                                <th class="py-2 px-4 border border-gray-300 ">{{ $c['lengan'] }}</th>
+                                <th class="py-2 px-4 border border-gray-300 ">{{ $c['tipe'] }}</th>
                             </tr>
                             <tr>
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Kain</th>
@@ -134,7 +124,7 @@
                     @foreach ($list as $key => $c)
                         <div class="space-y-2">
                             <div class="flex justify-between">
-                                <img class="object-cover w-20 h-22" src="{{ asset('images/'.$c['images']) }}">
+                                <img class="object-cover w-20 h-22" src="{{ asset('images/' . $c['images']) }}">
                                 <div>
                                     <h5 class="text-gray-800 text-lg font-semibold">Custom Batik {{ $c['motif'] }}
                                         @if ($c['id'] == 1)
@@ -156,38 +146,83 @@
                         </div>
                         <div class="flex justify-between border-b border-gray-200 mt-1 text-gray-800 font-medium py-3 ">
                             <p>Sub Total</p>
-                            <p>@currency($total)</p>
+                            <p class="font-bold">@currency($total)</p>
                         </div>
 
                         <div class="flex justify-between border-b border-gray-200 mt-1 text-gray-800 font-medium py-3 ">
                             <p>Biaya Pengiriman</p>
                             <p>@currency($cekongkir)</p>
                         </div>
-
+                        <div class="flex justify-between border-b border-gray-200 mt-1 text-gray-800 font-medium py-3 ">
+                            <p>Metode Pembayaran</p>
+                            <select name="pembayaran" id="payment-type" required
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 ">
+                                <option value="Saldo"> Saldo</option>
+                                <option value="Transfer"> Dompet Digital</option>
+                            </select>
+                        </div>
                         <div class="flex justify-between text-gray-800 font-medium py-3 ">
                             <p class="font-bold">Total</p>
                             <p class="font-bold">@currency($grandTotal)</p>
                         </div>
+                        <div class="flex justify-end text-gray-800 font-medium mt-4">
+                            <button type="submit"
+                                class="confirm flex px-2 py-2 text-center bg-blue-600 text-white font-medium rounded"
+                                id="pay_saldo">Bayar
+                            </button>
+                        </div>
                     @endforeach
-                    <div class="flex items-center mb-4 mt-2">
-                        <input type="checkbox" name="aggrement" id="aggrement"
-                            class="text-primary focus:ring-0 rounded-sm cursor-pointer w-3 h-3" required>
-                        <label for="aggrement" class="text-gray-600 ml-3 cursor-pointer text-sm">I agree to the <a
-                                href="#" class="text-blue-600">terms & conditions</a></label>
-                    </div>
                 </div>
-
             </div>
         </form>
-        <div class="grid container items-start gap-6">
+        <div class="flex justify-end text-gray-800 font-medium p-4">
             <button id="pay-button"
-                class="pay block mt-4 w-full px-2 py-2 text-center bg-blue-600 border border-blue-600 text-white font-medium rounded gap-2 hover:bg-transparent hover:text-blue-600 transition">
-                Checkout
+                class="pay flex px-2 py-2 text-center bg-blue-600 border border-blue-600 text-white font-medium rounded gap-2 hover:bg-transparent hover:text-blue-600 transition"
+                style="display: none">
+                Bayar
             </button>
         </div>
     </div>
 @endsection
 @section('script')
+    <script type="text/javascript">
+        $('.confirm').click(function(event) {
+
+            event.preventDefault();
+            var form = $(this).closest("form");
+            Swal.fire({
+                title: 'Konfirmasi Pembayaran?',
+                icon: 'success',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    if ({{ $userSaldo }} > {{ $grandTotal }}) {
+                        form.submit();
+                    } else {
+                        event.preventDefault();
+                        Swal.fire({
+                            title: 'Saldo anda tidak cukup.',
+                            icon: 'error',
+                        })
+                    }
+                }
+            });
+
+        });
+        $("#payment-type").change(function() {
+            var control = $(this);
+            if (control.val() == "Saldo") {
+                $("#pay_saldo").show();
+                $("#pay-button").hide();
+            } else if (control.val() == 'Transfer') {
+                $("#pay-button").show();
+                $("#pay_saldo").hide();
+            }
+        });
+    </script>
     <script type="text/javascript">
         $(document).ready(function() {
             $(document).on('click', '.pay', function() {

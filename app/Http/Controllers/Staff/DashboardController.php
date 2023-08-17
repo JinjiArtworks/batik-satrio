@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Models\Returns;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -30,7 +31,7 @@ class DashboardController extends Controller
         $totalClients = $getClients->count();
 
         // Total Orders
-        $filterPendapatan = Order::where('status', '=', 'Selesai')->orWhere('status','=','Ajuan Pengembalian Ditolak')->get();
+        $filterPendapatan = Order::where('status', '=', 'Selesai')->orWhere('status', '=', 'Ajuan Pengembalian Ditolak')->get();
         $sumPendapatan = collect($filterPendapatan)->sum('total');
         $totalOngkir = collect($filterPendapatan)->sum('ongkos_kirim');
         $pendapatanBersih = $sumPendapatan - $totalOngkir;
@@ -42,14 +43,14 @@ class DashboardController extends Controller
     }
     public function detail($id)
     {
-        $orderdetails = OrderDetail::whereOrderId($id)->first(); 
+        $orderdetails = OrderDetail::whereOrderId($id)->get();
+        $getOrderDetails = OrderDetail::whereOrderId($id)->first();
         // $details = OrderDetail::whereOrderId($id)->get(); // already declated a has many from categories, its mean it is beloangsto categories
         // {{ $item->order->status }}
-
         $returnOrder = Returns::whereOrdersId($id)->first();
-        return view('staff.reports.detail-reports', compact('orderdetails','returnOrder'));
+        return view('staff.reports.detail-reports', compact('orderdetails', 'returnOrder', 'getOrderDetails'));
     }
-    public function update(Request $request, $id)
+    public function update($id)
     {
         Order::where('id', $id)
             ->update(
@@ -61,12 +62,32 @@ class DashboardController extends Controller
     }
     public function updateReturn(Request $request, $id)
     {
-        Order::where('id', $id)
-            ->update(
-                [
-                    'status' => $request->action,
-                ]
-            );
+        // return dd($request->grandTotal);
+        $user = Auth::user()->id;
+        $userSaldo = Auth::user()->saldo;
+        if ($request->status == 'Ajuan Pengembalian Diterima') {
+            Order::where('id', $id)
+                ->update(
+                    [
+                        'status' => $request->action
+                    ]
+                );
+            User::where('id', $user)
+                ->update(
+                    [
+                        'saldo' => $userSaldo + $request->grandTotal,
+                    ]
+                );
+
+        } else {
+            Order::where('id', $id)
+                ->update(
+                    [
+                        'status' => $request->action,
+                    ]
+                );
+        }
+
         return redirect('/data-reports')->with('success', 'Status Pesanan Berhasil Diubah');
     }
     public function updateCustom(Request $request, $id)

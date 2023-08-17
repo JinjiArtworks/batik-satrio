@@ -108,11 +108,7 @@
                             </div>
                             <div class="w-1/3">
                                 <h2 class="text-gray-800 text-xl font-medium ">Produk Custom
-                                    @if ($item->orderdetail->request_gender == 'Wanita')
-                                        Wanita
-                                    @else
-                                        Pria
-                                    @endif
+                                
                                 </h2>
                                 @if ($item->status == 'Pesanan Custom Ditolak')
                                     <p class="text-gray-500 text-sm">Status: <span

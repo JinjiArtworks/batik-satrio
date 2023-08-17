@@ -36,7 +36,7 @@
                 </svg>
                 <a href="#"
                     class="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">Custom
-                    Batik {{ $gender }}</a>
+                    Batik </a>
             </div>
         </li>
     </ol>
@@ -45,10 +45,8 @@
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 border-b">
         <p>Proses pemesanan custom batik akan dikerjakan dalam waktu 3 hari. Silahkan mengisikan formulir berikut ini.</p>
     </div>
-    <form method="POST" action="{{ route('custom.details', ['id' => $gender_id]) }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('custom.details') }}" enctype="multipart/form-data">
         @csrf
-        <input type="hidden" name="gender" value="{{ $gender }}">
-        <input type="hidden" name="gender_id" value="{{ $gender_id }}">
         {{-- begitu hasil sudah di dapatkan, return redirect back ke halaman ini, dan kirimkan data kehalaman itu sendiri --}}
         <div class="max-w-screen-xl flex justify-between items-center mx-auto p-4">
             <ul class=" text-sm font-medium text-gray-900  rounded-lg sm:flex ">

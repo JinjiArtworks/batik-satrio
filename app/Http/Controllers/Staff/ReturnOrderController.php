@@ -7,7 +7,9 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Models\Returns;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReturnOrderController extends Controller
 {
@@ -19,12 +21,15 @@ class ReturnOrderController extends Controller
     }
     public function update(Request $request, $id)
     {
+        // return dd($request->grandTotal);
+
         Order::where('id', $id)
             ->update(
                 [
                     'status' => $request->status
                 ]
             );
+
         return redirect('/data-return')->with('success', 'Status pesanan berhasil diubah');
     }
     public function confirmReturn($id)

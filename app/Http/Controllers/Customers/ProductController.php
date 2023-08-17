@@ -6,6 +6,7 @@ use App\Models\Categories;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use App\Models\Product;
+use App\Models\User;
 use App\Models\Wishlist;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,7 +17,8 @@ class ProductController extends Controller
         $products = Product::all();
         $cat = Categories::all();
         // return dd($products);
-        return view('customers.products.shop', compact('products','cat'));
+
+        return view('customers.products.shop', compact('products', 'cat'));
     }
     public function detail($id)
     {
@@ -46,7 +48,19 @@ class ProductController extends Controller
         } else {
             $products = Product::get();;
         }
-        return view('customers.products.shop', compact('products','cat'));
+        return view('customers.products.shop', compact('products', 'cat'));
+    }
+    public function topupSaldo(Request $request)
+    {
+        $user = Auth::user()->id;
+        $userSaldo = Auth::user()->saldo;
+        User::where('id', $user)
+            ->update(
+                [
+                    'saldo' => $userSaldo + $request->nominal,
+                ]
+            );
+        return redirect('/')->with('success','saldo berhasil ditambahkan');
     }
     // public function searchByCat(Request $request)
     // {

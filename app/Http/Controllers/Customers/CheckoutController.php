@@ -21,11 +21,13 @@ class CheckoutController extends Controller
     {
         // dd($request->courier);
         $user = Auth::user();
+        $userSaldo = Auth::user()->saldo;
+        // return dd($userSaldo);
         $courierName = $request->courier;
         $cart = session()->get('cart');
         $usersCity = Auth::user()->city_id;
         $usersProvince = Auth::user()->province_id;
-        
+
         $city  = City::whereId($usersCity)->get('name');
         $provinces  = Province::whereId($usersProvince)->get('name');
 
@@ -96,12 +98,13 @@ class CheckoutController extends Controller
         );
         $snapToken = \Midtrans\Snap::getSnapToken($params);
         // dd($params);
-        return view('customers.cart.checkout', ['snap_token' => $snapToken],  compact('cart', 'cekongkir', 'courierName', 'city', 'provinces'));
+        return view('customers.cart.checkout', ['snap_token' => $snapToken],  compact('cart', 'userSaldo', 'cekongkir', 'courierName', 'city', 'provinces'));
     }
 
     public function store(Request $request)
     {
         $user = Auth::user();
+        $userSaldo = Auth::user()->saldo;
         $json = json_decode($request->get('json'));
         $cart = session()->get('cart');
         $orders = new Order();
@@ -111,7 +114,17 @@ class CheckoutController extends Controller
         $orders->alamat = $user->address;
         $orders->tanggal = Carbon::now();
         $orders->ongkos_kirim = $request->ongkir; // belum, gunakan raja ongkir
-        $orders->jenis_pembayaran = $json->payment_type; // belum, gunakan payment gateway untuk dapat jenis pembayarannya
+        if ($request->pembayaran == 'Transfer') {
+            $orders->jenis_pembayaran = $json->payment_type; // belum, gunakan payment gateway untuk dapat jenis pembayarannya
+        } else {
+            User::where('id', $user->id)
+                ->update(
+                    [
+                        'saldo' => $userSaldo - $request->grandTotal,
+                    ]
+                );
+            $orders->jenis_pembayaran = $request->pembayaran; // belum, gunakan payment gateway untuk dapat jenis pembayarannya
+        }
         $orders->jenis_pesanan = 'Non Custom';
         $orders->status = 'Sedang Diproses';
         $orders->ekspedisi = $request->courierName; // belum, gunakan raja ongkir
@@ -132,14 +145,12 @@ class CheckoutController extends Controller
             $details->minimal_order = $item['minimal_order'];
             $details->save();
             $product = Product::find($item['id']);
-            // return dd($product);
-            $product::where('id', $item['id'])
-                ->update(
-                    [
-                        'stok' => $product["stok"] - $item["quantity"],
-                        'terjual' => $product["terjual"] + $item["quantity"],
-                    ]
-                );
+            $product::where('id', $item['id'])->update(
+                [
+                    'stok' => $product["stok"] - $item["quantity"],
+                    'terjual' => $product["terjual"] + $item["quantity"],
+                ]
+            );
         }
         if (!$saved) {
             return redirect('/')->with('warning', 'Silahkan Menyelesaikan Pembayaran');

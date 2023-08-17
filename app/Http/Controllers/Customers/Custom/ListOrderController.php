@@ -30,22 +30,22 @@ class ListOrderController extends Controller
         return view('customers.custom.list-order', compact('list', 'city', 'allCities', 'usersCity', 'usersProvince', 'allProvince', 'allEkspedisi', 'province'));
     }
 
-    public function addList(Request $request, $id)
+    public function addList(Request $request)
     {
         // return dd($request->all());
-        $list[$id] = [
-            "id" => $request->gender_id,
+        $list[] = [
+            "id" => 1,
             "harga" => $request->harga,
             "model" => $request->model,
             "kain" => $request->kain,
+            "images" => $request->images,
             "weight" => 350,
-            "lengan" => $request->lengan,
+            "tipe" => $request->tipe,
             "quantity" => $request->post('quantity'),
             "size" => $request->size,
             "warna" => $request->warna,
             "images" => $request->images,
             "motif" => $request->motif,
-            "gender" => $request->gender,
             "total_after_disc" => $request->harga  * $request->post('quantity')
         ];
         session()->put('list', $list);
@@ -59,6 +59,6 @@ class ListOrderController extends Controller
             unset($list[$id]);
         }
         session()->put('list', $list);
-        return redirect('/list-order')->with('success', 'Pesanan berhasil dihapus!');
+        return redirect('/list-produk-custom')->with('success', 'Pesanan berhasil dihapus!');
     }
 }

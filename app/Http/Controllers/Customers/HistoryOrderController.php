@@ -17,7 +17,6 @@ class HistoryOrderController extends Controller
     {
         $user = Auth::user()->id;
         $orders = Order::whereUsersId($user)->get(); // already declated a has many from categories, its mean it is beloangsto categories\
-        // return dd($orders);
         return view('customers.history.history-order', compact('orders'));
     }
     public function detail($id)

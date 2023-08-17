@@ -6,6 +6,7 @@ use App\Models\Colors;
 use App\Models\Motif;
 use App\Models\Preview;
 use App\Models\Results;
+use App\Models\Tipe;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use LDAP\Result;
@@ -15,33 +16,30 @@ class CustomBatikController extends Controller
     public function index()
     {
         $list = session()->get('list');
-        return view('customers.custom.index', compact('list'));
-    }
-    public function check(Request $request, $id)
-    {
-        // return dd($list);
-        $colors = Colors::all();
-        $motif = Motif::all();
-        $gender = $request->gender;
-        $gender_id = $request->gender_id;
-        $previews = Preview::all();
-        // return dd($previews);
-        return view('customers.custom.custom-check', compact('gender', 'gender_id', 'colors', 'motif', 'previews'));
-    }
-    public function checkResults(Request $request, $id)
-    {
-        // return dd($list);
-        // return dd($request->all());
-        $getWarna = $request->warna;
-        $getMotif = $request->motif;
-        $colors = Colors::whereNama($getWarna)->first();
-        $motif = Motif::whereNama($getMotif)->first();
         $results = Results::all();
-        $gender = $request->gender;
-        $gender_id = $request->gender_id;
-        // return dd($previews);
-        return view('customers.custom.custom-results', compact('gender', 'gender_id', 'colors', 'motif','results'));
+        $getColors = Colors::all();
+        $getMotifs = Motif::all();
+        $getTipe = Tipe::all();
+        $previews = Preview::all();
+        // return dd($getMotifs[0]['nama'], '+', $getColors[0]['nama']);
+        // return dd($results);
+        // return dd($getTipes->gambar);
+        // $getColorsValues = Colors::
+        // return dd($list);
+        return view('customers.custom.index', compact('results', 'getColors', 'getTipe', 'getMotifs', 'previews'));
     }
+    // public function checkResults(Request $request)
+    // {
+    //     $getWarna = $request->warna;
+    //     $getMotif = $request->motif;
+    //     $colors = Colors::whereNama($getWarna)->first();
+    //     $motif = Motif::whereNama($getMotif)->first();
+    //     $results = Results::all();
+    //     $gender = $request->gender;
+    //     $gender_id = $request->gender_id;
+    //     // return dd($previews);
+    //     return view('customers.custom.custom-results', compact('gender', 'gender_id', 'colors', 'motif', 'results'));
+    // }
     // public function results(Request $request, $id)
     // {
     //     // to showing the results based on the rquest!
@@ -66,19 +64,23 @@ class CustomBatikController extends Controller
     //     // if ($motif == )
     // }
 
-    public function details(Request $request, $id)
+    public function details(Request $request)
     {
-        // return dd($list);
-        $gender = $request->gender;
+        $tipe = $request->tipe;
         $motif = $request->motif; //masukkan kedalam session list
         $warna = $request->warna; //masukkan kedalam session list
         // $images = $request->images; //masukkan kedalam session list
-        $images = Preview::where('nama', 'LIKE', '%' . $warna . '%')->orWhere('nama', 'LIKE', '%' . $motif . '%')->first('gambar'); // kalo begini, akan menampilkan hasil dari salah satu yang diinputkan, dan seperti fitur rekomendasi saja _'_
-        // return dd($images);
-        $getImages = $images->gambar;
-        $gender_id = $request->gender_id;
-        // return dd($request->all());
-        return view('customers.custom.custom', compact('gender', 'gender_id', 'motif', 'warna', 'getImages'));
+
+        // $images = Preview::where('nama', 'LIKE', '%' . $warna . '%')->orWhere('nama', 'LIKE', '%' . $motif . '%')->first('gambar'); // kalo begini, akan menampilkan hasil dari salah satu yang diinputkan, dan seperti fitur rekomendasi saja _'_
+        $results = Results::all();
+        foreach ($results as $item) {
+            if ($tipe == $item->tipe && $motif == $item->motif && $warna == $item->warna) {
+                $results2 = $item->results_images;
+            }
+        }
+        session()->put('list');
+
+        return view('customers.custom.custom', compact('motif', 'warna', 'tipe', 'results2'));
     }
 
 

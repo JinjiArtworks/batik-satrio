@@ -29,7 +29,7 @@
             @if (Auth::check())
                 <div class="flex items-center md:order-2">
                     <button type="button"
-                        class="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                        class="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 "
                         id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
                         data-dropdown-placement="bottom">
                         <span class="sr-only">Open user menu</span>
@@ -42,25 +42,33 @@
                             <div class="px-4 py-3">
                                 <span
                                     class="block text-sm text-gray-900 dark:text-white">{{ Auth::user()->name }}</span>
-                                <span
-                                    class="block text-sm  text-gray-500 truncate dark:text-gray-400">{{ Auth::user()->email }}</span>
+                                <span class="block text-sm  text-gray-500 truncate ">{{ Auth::user()->email }}</span>
+                                <span class="block text-sm  text-gray-500 truncate ">Saldo :
+                                    @currency(Auth::user()->saldo)</span>
+                                <span class="block text-sm  text-gray-500 truncate "> <button
+                                        data-modal-target="topup-modal"
+                                        data-modal-toggle="topup-modal" class="underline text-blue-700"
+                                        type="button">
+                                        Tambah saldo
+                                    </button></span>
+
                             </div>
                             <ul class="py-2" aria-labelledby="user-menu-button">
                                 <li>
                                     <a href="/profile"
-                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Profile</a>
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ">Profile</a>
                                 </li>
                                 <li>
                                     <a href="/cart"
-                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Keranjang</a>
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ">Keranjang</a>
                                 </li>
                                 <li>
                                     <a href="/wishlist"
-                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Wishlist</a>
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ">Wishlist</a>
                                 </li>
                                 <li>
                                     <a href="/history-order"
-                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Pesanan</a>
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ">Pesanan</a>
                                 </li>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
@@ -72,14 +80,51 @@
                                 </form>
                             </ul>
                         </div>
+                        <!-- Main modal -->
+                        <div id="topup-modal" tabindex="-1" aria-hidden="true"
+                            class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                            <div class="relative w-full max-w-md max-h-full">
+                                <!-- Modal content -->
+                                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                    <button type="button"
+                                        class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                        data-modal-hide="topup-modal">
+                                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                            fill="none" viewBox="0 0 14 14">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                        </svg>
+                                        <span class="sr-only">Close modal</span>
+                                    </button>
+                                    <div class="px-6 py-6 lg:px-8">
+                                        <h3 class="mb-4 text-xl font-medium text-gray-900">Tambah saldo</h3>
+                                        <form method="POST"
+                                            action="{{ route('products.topupSaldo', ['id' => Auth::user()->id]) }}"
+                                            enctype="multipart/form-data">
+                                            @csrf
+                                            <div>
+                                                <label for="nominal"
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nominal
+                                                    Saldo : </label>
+                                                <input type="number" name="nominal" required
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                            </div>
+                                            <button type="submit"
+                                                class="confirmTopUp w-full mt-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                                Submit
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     @else
                         <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow"
                             id="user-dropdown">
                             <div class="px-4 py-3">
                                 <span
                                     class="block text-sm text-gray-900 dark:text-white">{{ Auth::user()->name }}</span>
-                                <span
-                                    class="block text-sm  text-gray-500 truncate dark:text-gray-400">{{ Auth::user()->email }}</span>
+                                <span class="block text-sm  text-gray-500 truncate ">{{ Auth::user()->email }}</span>
                             </div>
                             <ul class="py-2" aria-labelledby="user-menu-button">
                                 <li>
@@ -141,11 +186,11 @@
                         <ul class="py-2" aria-labelledby="user-menu-button">
                             <li>
                                 <a href="/login"
-                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Login</a>
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ">Login</a>
                             </li>
                             <li>
                                 <a href="/register"
-                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Register</a>
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ">Register</a>
                             </li>
                         </ul>
                     </div>
@@ -199,7 +244,7 @@
                 <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
                     <div>
                         <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Resources</h2>
-                        <ul class="text-gray-600 dark:text-gray-400 font-medium">
+                        <ul class="text-gray-600  font-medium">
                             <li class="mb-4">
                                 <a href="https://flowbite.com/" class="hover:underline">Flowbite</a>
                             </li>
@@ -210,7 +255,7 @@
                     </div>
                     <div>
                         <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Follow us</h2>
-                        <ul class="text-gray-600 dark:text-gray-400 font-medium">
+                        <ul class="text-gray-600  font-medium">
                             <li class="mb-4">
                                 <a href="https://github.com/themesberg/flowbite" class="hover:underline ">Github</a>
                             </li>
@@ -221,7 +266,7 @@
                     </div>
                     <div>
                         <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Legal</h2>
-                        <ul class="text-gray-600 dark:text-gray-400 font-medium">
+                        <ul class="text-gray-600  font-medium">
                             <li class="mb-4">
                                 <a href="#" class="hover:underline">Privacy Policy</a>
                             </li>
@@ -234,8 +279,8 @@
             </div>
             <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
             <div class="sm:flex sm:items-center sm:justify-between">
-                <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a
-                        href="https://flowbite.com/" class="hover:underline">Flowbite™</a>. All Rights Reserved.
+                <span class="text-sm text-gray-500 sm:text-center ">© 2023 <a href="https://flowbite.com/"
+                        class="hover:underline">Flowbite™</a>. All Rights Reserved.
                 </span>
                 <div class="flex mt-4 space-x-6 sm:justify-center sm:mt-0">
                     <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
@@ -284,6 +329,24 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://app.sandbox.midtrans.com/snap/snap.js"></script>
+    <script type="text/javascript">
+        $('.confirmTopUp').click(function(event) {
+            event.preventDefault();
+            var form = $(this).closest("form");
+            Swal.fire({
+                title: 'Konfirmasi?',
+                icon: 'success',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            })
+        });
+    </script>
     @yield('script')
 </body>
 

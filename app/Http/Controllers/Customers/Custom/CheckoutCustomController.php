@@ -21,6 +21,7 @@ class CheckoutCustomController extends Controller
         // dd($request->courier);
         // return dd($request->all()); 
         $user = Auth::user();
+        $userSaldo = Auth::user()->saldo;
         $courierName = $request->courier;
         // return dd($courierName);
         $list = session()->get('list');
@@ -93,12 +94,13 @@ class CheckoutCustomController extends Controller
         );
         $snapToken = \Midtrans\Snap::getSnapToken($params);
         // dd($params);
-        return view('customers.custom.checkout', ['snap_token' => $snapToken],  compact('list', 'cekongkir', 'courierName', 'city'));
+        return view('customers.custom.checkout', ['snap_token' => $snapToken],  compact('list','userSaldo', 'cekongkir', 'courierName', 'city'));
     }
 
     public function store(Request $request)
     {
         $user = Auth::user();
+        $userSaldo = Auth::user()->saldo;
         $json = json_decode($request->get('json'));
         $list = session()->get('list');
         // return dd($list);
@@ -110,7 +112,17 @@ class CheckoutCustomController extends Controller
         $orders->alamat = $user->address;
         $orders->tanggal = Carbon::now();
         $orders->ongkos_kirim = $request->ongkir; // belum, gunakan raja ongkir
-        $orders->jenis_pembayaran = $json->payment_type; // belum, gunakan payment gateway untuk dapat jenis pembayarannya
+        if ($request->pembayaran == 'Transfer') {
+            $orders->jenis_pembayaran = $json->payment_type;
+        } else {
+            User::where('id', $user->id)
+                ->update(
+                    [
+                        'saldo' => $userSaldo - $request->grandTotal,
+                    ]
+                );
+            $orders->jenis_pembayaran = $request->pembayaran; 
+        }
         $orders->jenis_pesanan = 'Custom';
         $orders->status = 'Menunggu Konfirmasi Penjual';
         $orders->preorder = '3 Hari';
@@ -121,13 +133,12 @@ class CheckoutCustomController extends Controller
             $details = new OrderDetail();
             $details->order_id = $orders->id;
             $details->quantity = $item['quantity'];
-            $details->request_gender = $request->gender;
             $details->request_warna = $item['warna'];
             $details->request_ukuran = $item['size'];
             $details->request_kain = $item['kain'];
             $details->request_model = $item['model'];
             $details->request_motif = $item['motif'];
-            $details->request_lengan = $item['lengan'];
+            $details->request_lengan = $item['tipe'];
             $details->request_result = $item['images'];
             $details->harga = $item['harga'];
             $details->save();

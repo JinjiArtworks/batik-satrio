@@ -185,9 +185,11 @@
                             <tr
                                 class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                                 <th class="px-4 py-3">Nama</th>
+                                <th class="px-4 py-3">Nomor Handphone</th>
                                 <th class="px-4 py-3">Tanggal</th>
                                 <th class="px-4 py-3">Alamat</th>
                                 <th class="px-4 py-3">Jenis Pesanan</th>
+                                <th class="px-4 py-3">Ongkos Kirim</th>
                                 <th class="px-4 py-3">Grand Total</th>
                                 <th class="px-4 py-3">Status</th>
                             </tr>
@@ -195,16 +197,11 @@
                         <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                             @foreach ($orders as $item)
                                 <tr class="text-gray-700 dark:text-gray-400">
-                                    <td class="px-4 py-3">
-                                        <div class="flex items-center text-sm">
-                                            <!-- Avatar with inset shadow -->
-                                            <div>
-                                                <p class="font-semibold">{{ $item->nama }}</p>
-                                                <p class="text-xs text-gray-600 dark:text-gray-400">
-                                                    {{ $item->nomor_hp }}
-                                                </p>
-                                            </div>
-                                        </div>
+                                    <td class="px-4 py-3 text-sm">
+                                        <p class="font-semibold">{{ $item->nama }}</p>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm">
+                                        {{ $item->nomor_hp }}
                                     </td>
                                     <td class="px-4 py-3 text-sm">
                                         {{ $item->tanggal }}
@@ -216,11 +213,12 @@
                                         {{ $item->jenis_pesanan }}
                                     </td>
                                     <td class="px-4 py-3 text-sm">
+                                        @currency($item->ongkos_kirim)
+                                    </td>
+                                    <td class="px-4 py-3 text-sm">
                                         @currency($item->total)
                                     </td>
-
                                     <td class="px-4 py-3 text-xs">
-
                                         @if ($item->status == 'Selesai')
                                             <span
                                                 class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">

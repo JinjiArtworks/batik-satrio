@@ -67,7 +67,6 @@
             // echo $total;
             $subTotal = $total + $total_XXL;
             $grandTotal = $total + $cekongkir + $total_XXL;
-            // echo $grandTotal;
         }
     @endphp
     <div class="max-w-screen-xl items-center justify-between mx-auto">
@@ -170,23 +169,75 @@
                         <p>Biaya Pengiriman</p>
                         <p>@currency($cekongkir)</p>
                     </div>
-
+                    <div class="flex justify-between border-b border-gray-200 mt-1 text-gray-800 font-medium py-3 ">
+                        <p>Metode Pembayaran</p>
+                        <select name="pembayaran" id="payment-type" required
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 ">
+                            <option value="Saldo"> Saldo</option>
+                            <option value="Transfer"> Dompet Digital</option>
+                        </select>
+                    </div>
                     <div class="flex justify-between text-gray-800 font-medium mt-4 ">
                         <p class="font-bold">Total</p>
                         <p class="font-bold">@currency($grandTotal)</p>
                     </div>
-
+                    <div class="flex justify-end text-gray-800 font-medium mt-4">
+                        <button type="submit"
+                            class="confirm flex px-2 py-2 text-center bg-blue-600 text-white font-medium rounded"
+                            id="pay_saldo">Bayar
+                        </button>
+                    </div>
                 </div>
             </div>
         </form>
-
-        <button id="pay-button"
-            class="pay block mt-4 w-full px-2 py-2 text-center bg-blue-600 border border-blue-600 text-white font-medium rounded gap-2 hover:bg-transparent hover:text-blue-600 transition">
-            Checkout
-        </button>
+        <div class="flex justify-end text-gray-800 font-medium p-4">
+            <button id="pay-button"
+                class="pay flex px-2 py-2 text-center bg-blue-600 border border-blue-600 text-white font-medium rounded gap-2 hover:bg-transparent hover:text-blue-600 transition"
+                style="display: none">
+                Bayar 
+            </button>
+        </div>
     </div>
 @endsection
 @section('script')
+    <script type="text/javascript">
+        $('.confirm').click(function(event) {
+
+            event.preventDefault();
+            var form = $(this).closest("form");
+            Swal.fire({
+                title: 'Konfirmasi Pembayaran?',
+                icon: 'success',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    if ({{ $userSaldo }} > {{ $grandTotal }}) {
+                        form.submit();
+                    } else {
+                        event.preventDefault();
+                        Swal.fire({
+                            title: 'Saldo anda tidak cukup.',
+                            icon: 'error',
+                        })
+                    }
+                }
+            });
+
+        });
+        $("#payment-type").change(function() {
+            var control = $(this);
+            if (control.val() == "Saldo") {
+                $("#pay_saldo").show();
+                $("#pay-button").hide();
+            } else if (control.val() == 'Transfer') {
+                $("#pay-button").show();
+                $("#pay_saldo").hide();
+            }
+        });
+    </script>
     <script type="text/javascript">
         $(document).ready(function() {
             $(document).on('click', '.pay', function() {
@@ -221,6 +272,7 @@
                     $('#submit_form').submit();
                 }
             });
+
         });
     </script>
 @endsection

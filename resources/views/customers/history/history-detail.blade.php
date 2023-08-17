@@ -196,12 +196,6 @@
                                     class="w-full">
                             </div>
                             <h2 class="text-gray-800 text-xl font-medium ">Custom Batik
-
-                                @if ($item->request_gender == 'Wanita')
-                                    Wanita
-                                @else
-                                    Pria
-                                @endif
                                 <p class="text-gray-500 text-sm">Status: <span
                                         class="text-green-600">{{ $item->order->status }}</span>
                                 </p>
@@ -217,16 +211,6 @@
                             <tr>
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Ongkos Kirim</th>
                                 <th class="py-2 px-4 border border-gray-300 ">@currency($item->order->ongkos_kirim)
-                                </th>
-                            </tr>
-                            <tr>
-                                <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Gender</th>
-                                <th class="py-2 px-4 border border-gray-300 ">
-                                    @if ($item->request_gender == 'Wanita')
-                                        Wanita
-                                    @else
-                                        Pria
-                                    @endif
                                 </th>
                             </tr>
                             <tr>
@@ -409,7 +393,7 @@
             event.preventDefault();
             var form = $(this).closest("form");
             Swal.fire({
-                title: 'Kirim Balik Pesanan?',
+                title: 'Kirim Ajuan Pengembalian?',
                 icon: 'success',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',

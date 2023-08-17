@@ -36,7 +36,7 @@
                 </svg>
                 <a href="#"
                     class="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">Custom
-                    Batik {{ $gender }}</a>
+                    Batik</a>
             </div>
         </li>
     </ol>
@@ -45,58 +45,34 @@
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 border-b">
         <p>Proses pemesanan custom batik akan dikerjakan dalam waktu 3 hari. Silahkan mengisikan formulir berikut ini.</p>
     </div>
-    <form method="POST" action="{{ route('custom.add', ['id' => $gender_id]) }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('custom.add') }}" enctype="multipart/form-data">
         @csrf
         {{-- <input type="hidden" value="{{ $get_results }}" name="hasil_request"> --}}
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <input type="hidden" value="50000" name="harga">
-            <input type="hidden" value="{{ $gender_id }}" name="gender_id">
             <input type="hidden" value="{{ $motif }}" name="motif">
             <input type="hidden" value="{{ $warna }}" name="warna">
-            <input type="hidden" value="{{ $gender }}" name="gender">
-            <input type="hidden" value="{{ $getImages }}" name="images">
+            <input type="hidden" value="{{ $tipe }}" name="tipe">
+            <input type="hidden" value="{{ $results2 }}" name="images">
             {{-- {{ dd($images->gambar) }} --}}
             <ul class="items-center w-full text-sm font-medium text-gray-900  rounded-lg sm:flex ">
                 <li class="w-full">
-                    <div class="flex w-full space-x-2 sm:space-x-4">
-                        <img class="flex-shrink-0 object-cover w-20 h-22 dark:border-transparent rounded outline-none sm:w-32 sm:h-32 dark:bg-gray-500"
-                            src="{{ asset('images/' . $getImages) }}">
-                        <div class="flex flex-col justify-between w-full pb-4">
-                            <div class="flex justify-between w-full pb-2 space-x-2">
-                                <div class="space-y-1">
-                                    <h3 class="text-lg font-semibold leadi sm:pr-8"> Custom Batik
-                                        @if ($gender_id == 1)
-                                            Wanita
-                                        @else
-                                            Pria
-                                        @endif
-                                    </h3>
-                                    <p class="text-sm  dark:text-gray-400"> Motif : {{ $motif }}</p>
-                                    <p class="text-sm  dark:text-gray-400">Warna : {{ $warna }}</p>
+                    <div class="flex justify-center w-full space-x-2 sm:space-x-4">
+                        <img class="flex-shrink-0 object-cover w-80 h-80  rounded outline-none "
+                            src="{{ asset('images/' . $results2) }}">
+                    </div>
+                    <div class="flex flex-col w-full pb-4 text-center mt-4">
+                        <div class="flex justify-center w-full pb-2 space-x-2 ">
+                            <div class="space-y-1">
+                                <h3 class="text-lg font-semibold"> Hasil produk custom Anda :
+                                </h3>
+                                <p class="text-sm"> Tipe Lengan: {{ $tipe }}</p>
+                                <p class="text-sm"> Motif : {{ $motif }}</p>
+                                <p class="text-sm">Warna : {{ $warna }}</p>
+                                <div class="mt-4">
+                                    <p class="text-md font-semibold ">Hasil Kurang Sesuai ? <a href="/list-produk-custom"
+                                            class="underline text-blue-600">Pilih Ulang</a></p>
                                 </div>
-                                {{--                               
-                                <div class="text-right">
-                                    <form action="{{ route('custom.remove', ['id' => $c['id']]) }}" method="GET">
-                                        <button type="submit"
-                                            class="flex items-center px-2 py-1 pl-0 space-x-1 text-red-600">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                                class="w-4 h-4 fill-current">
-                                                <path
-                                                    d="M96,472a23.82,23.82,0,0,0,23.579,24H392.421A23.82,23.82,0,0,0,416,472V152H96Zm32-288H384V464H128Z">
-                                                </path>
-                                                <rect width="32" height="200" x="168" y="216">
-                                                </rect>
-                                                <rect width="32" height="200" x="240" y="216">
-                                                </rect>
-                                                <rect width="32" height="200" x="312" y="216">
-                                                </rect>
-                                                <path
-                                                    d="M328,88V40c0-13.458-9.488-24-21.6-24H205.6C193.488,16,184,26.542,184,40V88H64v32H448V88ZM216,48h80V88H216Z">
-                                                </path>
-                                            </svg>
-                                        </button>
-                                    </form>
-                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -131,20 +107,7 @@
                     </div>
                 </li>
             </ul>
-            <h3 class=" font-semibold text-gray-900">Pilih Lengan</h3>
-            <ul class="items-center w-full text-sm font-medium text-gray-900  rounded-lg sm:flex ">
-                <li class="w-full">
-                    <div class="flex items-center mb-4">
-                        <select id="lengan" name="lengan"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                            required>
-                            <option value="">-- Pilih Ukuran Lengan-- </option>
-                            <option value="Lengan Panjang">Lengan Panjang</option>
-                            <option value="Lengan Pendek">Lengan Pendek</option>
-                        </select>
-                    </div>
-                </li>
-            </ul>
+           
             <h3 class=" font-semibold text-gray-900">Quantity</h3>
             <ul class="items-center w-full text-sm font-medium text-gray-900  rounded-lg sm:flex ">
                 <li class="w-full">
