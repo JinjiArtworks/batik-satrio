@@ -65,29 +65,12 @@ class DashboardController extends Controller
         // return dd($request->grandTotal);
         $user = Auth::user()->id;
         $userSaldo = Auth::user()->saldo;
-        if ($request->status == 'Ajuan Pengembalian Diterima') {
-            Order::where('id', $id)
-                ->update(
-                    [
-                        'status' => $request->action
-                    ]
-                );
-            User::where('id', $user)
-                ->update(
-                    [
-                        'saldo' => $userSaldo + $request->grandTotal,
-                    ]
-                );
-
-        } else {
-            Order::where('id', $id)
-                ->update(
-                    [
-                        'status' => $request->action,
-                    ]
-                );
-        }
-
+        Order::where('id', $id)
+            ->update(
+                [
+                    'status' => $request->action
+                ]
+            );
         return redirect('/data-reports')->with('success', 'Status Pesanan Berhasil Diubah');
     }
     public function updateCustom(Request $request, $id)

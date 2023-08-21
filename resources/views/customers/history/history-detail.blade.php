@@ -97,6 +97,17 @@
                                     </button>
                                 </p>
                             </form>
+                        @elseif ($detailStatus->order->status == 'Pesanan Dikirim Balik Kepada Penjual')
+                            <span
+                                class="px-2 py-1 leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                                {{ $detailStatus->order->status }} - Menunggu Dikonfirmasi
+                            </span>
+                        @elseif ($detailStatus->order->status == 'Pengembalian Diterima Penjual')
+                            <span
+                                class="px-2 py-1 leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                                {{ $detailStatus->order->status }}
+                            </span>
+                            <p>Saldo transaksi yang anda gunakan akan kembali dalam waktu 1x24 Jam.</p>
                         @else
                             <span
                                 class="px-2 py-1 leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">

@@ -49,7 +49,7 @@
                         stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                         <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
                     </svg>
-                    <span class="ml-4">Ajuan Pengembalian</span>
+                    <span class="ml-4">Pengembalian Pesanan/span>
                 </a>
             </li>
             <li class="relative px-6 py-3">

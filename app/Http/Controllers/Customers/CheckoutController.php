@@ -104,7 +104,7 @@ class CheckoutController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        $userSaldo = Auth::user()->saldo;
+        // $userSaldo = Auth::user()->saldo;
         $json = json_decode($request->get('json'));
         $cart = session()->get('cart');
         $orders = new Order();
@@ -114,17 +114,17 @@ class CheckoutController extends Controller
         $orders->alamat = $user->address;
         $orders->tanggal = Carbon::now();
         $orders->ongkos_kirim = $request->ongkir; // belum, gunakan raja ongkir
-        if ($request->pembayaran == 'Transfer') {
-            $orders->jenis_pembayaran = $json->payment_type; // belum, gunakan payment gateway untuk dapat jenis pembayarannya
-        } else {
-            User::where('id', $user->id)
-                ->update(
-                    [
-                        'saldo' => $userSaldo - $request->grandTotal,
-                    ]
-                );
-            $orders->jenis_pembayaran = $request->pembayaran; // belum, gunakan payment gateway untuk dapat jenis pembayarannya
-        }
+        // if ($request->pembayaran == 'Transfer') {
+        $orders->jenis_pembayaran = $json->payment_type; // belum, gunakan payment gateway untuk dapat jenis pembayarannya
+        // } else {
+        //     User::where('id', $user->id)
+        //         ->update(
+        //             [
+        //                 'saldo' => $userSaldo - $request->grandTotal,
+        //             ]
+        //         );
+        //     $orders->jenis_pembayaran = $request->pembayaran; // belum, gunakan payment gateway untuk dapat jenis pembayarannya
+        // }
         $orders->jenis_pesanan = 'Non Custom';
         $orders->status = 'Sedang Diproses';
         $orders->ekspedisi = $request->courierName; // belum, gunakan raja ongkir

@@ -169,32 +169,31 @@
                         <p>Biaya Pengiriman</p>
                         <p>@currency($cekongkir)</p>
                     </div>
-                    <div class="flex justify-between border-b border-gray-200 mt-1 text-gray-800 font-medium py-3 ">
+                    {{-- <div class="flex justify-between border-b border-gray-200 mt-1 text-gray-800 font-medium py-3 ">
                         <p>Metode Pembayaran</p>
                         <select name="pembayaran" id="payment-type" required
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 ">
                             <option value="Saldo"> Saldo</option>
                             <option value="Transfer"> Dompet Digital</option>
                         </select>
-                    </div>
+                    </div> --}}
                     <div class="flex justify-between text-gray-800 font-medium mt-4 ">
                         <p class="font-bold">Total</p>
                         <p class="font-bold">@currency($grandTotal)</p>
                     </div>
-                    <div class="flex justify-end text-gray-800 font-medium mt-4">
+                    {{-- <div class="flex justify-end text-gray-800 font-medium mt-4">
                         <button type="submit"
                             class="confirm flex px-2 py-2 text-center bg-blue-600 text-white font-medium rounded"
                             id="pay_saldo">Bayar
                         </button>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </form>
         <div class="flex justify-end text-gray-800 font-medium p-4">
             <button id="pay-button"
-                class="pay flex px-2 py-2 text-center bg-blue-600 border border-blue-600 text-white font-medium rounded gap-2 hover:bg-transparent hover:text-blue-600 transition"
-                style="display: none">
-                Bayar 
+                class="pay flex px-2 py-2 text-center bg-blue-600 border border-blue-600 text-white font-medium rounded gap-2 hover:bg-transparent hover:text-blue-600 transition">
+                Bayar
             </button>
         </div>
     </div>
@@ -227,16 +226,16 @@
             });
 
         });
-        $("#payment-type").change(function() {
-            var control = $(this);
-            if (control.val() == "Saldo") {
-                $("#pay_saldo").show();
-                $("#pay-button").hide();
-            } else if (control.val() == 'Transfer') {
-                $("#pay-button").show();
-                $("#pay_saldo").hide();
-            }
-        });
+        // $("#payment-type").change(function() {
+        //     var control = $(this);
+        //     if (control.val() == "Saldo") {
+        //         $("#pay_saldo").show();
+        //         $("#pay-button").hide();
+        //     } else if (control.val() == 'Transfer') {
+        //         $("#pay-button").show();
+        //         $("#pay_saldo").hide();
+        //     }
+        // });
     </script>
     <script type="text/javascript">
         $(document).ready(function() {

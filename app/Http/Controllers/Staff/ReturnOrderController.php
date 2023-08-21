@@ -15,9 +15,47 @@ class ReturnOrderController extends Controller
 {
     public function index()
     {
-        // $orders = Order::whereStatus('Menunggu Konfirmasi Penjual')->get();
-        $ordersConfirm = Order::whereStatus('Pesanan Dikirim Balik Kepada Penjual')->get();
-        return view('staff.return.index', compact('ordersConfirm'));
+        // payment gateway
+        $orders = Order::all();
+        return view('staff.return.index', compact('orders'));
+        // return dd($request->all());
+        // <form method="POST" action="{{ route('return.confirm', ['id' => $item->id]) }}"
+        // enctype="multipart/form-data" id="submit_form">
+        // @csrf
+    }
+    public function details($id)
+    {
+        // payment gateway
+        $orderdetails = OrderDetail::whereOrderId($id)->get();
+        $getOrderDetails = OrderDetail::whereOrderId($id)->first();
+        // return dd($getOrderDetails->order->total);
+        $returnOrder = Returns::whereOrdersId($id)->first();
+
+        // return dd($ordersConfirm);
+        \Midtrans\Config::$serverKey = 'SB-Mid-server-yUxga--v_4EQ_EKe8TWMMmbZ';
+        // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
+        \Midtrans\Config::$isProduction = false;
+        // Set sanitization on (default)
+        \Midtrans\Config::$isSanitized = true;
+        // Set 3DS transaction for credit card to true
+        \Midtrans\Config::$is3ds = true;
+
+        // $grandTotal =  $oc->total;
+        // $customers =  $oc->nama;
+        $params = array(
+            'transaction_details' => array(
+                'order_id' => rand(),
+                'gross_amount' => $getOrderDetails->order->total,
+            ),
+            'customer_details' => array(
+                'first_name' => $getOrderDetails->order->nama,
+                'phone' => '08111222333',
+            ),
+        );
+        $snapToken = \Midtrans\Snap::getSnapToken($params);
+        return view('staff.return.details', ['snap_token' => $snapToken], compact('getOrderDetails','orderdetails','returnOrder'));
+        // return dd($request->all());
+
     }
     public function update(Request $request, $id)
     {
@@ -34,23 +72,18 @@ class ReturnOrderController extends Controller
     }
     public function confirmReturn($id)
     {
-        $getAllProduct = OrderDetail::whereOrderId($id)->first();
-        $getProductId = $getAllProduct->product_id;
+        $getOrderDetails = OrderDetail::whereOrderId($id)->first();
+        $getProductId = $getOrderDetails->product_id;
+        $getQty = $getOrderDetails->quantity;
 
-        $getAllQty = OrderDetail::whereOrderId($id)->first();
-        $getQty = $getAllQty->quantity;
+        $getProducts = Product::whereId($getProductId)->first();
 
         if ($getProductId != null) {
-            $getAllStock = Product::whereId($getProductId)->first();
-            $getStok = $getAllStock->stok;
-
-            $getAllTerjual = Product::whereId($getProductId)->first();
-            $getTerjual = $getAllTerjual->terjual;
+            // $getAllStock = Product::whereId($getProductId)->first();
+            $getStok = $getProducts->stok;
+            $getTerjual = $getProducts->terjual;
         }
-
-
-        // return dd($getTerjual);
-        if ($getProductId != null) {
+        if ($getProductId != null) { // product non custom
             Product::where('id', $getProductId)
                 ->update(
                     [
@@ -58,15 +91,21 @@ class ReturnOrderController extends Controller
                         'terjual' => $getTerjual - $getQty,
                     ]
                 );
-            Order::where('id', $id)->delete();
-        } else {
             Order::where('id', $id)
                 ->update(
                     [
                         'status' => 'Pengembalian Diterima Penjual'
                     ]
                 );
-            Order::where('id', $id)->delete();
+            // Order::where('id', $id)->delete();
+        } else {
+            Order::where('id', $id) // product custom
+                ->update(
+                    [
+                        'status' => 'Pengembalian Diterima Penjual'
+                    ]
+                );
+            // Order::where('id', $id)->delete();
         }
 
         return redirect('/data-return')->with('success', 'Status pesanan berhasil diubah');

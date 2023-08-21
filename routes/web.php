@@ -130,6 +130,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::group(['as' => 'return.'], function () {
         Route::get('/data-return', [ReturnOrderController::class, 'index'])->name('index');
+        Route::get('/details-return/{id}', [ReturnOrderController::class, 'details'])->name('details');
         Route::put('/update-return/{id}', [ReturnOrderController::class, 'update'])->name('update');
         Route::post('/confirm-return/{id}', [ReturnOrderController::class, 'confirmReturn'])->name('confirm');
         Route::get('/delete-return/{id}', [ReturnOrderController::class, 'destroy'])->name('delete');
