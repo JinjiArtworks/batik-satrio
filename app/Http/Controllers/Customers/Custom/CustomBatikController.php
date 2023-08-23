@@ -70,7 +70,7 @@ class CustomBatikController extends Controller
         $motif = $request->motif; //masukkan kedalam session list
         $warna = $request->warna; //masukkan kedalam session list
         // $images = $request->images; //masukkan kedalam session list
-
+        return dd($request->all());
         // $images = Preview::where('nama', 'LIKE', '%' . $warna . '%')->orWhere('nama', 'LIKE', '%' . $motif . '%')->first('gambar'); // kalo begini, akan menampilkan hasil dari salah satu yang diinputkan, dan seperti fitur rekomendasi saja _'_
         $results = Results::all();
         foreach ($results as $item) {

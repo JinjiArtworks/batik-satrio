@@ -6,7 +6,7 @@
         left: -9999px;
     }
 
-    input[type="radio"]:checked+label>img {
+    /* input[type="radio"]:checked+label>img {
         border: 1px solid rgb(157, 255, 0);
         box-shadow: 0 0 3px 3px #e65b0b;
     }
@@ -24,6 +24,75 @@
     input[type="radio"]+label {
         transition: 500ms all;
         border-style: solid;
+    } */
+
+    /*
+** Author : Chafik Amraoui
+** Date   : 14/09/2020
+** Title  : T-shirt Color Generator
+*/
+
+    :root {
+        --color: rgb(255, 255, 255);
+    }
+
+    /* Global Rules  */
+    *,
+    *::after,
+    *::before {
+        box-sizing: border-box
+    }
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        position: relative;
+        height: 2000px;
+        background-color: rgb(255, 255, 255);
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    /* End Global Rules  */
+    .container {
+        width: 90%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .image_container {
+        width: 100%;
+        height: 500px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .image_container img {
+        width: 400px;
+        display: block;
+        background-color: var(--color);
+        background-image: var(--bg-image);
+    }
+
+    .colors {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100px;
+    }
+
+    .colors ul li {
+        width: 30px;
+        height: 30px;
+        display: inline-block;
+        cursor: pointer;
+
     }
 
     /* input[type="radio"]:checked+label>img {
@@ -110,22 +179,18 @@
                             </div>
                         </div>
                     @endforeach
-
                 </div>
             </div>
         </div>
     </div>
     <!-- product-detail -->
-
     <div class="container grid grid-cols-2 gap-6 mt-4">
-
-        <div>
-            <img id="results-img" src="{{ asset('images/pria.png') }}" alt="product" class="w-full">
+        <div class="image_container">
+            <img id="results-img" src="{{ asset('images/bajus.png') }}" alt="">
         </div>
         <form method="POST" action="{{ route('custom.details') }}" enctype="multipart/form-data">
             @csrf
-            <div class="space-y-2">
-                <p class="space-x-2">
+            {{-- <p class="space-x-2">
                     <span class="text-gray-800 font-semibold">Tipe Pakaian: </span>
                     <span class="text-gray-600">
                         <div class="flex items-center gap-2">
@@ -141,88 +206,120 @@
                             @endforeach
                         </div>
                     </span>
+                </p> --}}
+            <div class="space-y-2">
+                <p class="space-x-2">
+                    <span class="text-gray-800 font-semibold">Pilih Warna: </span>
+                    <span class="text-gray-600">
+                        <div class="flex items-center gap-2">
+                            @foreach ($getColors as $colors)
+                                <div class="color-selector">
+                                    <input type="radio" name="warna" value="{{ $colors->nama }}"
+                                        id="{{ $colors->nama }}" class="hidden">
+                                    <label for="{{ $colors->nama }}" id="colors"
+                                        class="border border-gray-200 rounded-sm h-20 w-20 cursor-pointer shadow-sm block"
+                                        data-color="{{ $colors->hexacode }}"
+                                        style="background-color: {{ $colors->hexacode }}">
+                                    </label>
+                                    {{-- <p class="my-2 flex justify-center text-sm">{{ $colors->nama }}</p> --}}
+                                </div>
+                            @endforeach
+                        </div>
+                    </span>
                 </p>
-
-                <div class="space-y-2">
-                    <p class="space-x-2">
-                        <span class="text-gray-800 font-semibold">Color: </span>
-                        <span class="text-gray-600">
-                            <div class="flex items-center gap-2">
-                                @foreach ($getColors as $colors)
-                                    <div class="color-selector">
-                                        <input type="radio" name="warna" value="{{ $colors->nama }}"
-                                            id="{{ $colors->nama }}" class="hidden">
-                                        <label for="{{ $colors->nama }}"
-                                            class="border border-gray-200 rounded-sm h-20 w-20  cursor-pointer shadow-sm block"
-                                            style="background-color: {{ $colors->hexacode }}"></label>
-                                        {{-- <input type="color" id="colorpicker" value="#0000ff"> --}}
-                                    </div>
-                                @endforeach
-                            </div>
-                        </span>
-                    </p>
-                    <p class="space-x-2">
-                        <span class="text-gray-800 font-semibold">Motif: </span>
-                        <span class="text-gray-600">
-                            <div class="flex items-center gap-2">
-                                @foreach ($getMotifs as $motifs)
-                                    <div class="color-selector">
-                                        <input type="radio" name="motif" value="{{ $motifs->nama }}"
-                                            id="{{ $motifs->nama }}" class="hidden">
-                                        <label for="{{ $motifs->nama }}"
-                                            class="border border-gray-200 rounded-sm w-32  cursor-pointer shadow-sm block">
-                                            <img src="{{ asset('images/' . $motifs->gambar) }}" alt="">
-                                        </label>
-                                        <p class="my-2 flex justify-center text-sm">{{ $motifs->nama }}</p>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </span>
-                    </p>
-                </div>
+                <p class="space-x-2">
+                    <span class="text-gray-800 font-semibold">Motif: </span>
+                    <span class="text-gray-600">
+                        <div class="flex items-center gap-2">
+                            @foreach ($getMotifs as $motifs)
+                                <div class="color-selector">
+                                    <input type="radio" name="motif" value="{{ $motifs->nama }}"
+                                        id="{{ $motifs->nama }}" class="hidden">
+                                    <label for="{{ $motifs->nama }}" id="motif"
+                                        class="border border-gray-200 rounded-sm w-32 cursor-pointer shadow-sm block"
+                                        data-motif="url('images/{{ $motifs->gambar }}')">
+                                        <img src="{{ asset('images/' . $motifs->gambar) }}">
+                                    </label>
+                                    <p class="my-2 flex justify-center text-sm">{{ $motifs->nama }}</p>
+                                </div>
+                            @endforeach
+                        </div>
+                    </span>
+                </p>
                 <button type="submit"
                     class="bg-blue-600 border border-blue-600 text-white px-4 py-2 font-medium rounded  gap-2 hover:bg-transparent hover:text-blue-600 transition">
                     Konfirmasi
                 </button>
             </div>
         </form>
+        <button id="btn">Show Selected Value</button>
+        <p id="output"></p>
     </div>
 @endsection
 @section('script')
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('input[name="tipe"]:radio').click(function() {
-                switch ($(this).val()) {
-                    case "{{ $getTipe[0]['nama'] }}":
-                        $("#results-img").attr("src", "images/" + "{{ $getTipe[0]['gambar'] }}");
-                        break;
-                    case "{{ $tipes->nama }}":
-                        $("#results-img").attr("src", "images/" + "{{ $tipes->gambar }}");
-                        break;
-                }
-            });
-            $('input[name="warna"]:radio').click(function() {
-                switch ($(this).val()) {
-                    case "{{ $getColors[0]['nama'] }}":
-                        $("#results-img").attr("src", "images/" + "{{ $getColors[0]['gambar'] }}");
-                        break;
-                    case "{{ $colors->nama }}":
-                        $("#results-img").attr("src", "images/" + "{{ $colors->gambar }}");
-                        break;
-                }
-            });
-            $('input[name="motif"]:radio').click(function() {
-                switch ($(this).val()) {
-                    case "{{ $getMotifs[0]['nama'] }}":
-                        $("#results-img").attr("src", "images/" + "{{ $getMotifs[0]['gambar'] }}");
-                        break;
-                    case "{{ $motifs->nama }}":
-                        $("#results-img").attr("src", "images/" + "{{ $motifs->gambar }}");
-                        break;
-                }
+    <script>
+        // listColors.forEach(element => {
+        //             element.addEventListener('click', function() {
+
+        //                 let clr = this.getAttribute('data-color');
+        //                 document.documentElement.style.setProperty('--color', clr);
+        //             })
+        //         });
+        // $('input[name="motif"]:radio').click(function() {
+        //     switch ($(this).val()) {
+        //         case "{{ $getMotifs[0]['nama'] }}":
+        //             $("#results-img").attr("src", "images/" + "{{ $getMotifs[0]['gambar'] }}");
+        //             break;
+        //         case "{{ $motifs->nama }}":
+        //             $("#results-img").attr("src", "images/" + "{{ $motifs->gambar }}");
+        //             break;
+        //     }
+        // });
+
+        const btn = document.querySelector('#btn');
+        const radioButtonsWarna = document.querySelectorAll('input[name="warna"]');
+        const radioButtonsMotifs = document.querySelectorAll('input[name="motif"]');
+
+        let listColors = document.querySelectorAll('#colors');
+        let listMotif = document.querySelectorAll('#motif');
+        listColors.forEach(element => {
+            element.addEventListener('click', function() {
+                let clr = this.getAttribute('data-color');
+                document.documentElement.style.setProperty('--color', clr);
+                alert(clr);
+            })
+        });
+        listMotif.forEach(element => {
+            element.addEventListener('click', function() {
+                let motif = this.getAttribute('data-motif');
+                document.documentElement.style.setProperty('--bg-image', motif);
             });
         });
+        // btn.addEventListener("click", () => {
+        //     let selectedWarna;
+        //     let selectedMotif;
+
+        //     for (const radioButton of radioButtonsWarna) {
+        //         if (radioButton.checked) {
+        //             selectedWarna = radioButton.value;
+        //             break;
+        //         }
+        //     }
+        //     for (const radioButton of radioButtonsMotifs) {
+        //         if (radioButton.checked) {
+        //             selectedMotif = radioButton.value;
+        //             break;
+        //         }
+        //     }
+        //     if (selectedWarna == 'Merah' && selectedMotif == 'Mega Mendung') {
+        //         output.innerHTML = "<img src=\"images/no-profile.png\" width=\"400px\" height=\"150px\">";
+        //     }
+        //     // show the output:
+        //     // output.innerText = selectedWarna ? `You selected ${selectedWarna} and ${selectedMotif}` : `You haven't selected any size`;
+        //     //
+        // });
     </script>
+    {{-- for carousel --}}
     <script>
         function gallery() {
             this.index = 0;
