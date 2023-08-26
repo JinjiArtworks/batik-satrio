@@ -77,6 +77,7 @@
         display: block;
         background-color: var(--color);
         background-image: var(--bg-image);
+        content: var(--bg-lengan);
     }
 
     .colors {
@@ -190,25 +191,27 @@
         </div>
         <form method="POST" action="{{ route('custom.details') }}" enctype="multipart/form-data">
             @csrf
-            {{-- <p class="space-x-2">
+            <div class="space-y-2">
+
+                <p class="space-x-2">
                     <span class="text-gray-800 font-semibold">Tipe Pakaian: </span>
                     <span class="text-gray-600">
                         <div class="flex items-center gap-2">
-                            @foreach ($getTipe as $tipes)
-                                <div class="color-selector">
-                                    <input type="radio" name="tipe" value="{{ $tipes->nama }}"
-                                        id="{{ $tipes->nama }}" class="hidden">
-                                    <label for="{{ $tipes->nama }}"
-                                        class="border border-gray-200 rounded-sm w-24  cursor-pointer shadow-sm block">
-                                        <img src="{{ asset('images/' . $tipes->gambar) }}" alt="">
-                                    </label>
-                                </div>
-                            @endforeach
+                                @foreach ($getTipe as $tipes)
+                                    <div class="color-selector">
+                                        <input type="radio" name="tipe" value="{{ $tipes->nama }}"
+                                            id="{{ $tipes->nama }}" class="hidden">
+                                        <label for="{{ $tipes->nama }}" id="lengan"
+                                            class="border border-gray-200 rounded-sm w-24  cursor-pointer shadow-sm block"
+                                            data-lengan="url('images/{{ $tipes->gambar }}')">
+                                            <img src="{{ asset('images/' . $tipes->gambar) }}" alt="">
+                                        </label>
+                                    </div>
+                                @endforeach
                         </div>
                     </span>
-                </p> --}}
-            <div class="space-y-2">
-                <p class="space-x-2">
+                </p>
+                {{-- <p class="space-x-2">
                     <span class="text-gray-800 font-semibold">Pilih Warna: </span>
                     <span class="text-gray-600">
                         <div class="flex items-center gap-2">
@@ -221,12 +224,12 @@
                                         data-color="{{ $colors->hexacode }}"
                                         style="background-color: {{ $colors->hexacode }}">
                                     </label>
-                                    {{-- <p class="my-2 flex justify-center text-sm">{{ $colors->nama }}</p> --}}
+                                    <p class="my-2 flex justify-center text-sm">{{ $colors->nama }}</p>
                                 </div>
                             @endforeach
                         </div>
                     </span>
-                </p>
+                </p> --}}
                 <p class="space-x-2">
                     <span class="text-gray-800 font-semibold">Motif: </span>
                     <span class="text-gray-600">
@@ -258,13 +261,6 @@
 @endsection
 @section('script')
     <script>
-        // listColors.forEach(element => {
-        //             element.addEventListener('click', function() {
-
-        //                 let clr = this.getAttribute('data-color');
-        //                 document.documentElement.style.setProperty('--color', clr);
-        //             })
-        //         });
         // $('input[name="motif"]:radio').click(function() {
         //     switch ($(this).val()) {
         //         case "{{ $getMotifs[0]['nama'] }}":
@@ -280,19 +276,26 @@
         const radioButtonsWarna = document.querySelectorAll('input[name="warna"]');
         const radioButtonsMotifs = document.querySelectorAll('input[name="motif"]');
 
-        let listColors = document.querySelectorAll('#colors');
+        // let listColors = document.querySelectorAll('#colors');
         let listMotif = document.querySelectorAll('#motif');
-        listColors.forEach(element => {
-            element.addEventListener('click', function() {
-                let clr = this.getAttribute('data-color');
-                document.documentElement.style.setProperty('--color', clr);
-                alert(clr);
-            })
-        });
+        let listLengans = document.querySelectorAll('#lengan');
+        // listColors.forEach(element => {
+        //     element.addEventListener('click', function() {
+        //         let clr = this.getAttribute('data-color');
+        //         document.documentElement.style.setProperty('--color', clr);
+        //     })
+        // });
         listMotif.forEach(element => {
             element.addEventListener('click', function() {
                 let motif = this.getAttribute('data-motif');
                 document.documentElement.style.setProperty('--bg-image', motif);
+            });
+        });
+        listLengans.forEach(element => {
+            element.addEventListener('click', function() {
+                let lengan = this.getAttribute('data-lengan');
+                alert(lengan);
+                document.documentElement.style.setProperty('--bg-lengan', lengan);
             });
         });
         // btn.addEventListener("click", () => {

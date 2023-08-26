@@ -17,6 +17,7 @@ class CustomBatikController extends Controller
     {
         $list = session()->get('list');
         $results = Results::all();
+        // return dd($results);
         $getColors = Colors::all();
         $getMotifs = Motif::all();
         $getTipe = Tipe::all();
