@@ -192,11 +192,37 @@
         <form method="POST" action="{{ route('custom.details') }}" enctype="multipart/form-data">
             @csrf
             <div class="space-y-2">
-
-                <p class="space-x-2">
-                    <span class="text-gray-800 font-semibold">Tipe Pakaian: </span>
-                    <span class="text-gray-600">
-                        <div class="flex items-center gap-2">
+                <div class="space-y-2">
+                    <p class="space-x-2">
+                        <span class="text-gray-800 font-semibold">Pilih Metode Custom: </span>
+                        <span class="text-gray-600">
+                            <div class="flex items-center gap-2">
+                                <select name="metode" id="order-method" required
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 ">
+                                    <option value="Upload"> Upload File</option>
+                                    <option value="Custom"> Custom Manual</option>
+                                </select>
+                            </div>
+                        </span>
+                    </p>
+                </div>
+                <div class="space-y-2" id="upload-method">
+                    <p class="space-x-2">
+                        <span class="text-gray-800 font-semibold">Upload File </span>
+                        <span class="text-gray-600">
+                            <img src="{{ asset('images/no-profile.png') }}" id="blah" width="200px" height="200px"
+                                class="mt-1 mb-2">
+                            {{-- <input accept="image/*" id="input_image" type="file"
+                                name="upload_custom"required> --}}
+                            <input id="myFileInput" type="file" name="images">
+                        </span>
+                    </p>
+                </div>
+                <div class="space-y-2" id="custom-method" style="display: none">
+                    <p class="space-x-2">
+                        <span class="text-gray-800 font-semibold">Tipe Pakaian: </span>
+                        <span class="text-gray-600">
+                            <div class="flex items-center gap-2">
                                 @foreach ($getTipe as $tipes)
                                     <div class="color-selector">
                                         <input type="radio" name="tipe" value="{{ $tipes->nama }}"
@@ -208,73 +234,85 @@
                                         </label>
                                     </div>
                                 @endforeach
-                        </div>
-                    </span>
-                </p>
-                {{-- <p class="space-x-2">
-                    <span class="text-gray-800 font-semibold">Pilih Warna: </span>
-                    <span class="text-gray-600">
-                        <div class="flex items-center gap-2">
-                            @foreach ($getColors as $colors)
-                                <div class="color-selector">
-                                    <input type="radio" name="warna" value="{{ $colors->nama }}"
-                                        id="{{ $colors->nama }}" class="hidden">
-                                    <label for="{{ $colors->nama }}" id="colors"
-                                        class="border border-gray-200 rounded-sm h-20 w-20 cursor-pointer shadow-sm block"
-                                        data-color="{{ $colors->hexacode }}"
-                                        style="background-color: {{ $colors->hexacode }}">
-                                    </label>
-                                    <p class="my-2 flex justify-center text-sm">{{ $colors->nama }}</p>
-                                </div>
-                            @endforeach
-                        </div>
-                    </span>
-                </p> --}}
-                <p class="space-x-2">
-                    <span class="text-gray-800 font-semibold">Motif: </span>
-                    <span class="text-gray-600">
-                        <div class="flex items-center gap-2">
-                            @foreach ($getMotifs as $motifs)
-                                <div class="color-selector">
-                                    <input type="radio" name="motif" value="{{ $motifs->nama }}"
-                                        id="{{ $motifs->nama }}" class="hidden">
-                                    <label for="{{ $motifs->nama }}" id="motif"
-                                        class="border border-gray-200 rounded-sm w-32 cursor-pointer shadow-sm block"
-                                        data-motif="url('images/{{ $motifs->gambar }}')">
-                                        <img src="{{ asset('images/' . $motifs->gambar) }}">
-                                    </label>
-                                    <p class="my-2 flex justify-center text-sm">{{ $motifs->nama }}</p>
-                                </div>
-                            @endforeach
-                        </div>
-                    </span>
-                </p>
+                            </div>
+                        </span>
+                    </p>
+                    <p class="space-x-2">
+                        <span class="text-gray-800 font-semibold">Motif: </span>
+                        <span class="text-gray-600">
+                            <div class="flex items-center gap-2">
+                                @foreach ($getMotifs as $motifs)
+                                    <div class="color-selector">
+                                        <input type="radio" name="motif" value="{{ $motifs->nama }}"
+                                            id="{{ $motifs->nama }}" class="hidden">
+                                        <label for="{{ $motifs->nama }}" id="motif"
+                                            class="border border-gray-200 rounded-sm w-32 cursor-pointer shadow-sm block"
+                                            data-motif="url('images/{{ $motifs->gambar }}')">
+                                            <img src="{{ asset('images/' . $motifs->gambar) }}">
+                                        </label>
+                                        <p class="my-2 flex justify-center text-sm">{{ $motifs->nama }}</p>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </span>
+                    </p>
+                </div>
                 <button type="submit"
                     class="bg-blue-600 border border-blue-600 text-white px-4 py-2 font-medium rounded  gap-2 hover:bg-transparent hover:text-blue-600 transition">
                     Konfirmasi
                 </button>
             </div>
         </form>
-        <button id="btn">Show Selected Value</button>
-        <p id="output"></p>
     </div>
 @endsection
 @section('script')
     <script>
-        // $('input[name="motif"]:radio').click(function() {
-        //     switch ($(this).val()) {
-        //         case "{{ $getMotifs[0]['nama'] }}":
-        //             $("#results-img").attr("src", "images/" + "{{ $getMotifs[0]['gambar'] }}");
-        //             break;
-        //         case "{{ $motifs->nama }}":
-        //             $("#results-img").attr("src", "images/" + "{{ $motifs->gambar }}");
-        //             break;
-        //     }
-        // });
+        myFileInput.onchange = evt => {
+            const [file] = myFileInput.files
+            if (file) {
+                blah.src = URL.createObjectURL(file)
+            }
+        }
 
-        const btn = document.querySelector('#btn');
-        const radioButtonsWarna = document.querySelectorAll('input[name="warna"]');
-        const radioButtonsMotifs = document.querySelectorAll('input[name="motif"]');
+        // document.querySelector('#myFileInput').addEventListener('change', function() {
+        //     // console.log(this.files);
+        //     const reader = new FileReader();
+        //     reader.addEventListener("load", () => {
+        //         console.log(reader.result);
+        //         // localStorage.setItem('recent-image', reader.result);
+        //     });
+        //     reader.readAsDataURL(this.file[0]);
+        // })
+
+        function getBase64(file) {
+            return new Promise((resolve, reject) => {
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function() {
+                    resolve(reader.result)
+                };
+                reader.onerror = reject
+            })
+        }
+        document.querySelector('#myFileInput').addEventListener('change', async (e) => {
+            // console.log(e.target.files);
+            const data = await getBase64(e.target.files[0])
+            localStorage.setItem('recent-items', data)
+
+        });
+    </script>
+    <script>
+        $("#order-method").change(function() {
+            var control = $(this);
+            if (control.val() == "Upload") {
+                $("#upload-method").show();
+                $("#custom-method").hide();
+            } else if (control.val() == 'Custom') {
+                $("#upload-method").hide();
+                $("#custom-method").show();
+            }
+        });
+
 
         // let listColors = document.querySelectorAll('#colors');
         let listMotif = document.querySelectorAll('#motif');
@@ -294,34 +332,12 @@
         listLengans.forEach(element => {
             element.addEventListener('click', function() {
                 let lengan = this.getAttribute('data-lengan');
-                alert(lengan);
                 document.documentElement.style.setProperty('--bg-lengan', lengan);
             });
         });
-        // btn.addEventListener("click", () => {
-        //     let selectedWarna;
-        //     let selectedMotif;
-
-        //     for (const radioButton of radioButtonsWarna) {
-        //         if (radioButton.checked) {
-        //             selectedWarna = radioButton.value;
-        //             break;
-        //         }
-        //     }
-        //     for (const radioButton of radioButtonsMotifs) {
-        //         if (radioButton.checked) {
-        //             selectedMotif = radioButton.value;
-        //             break;
-        //         }
-        //     }
-        //     if (selectedWarna == 'Merah' && selectedMotif == 'Mega Mendung') {
-        //         output.innerHTML = "<img src=\"images/no-profile.png\" width=\"400px\" height=\"150px\">";
-        //     }
-        //     // show the output:
-        //     // output.innerText = selectedWarna ? `You selected ${selectedWarna} and ${selectedMotif}` : `You haven't selected any size`;
-        //     //
-        // });
     </script>
+
+
     {{-- for carousel --}}
     <script>
         function gallery() {

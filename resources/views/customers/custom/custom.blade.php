@@ -50,33 +50,47 @@
         {{-- <input type="hidden" value="{{ $get_results }}" name="hasil_request"> --}}
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <input type="hidden" value="50000" name="harga">
-            <input type="hidden" value="{{ $motif }}" name="motif">
-            <input type="hidden" value="{{ $warna }}" name="warna">
-            <input type="hidden" value="{{ $tipe }}" name="tipe">
-            <input type="hidden" value="{{ $results2 }}" name="images">
+            <input type="hidden" value="{{ $metode }}" name="metode">
             {{-- {{ dd($images->gambar) }} --}}
             <ul class="items-center w-full text-sm font-medium text-gray-900  rounded-lg sm:flex ">
-                <li class="w-full">
-                    <div class="flex justify-center w-full space-x-2 sm:space-x-4">
-                        <img class="flex-shrink-0 object-cover w-80 h-80  rounded outline-none "
-                            src="{{ asset('images/' . $results2) }}">
-                    </div>
-                    <div class="flex flex-col w-full pb-4 text-center mt-4">
-                        <div class="flex justify-center w-full pb-2 space-x-2 ">
-                            <div class="space-y-1">
-                                <h3 class="text-lg font-semibold"> Hasil produk custom Anda :
-                                </h3>
-                                <p class="text-sm"> Tipe Lengan: {{ $tipe }}</p>
-                                <p class="text-sm"> Motif : {{ $motif }}</p>
-                                <p class="text-sm">Warna : {{ $warna }}</p>
-                                <div class="mt-4">
-                                    <p class="text-md font-semibold ">Hasil Kurang Sesuai ? <a href="/list-produk-custom"
-                                            class="underline text-blue-600">Pilih Ulang</a></p>
+                @if ($metode == 'Custom')
+                    <input type="hidden" value="{{ $motif }}" name="motif">
+                    <input type="hidden" value="{{ $tipe }}" name="tipe">
+                    <li class="w-full">
+                        @foreach ($results as $item)
+                            @if ($item->tipe == $tipe && $item->motif == $motif)
+                                <div class="flex justify-center w-full space-x-2 sm:space-x-4">
+                                    <img class="flex-shrink-0 object-cover w-80 h-80  rounded outline-none "
+                                        src="{{ asset('images/' . $item->results_images) }}">
+                                </div>
+                                <input type="hidden" value="{{ $item->results_images }}" name="images_custom">
+                            @endif
+                        @endforeach
+                        <div class="flex flex-col w-full pb-4 text-center mt-4">
+                            <div class="flex justify-center w-full pb-2 space-x-2 ">
+                                <div class="space-y-1">
+                                    <h3 class="text-lg font-semibold"> Hasil produk custom Anda :
+                                    </h3>
+                                    <p class="text-sm"> Tipe Lengan: {{ $tipe }}</p>
+                                    <p class="text-sm"> Motif : {{ $motif }}</p>
+                                    <div class="mt-4">
+                                        <p class="text-md font-semibold ">Hasil Kurang Sesuai ? <a
+                                                href="/list-produk-custom" class="underline text-blue-600">Pilih Ulang</a>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </li>
+                    </li>
+                @else
+                    <input type="hidden" value="{{ $images }}" name="images">
+                    <li class="w-full">
+                        <div class="flex justify-center w-full space-x-2 sm:space-x-4">
+                            <img src="" alt="Preview" id="imgPreview">
+                        </div>
+                    </li>
+                @endif
+
             </ul>
             <h3 class="font-semibold text-gray-900 mt-4">Pilih Model Baju</h3>
             <ul class="items-center w-full text-sm font-medium text-gray-900  rounded-lg sm:flex ">
@@ -107,7 +121,6 @@
                     </div>
                 </li>
             </ul>
-           
             <h3 class=" font-semibold text-gray-900">Quantity</h3>
             <ul class="items-center w-full text-sm font-medium text-gray-900  rounded-lg sm:flex ">
                 <li class="w-full">
@@ -118,7 +131,7 @@
                     </div>
                 </li>
             </ul>
-            <h3 class=" font-semibold text-gray-900 ">Masukkan Detail Ukuran </h3>
+            <h3 class=" font-semibold text-gray-900 ">Masukkan qty dan detail ukuran </h3>
             <ul class="items-center w-full text-sm font-medium text-gray-900  rounded-lg sm:flex ">
                 <li class="w-full">
                     <div class="flex items-center">
@@ -131,6 +144,25 @@
                     </div>
                 </li>
             </ul>
+            {{-- <h3 class=" font-semibold text-gray-900 ">Masukkan Quantity</h3>
+            <ul class="items-center w-full text-sm font-medium text-gray-900  rounded-lg sm:flex mb-4 ">
+                <li class="w-full">
+                    <div class="flex items-center">
+                        <a
+                            class="btn btn-reduce h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none">
+                            -</a>
+                        <input type="number"
+                            class="count bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+                            pattern="[0-9]*" name="quantity" value="1" data-max="120" required>
+                        <a
+                            class="btn btn-increase h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none">
+                            +</a>
+                    </div>
+                </li>
+            </ul> --}}
+
+
+
             <div class="flex justify justify-end" id="check_results">
                 <button type="submit"
                     class="bg-blue-600 border  border-blue-600 text-white px-4 py-2 font-medium rounded  gap-2 hover:bg-transparent hover:text-blue-600 transition">
@@ -139,4 +171,46 @@
             </div>
         </div>
     </form>
+@endsection
+@section('script')
+    <script>
+        $(document).ready(function() {
+            $(document).on('click', '.btn-increase', function() {
+                $('.count').val(parseInt($('.count').val()) + 1);
+            });
+            $(document).on('click', '.btn-reduce', function() {
+                $('.count').val(parseInt($('.count').val()) - 1);
+                if ($('.count').val() == 0) {
+                    $('.count').val(1);
+                }
+            });
+        });
+        if (localStorage.getItem('recent-items')) {
+            document.querySelector('#imgPreview').src = localStorage.getItem('recent-items');
+            // Retrieve data from local storage or any other source
+            var dataFromLocalStorage = localStorage.getItem('recent-items');
+            // Send data to Laravel controller using AJAX
+            $.ajax({
+                url: '/list-order', // Replace with your Laravel controller route
+                method: 'POST', // Use POST method to send data
+                data: {
+                    data: dataFromLocalStorage
+                }, // Data to send
+                success: function(response) {
+                    // Handle the response from the server
+                    console.log(response);
+                },
+                error: function(xhr, status, error) {
+                    // Handle any errors that occur during the AJAX request
+                    console.error(error);
+                }
+            });
+        }
+        // document.addEventListener('DOMContentLoaded', () => {
+        //     const recentImageDataUrl = localStorage.getItem('recent-image');
+        //     if (recentImageDataUrl) {
+        //         document.querySelector('#imgPreview').setAttribute('src', recentImageDataUrl);
+        //     }
+        // });
+    </script>
 @endsection

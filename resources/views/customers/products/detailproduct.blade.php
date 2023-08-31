@@ -125,9 +125,8 @@
                         @if ($products->ukuran == 'All Size')
                             <div class="flex items-center gap-2">
                                 <div class="size-selector">
-                                    <input type="radio" name="size" id="size-sm"
-                                        class="hidden"value="S"required>
-                                    <label for="size-sm"
+                                    <input type="radio" name="size"  id="size-s" class="hidden"value="S"required>
+                                    <label for="size-s"
                                         class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">S</label>
                                 </div>
                                 <div class="size-selector">
@@ -158,8 +157,7 @@
                         @elseif ($products->ukuran == 'S')
                             <div class="flex items-center gap-2">
                                 <div class="size-selector">
-                                    <input type="radio" name="size" id="size-sm"
-                                        class="hidden"value="S"required>
+                                    <input type="radio" name="size" class="hidden"value="S"required>
                                     <label for="size-sm"
                                         class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">S</label>
                                 </div>
@@ -167,8 +165,7 @@
                         @elseif ($products->ukuran == 'M')
                             <div class="flex items-center gap-2">
                                 <div class="size-selector">
-                                    <input type="radio" name="size" id="size-sm"
-                                        class="hidden"value="M"required>
+                                    <input type="radio" name="size" class="hidden"value="M"required>
                                     <label for="size-sm"
                                         class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">M</label>
                                 </div>
@@ -176,8 +173,7 @@
                         @elseif ($products->ukuran == 'L')
                             <div class="flex items-center gap-2">
                                 <div class="size-selector">
-                                    <input type="radio" name="size" id="size-sm"
-                                        class="hidden"value="L"required>
+                                    <input type="radio" name="size" class="hidden"value="L"required>
                                     <label for="size-sm"
                                         class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">L</label>
                                 </div>
@@ -185,8 +181,7 @@
                         @elseif ($products->ukuran == 'XL')
                             <div class="flex items-center gap-2">
                                 <div class="size-selector">
-                                    <input type="radio" name="size" id="size-sm"
-                                        class="hidden"value="XL"required>
+                                    <input type="radio" name="size" class="hidden"value="XL"required>
                                     <label for="size-sm"
                                         class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">XL</label>
                                 </div>
@@ -253,10 +248,6 @@
                 </div>
 
                 <table class="table-auto border-collapse w-full text-left text-gray-600 text-sm mt-6">
-                    <tr>
-                        <th class="py-2 px-4 border border-gray-300 w-40 ">Color</th>
-                        <th class="py-2 px-4 border border-gray-300 font-medium">Blank, Brown, Red</th>
-                    </tr>
                     <tr>
                         <th class="py-2 px-4 border border-gray-300 w-40 ">Bahan</th>
                         <th class="py-2 px-4 border border-gray-300 font-medium">{{ $products->bahan->nama }}</th>

@@ -19,7 +19,7 @@ class ListOrderController extends Controller
         $list = session()->get('list');
         $usersCity = Auth::user()->city_id;
         $usersProvince = Auth::user()->province_id;
-
+        // return dd($list);
         $city  = City::whereId($usersCity)->get('name');
         $province  = Province::whereId($usersProvince)->get('name');
 
@@ -34,17 +34,18 @@ class ListOrderController extends Controller
     {
         // return dd($request->all());
         $list[] = [
+            // disimpen disini local storage nya, dijadikan listnya aja, kirim lewat ajax
             "id" => 1,
             "harga" => $request->harga,
             "model" => $request->model,
             "kain" => $request->kain,
+            "metode" => $request->metode,
             "images" => $request->images,
+            "images_custom" => $request->images_custom,
             "weight" => 350,
             "tipe" => $request->tipe,
             "quantity" => $request->post('quantity'),
             "size" => $request->size,
-            "warna" => $request->warna,
-            "images" => $request->images,
             "motif" => $request->motif,
             "total_after_disc" => $request->harga  * $request->post('quantity')
         ];

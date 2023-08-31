@@ -16,14 +16,14 @@ class HistoryOrderController extends Controller
     public function index()
     {
         $user = Auth::user()->id;
-        $orders = Order::whereUsersId($user)->get(); // already declated a has many from categories, its mean it is beloangsto categories\
+        $orders = Order::whereUsersId($user)->get();
+        // return dd($orders);
         return view('customers.history.history-order', compact('orders'));
     }
     public function detail($id)
     {
-        $details = OrderDetail::whereOrderId($id)->get(); // already declated a has many from categories, its mean it is beloangsto categories
-        // return dd($details);
-        $detailStatus = OrderDetail::whereOrderId($id)->first(); // already declated a has many from categories, its mean it is beloangsto categories
+        $details = OrderDetail::whereOrderId($id)->get();        // return dd($details);
+        $detailStatus = OrderDetail::whereOrderId($id)->first();
         $getId = $id;
         $reviews = Review::all();
         // return dd($reviews);
@@ -33,8 +33,7 @@ class HistoryOrderController extends Controller
         // return dd($NewDate);
         // return dd($details->order->tanggal);
         // return dd($mytime);
-        // $test = OrderDetail::whereOrderId($id)->get('price'); // already declated a has many from categories, its mean it is beloangsto categories
-        // $sumPendapatan = collect($details)->sum('price');
+        // $test = OrderDetail::whereOrderId($id)->get('price');        // $sumPendapatan = collect($details)->sum('price');
         // return dd($details);
         return view('customers.history.history-detail', compact('details', 'getId', 'reviews', 'mytime', 'detailStatus'));
     }

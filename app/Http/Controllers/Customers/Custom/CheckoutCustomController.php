@@ -94,7 +94,7 @@ class CheckoutCustomController extends Controller
         );
         $snapToken = \Midtrans\Snap::getSnapToken($params);
         // dd($params);
-        return view('customers.custom.checkout', ['snap_token' => $snapToken],  compact('list','userSaldo', 'cekongkir', 'courierName', 'city'));
+        return view('customers.custom.checkout', ['snap_token' => $snapToken],  compact('list', 'userSaldo', 'cekongkir', 'courierName', 'city'));
     }
 
     public function store(Request $request)
@@ -103,8 +103,6 @@ class CheckoutCustomController extends Controller
         $userSaldo = Auth::user()->saldo;
         $json = json_decode($request->get('json'));
         $list = session()->get('list');
-        // return dd($list);
-        // return dd($request->all());
         $orders = new Order();
         $orders->users_id = $user->id;
         $orders->nama = $user->name;
@@ -121,7 +119,7 @@ class CheckoutCustomController extends Controller
                         'saldo' => $userSaldo - $request->grandTotal,
                     ]
                 );
-            $orders->jenis_pembayaran = $request->pembayaran; 
+            $orders->jenis_pembayaran = $request->pembayaran;
         }
         $orders->jenis_pesanan = 'Custom';
         $orders->status = 'Menunggu Konfirmasi Penjual';
@@ -133,13 +131,17 @@ class CheckoutCustomController extends Controller
             $details = new OrderDetail();
             $details->order_id = $orders->id;
             $details->quantity = $item['quantity'];
-            $details->request_warna = $item['warna'];
             $details->request_ukuran = $item['size'];
             $details->request_kain = $item['kain'];
             $details->request_model = $item['model'];
             $details->request_motif = $item['motif'];
             $details->request_lengan = $item['tipe'];
-            $details->request_result = $item['images'];
+            // return dd($item['metode']);
+            if ($item['metode'] == 'Custom') {
+                $details->request_result = $item['images_custom'];
+            } else if ($item['metode'] == 'Upload') {
+                $details->request_result = $item['images'];
+            }
             $details->harga = $item['harga'];
             $details->save();
         }

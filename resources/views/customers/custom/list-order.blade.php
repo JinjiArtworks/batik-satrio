@@ -101,8 +101,13 @@
                 <ul class="flex flex-col divide-y divide-gray-700">
                     <li class="flex flex-col py-6 sm:flex-row sm:justify-between">
                         <div class="flex w-full space-x-2 sm:space-x-4">
-                            <img class="flex-shrink-0 object-cover w-20 h-22 dark:border-transparent rounded outline-none sm:w-32 sm:h-32 dark:bg-gray-500"
-                                src="{{ asset('images/' . $c['images']) }}">
+                            @if ($c['metode'] != 'Custom')
+                                <img class="flex-shrink-0 object-cover w-20 h-22 dark:border-transparent rounded outline-none sm:w-32 sm:h-32 dark:bg-gray-500"
+                                    src="" id="imgPreview" alt="Preview">
+                            @else
+                                <img class="flex-shrink-0 object-cover w-20 h-22 dark:border-transparent rounded outline-none sm:w-32 sm:h-32 dark:bg-gray-500"
+                                    src="{{ asset('images/'. $c['images_custom']) }}" alt="Preview">
+                            @endif
                             <div class="flex flex-col justify-between w-full pb-4">
                                 <div class="flex justify-between w-full pb-2 space-x-2">
                                     <div class="space-y-1">
@@ -118,14 +123,7 @@
                                         <p class="font-semibold mb-2">Harga Satuan </p>
                                         <p> @currency($c['harga'])</p>
                                     </div>
-                                    {{-- <div class="text-sm">
-                                        <p class="font-semibold mb-2">Request Kain </p>
-                                        <p> {{ $c['kain'] }}</p>
-                                    </div>
-                                    <div class="text-sm">
-                                        <p class="font-semibold mb-2">Request Warna Dasar</p>
-                                        <p> {{ $c['warna'] }} </p>
-                                    </div> --}}
+
                                     <div class="text-sm">
                                         <p class="font-semibold mb-2">Total </p>
                                         <p> @currency($c['total_after_disc']) </p>
@@ -169,22 +167,21 @@
                         <tr>
                             <h4 class="text-gray-800 text-lg font-medium">Detail Pesanan</h4>
                         </tr>
-                        <tr>
-                            <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Warna Dasar</th>
-                            <th class="py-2 px-4 border border-gray-300 ">{{ $c['warna'] }}</th>
-                        </tr>
-                        <tr>
-                            <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Motif </th>
-                            <th class="py-2 px-4 border border-gray-300 ">{{ $c['motif'] }}</th>
-                        </tr>
+                        @if ($c['metode'] == 'Custom')
+                            <tr>
+                                <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Motif </th>
+                                <th class="py-2 px-4 border border-gray-300 ">{{ $c['motif'] }}</th>
+                            </tr>
+                            <tr>
+                                <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Tipe</th>
+                                <th class="py-2 px-4 border border-gray-300 ">{{ $c['tipe'] }}</th>
+                            </tr>
+                        @endif
                         <tr>
                             <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Model</th>
                             <th class="py-2 px-4 border border-gray-300 ">{{ $c['model'] }}</th>
                         </tr>
-                        <tr>
-                            <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Tipe</th>
-                            <th class="py-2 px-4 border border-gray-300 ">{{ $c['tipe'] }}</th>
-                        </tr>
+
                         <tr>
                             <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Kain</th>
                             <th class="py-2 px-4 border border-gray-300 ">{{ $c['kain'] }}</th>
@@ -340,6 +337,9 @@
 @endsection
 @section('script')
     <script>
+        if (localStorage.getItem('recent-items')) {
+            document.querySelector('#imgPreview').src = localStorage.getItem('recent-items');
+        }
         $('.confirm').click(function(event) {
             event.preventDefault();
             var form = $(this).closest("form");

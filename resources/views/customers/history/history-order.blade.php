@@ -103,12 +103,10 @@
                     @if ($item->jenis_pesanan == 'Custom')
                         <div class="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
                             <div class="w-28">
-                                <img src="{{ asset('images/' . $item->orderdetail->request_result) }}" alt="product 6"
-                                    class="w-full">
+                                <img src="{{ asset('images/no-profile.png') }}" alt="product 6" class="w-full">
                             </div>
                             <div class="w-1/3">
-                                <h2 class="text-gray-800 text-xl font-medium ">Produk Custom
-                                
+                                <h2 class="text-gray-800 text-xl font-medium ">Produk Custom #{{ $item->id }}
                                 </h2>
                                 @if ($item->status == 'Pesanan Custom Ditolak')
                                     <p class="text-gray-500 text-sm">Status: <span
@@ -141,7 +139,7 @@
                                 @endif
                             </div>
                             <div class="text-gray-600 text-lg font-semibold">@currency($item->total)</div>
-                            <a href="/history-detail/{{ $item->orderdetail->order_id }}"
+                            <a href="/history-detail/{{ $item->id }}"
                                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                 Details</a>
                         </div>
@@ -152,14 +150,14 @@
                             </div>
                             <div class="w-1/3">
                                 <h2 class="text-gray-800 text-xl font-medium ">Nomor Pesanan
-                                    #{{ $item->orderdetail->order_id }}
+                                    #{{ $item->id }}
                                 </h2>
                                 <p class="text-gray-500 text-sm">Status: <span
                                         class="text-green-600">{{ $item->status }}</span>
                                 </p>
                             </div>
                             <div class="text-gray-600 text-lg font-semibold">@currency($item->total)</div>
-                            <a href="/history-detail/{{ $item->orderdetail->order_id }}"
+                            <a href="/history-detail/{{ $item->id }}"
                                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                 Details</a>
                         </div>

@@ -43,9 +43,13 @@
 @section('content')
     @php
         $total = 0;
+        $berat = 0;
+        $totalBerat = 0;
         if ($list != null) {
             foreach ($list as $key => $value) {
                 $total = $value['total_after_disc'] + $total;
+                $berat = $value['weight'] * $value['quantity'];
+                $totalBerat += $berat;
             }
             $grandTotal = $total + $cekongkir;
         }
@@ -88,22 +92,22 @@
                     <hr class="border-gray-200 sm:mx-auto dark:border-gray-700 " />
                     @foreach ($list as $key => $c)
                         <table class="table-auto border-collapse w-full text-left text-gray-600 text-sm mt-2">
-                            <tr>
-                                <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Warna Dasar</th>
-                                <th class="py-2 px-4 border border-gray-300 ">{{ $c['warna'] }}</th>
-                            </tr>
-                            <tr>
-                                <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Motif </th>
-                                <th class="py-2 px-4 border border-gray-300 ">{{ $c['motif'] }}</th>
-                            </tr>
+                            @if ($c['metode'] == 'Custom')
+                                <tr>
+                                    <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Motif </th>
+                                    <th class="py-2 px-4 border border-gray-300 ">{{ $c['motif'] }}</th>
+                                </tr>
+                                <tr>
+                                    <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Tipe Lengan</th>
+                                    <th class="py-2 px-4 border border-gray-300 ">{{ $c['tipe'] }}</th>
+                                </tr>
+                            @endif
+
                             <tr>
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Model</th>
                                 <th class="py-2 px-4 border border-gray-300 ">{{ $c['model'] }}</th>
                             </tr>
-                            <tr>
-                                <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Lengan</th>
-                                <th class="py-2 px-4 border border-gray-300 ">{{ $c['tipe'] }}</th>
-                            </tr>
+
                             <tr>
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Kain</th>
                                 <th class="py-2 px-4 border border-gray-300 ">{{ $c['kain'] }}</th>
@@ -112,7 +116,14 @@
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Ukuran Detail</th>
                                 <th class="py-2 px-4 border border-gray-300 ">{{ $c['size'] }}</th>
                             </tr>
-
+                            <tr>
+                                <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Weight</th>
+                                <th class="py-2 px-4 border border-gray-300 ">{{ $totalBerat }} gram</th>
+                            </tr>
+                            <tr>
+                                <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Pre Order</th>
+                                <th class="py-2 px-4 border border-gray-300 ">3 Hari</th>
+                            </tr>
                         </table>
                     @endforeach
                 </div>
@@ -124,14 +135,14 @@
                     @foreach ($list as $key => $c)
                         <div class="space-y-2">
                             <div class="flex justify-between">
-                                <img class="object-cover w-20 h-22" src="{{ asset('images/' . $c['images']) }}">
+                                @if ($c['metode'] != 'Custom')
+                                    <img class="object-cover w-20 h-22" src="" alt="Preview" id="imgPreview">
+                                @else
+                                    <img class="object-cover w-20 h-22" src="{{ asset('images/' . $c['images_custom']) }}"
+                                        alt="Preview">
+                                @endif
                                 <div>
-                                    <h5 class="text-gray-800 text-lg font-semibold">Custom Batik {{ $c['motif'] }}
-                                        @if ($c['id'] == 1)
-                                            Wanita
-                                        @else
-                                            Pria
-                                        @endif
+                                    <h5 class="text-gray-800 text-lg font-semibold">Custom Batik
                                     </h5>
                                     <p class="text-sm text-gray-600">Request Ukuran : {{ $c['size'] }}</p>
                                 </div>
@@ -157,7 +168,7 @@
                             <p>Metode Pembayaran</p>
                             <select name="pembayaran" id="payment-type" required
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 ">
-                                <option value="Saldo"> Saldo</option>
+                                <option value="Saldo"> Saldo @currency(Auth::user()->saldo)</option>
                                 <option value="Transfer"> Dompet Digital</option>
                             </select>
                         </div>
@@ -168,7 +179,7 @@
                         <div class="flex justify-end text-gray-800 font-medium mt-4">
                             <button type="submit"
                                 class="confirm flex px-2 py-2 text-center bg-blue-600 text-white font-medium rounded"
-                                id="pay_saldo">Bayar
+                                id="pay_saldo">Bayar Dengan Saldo
                             </button>
                         </div>
                     @endforeach
@@ -179,7 +190,7 @@
             <button id="pay-button"
                 class="pay flex px-2 py-2 text-center bg-blue-600 border border-blue-600 text-white font-medium rounded gap-2 hover:bg-transparent hover:text-blue-600 transition"
                 style="display: none">
-                Bayar
+                Bayar Dengan Dompet Digital
             </button>
         </div>
     </div>
@@ -222,6 +233,9 @@
                 $("#pay_saldo").hide();
             }
         });
+        if (localStorage.getItem('recent-items')) {
+            document.querySelector('#imgPreview').src = localStorage.getItem('recent-items');
+        }
     </script>
     <script type="text/javascript">
         $(document).ready(function() {

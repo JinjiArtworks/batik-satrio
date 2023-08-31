@@ -75,7 +75,7 @@
             <h2 class=" mt-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
                 Detail Pesanan
             </h2>
-            @if ($getOrderDetails->order->jenis_pesanan == 'Custom')
+            @if ($customDetails->order->jenis_pesanan == 'Custom')
                 <div class="w-full overflow-hidden rounded-lg shadow-xs">
                     <div class="w-full overflow-x-auto">
                         <table class="w-full whitespace-no-wrap">
@@ -94,28 +94,28 @@
                                             Status Pesanan :
                                         </span><span
                                             class="px-2 py-1 ml-2 font-semibold text-sm leading-tight text-blue-700 bg-blue-100 rounded-full dark:bg-blue-700 dark:text-green-100">
-                                            {{ $item->order->status }}
+                                            {{ $customDetails->order->status }}
                                         </span>
                                     </label>
                                 </div>
                                 <tr class="text-gray-700 dark:text-gray-400">
                                     <td class="px-4 py-3 text-sm font-semibold">
-                                        #{{ $item->order->id }}
+                                        #{{ $customDetails->order->id }}
                                     </td>
                                     <td class="px-4 py-3 text-sm">
-                                        {{ $item->quantity }}
+                                        {{ $customDetails->quantity }}
                                     </td>
                                     <td class="px-4 py-3 text-sm">
-                                        @currency($item->order->total)
+                                        @currency($customDetails->order->total)
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-                @if ($item->order->status == 'Pesanan Custom Diterima')
+                @if ($customDetails->order->status == 'Pesanan Custom Diterima')
                     <div class="flex justify-end">
-                        <form method="POST" action="{{ route('reports.update', ['id' => $item->order->id]) }}">
+                        <form method="POST" action="{{ route('reports.update', ['id' => $customDetails->order->id]) }}">
                             @csrf
                             {{ method_field('put') }}
                             <button type="submit"
@@ -135,46 +135,50 @@
                             <tr>
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Gambar Pesanan </th>
                                 <th class="py-2 px-4 border border-gray-300 ">
-                                    <img src="{{ asset('images/' . $item->request_result) }}" style="width: 120px">
+                                    <img src="" id="imgPreview" style="width: 120px" alt="Preview">
                                 </th>
                             </tr>
-                            <tr>
-                                <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Warna Dasar</th>
-                                <th class="py-2 px-4 border border-gray-300 ">{{ $item->request_warna }}</th>
-                            </tr>
-                            <tr>
-                                <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Motif </th>
-                                <th class="py-2 px-4 border border-gray-300 ">{{ $item->request_motif }}</th>
-                            </tr>
+                            @if ($customDetails->order_results != null)
+                                <tr>
+                                    <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Warna Dasar</th>
+                                    <th class="py-2 px-4 border border-gray-300 ">{{ $customDetails->request_warna }}</th>
+                                </tr>
+                                <tr>
+                                    <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Motif </th>
+                                    <th class="py-2 px-4 border border-gray-300 ">{{ $customDetails->request_motif }}</th>
+                                </tr>
+                                <tr>
+                                    <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Lengan</th>
+                                    <th class="py-2 px-4 border border-gray-300 ">{{ $customDetails->request_lengan }}</th>
+                                </tr>
+                            @endif
+
                             <tr>
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Model</th>
-                                <th class="py-2 px-4 border border-gray-300 ">{{ $item->request_model }}</th>
+                                <th class="py-2 px-4 border border-gray-300 ">{{ $customDetails->request_model }}</th>
                             </tr>
-                            <tr>
-                                <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Lengan</th>
-                                <th class="py-2 px-4 border border-gray-300 ">{{ $item->request_lengan }}</th>
-                            </tr>
+
                             <tr>
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Kain</th>
-                                <th class="py-2 px-4 border border-gray-300 ">{{ $item->request_kain }}</th>
+                                <th class="py-2 px-4 border border-gray-300 ">{{ $customDetails->request_kain }}</th>
                             </tr>
                             <tr>
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Ukuran Detail</th>
-                                <th class="py-2 px-4 border border-gray-300 ">{{ $item->request_ukuran }}</th>
+                                <th class="py-2 px-4 border border-gray-300 ">{{ $customDetails->request_ukuran }}</th>
                             </tr>
                             <tr>
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Total Pesanan </th>
-                                <th class="py-2 px-4 border border-gray-300 ">@currency($item->harga * $item->quantity)</th>
+                                <th class="py-2 px-4 border border-gray-300 ">@currency($customDetails->harga * $customDetails->quantity)</th>
                             </tr>
                             <tr>
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Ongkos Kirim </th>
-                                <th class="py-2 px-4 border border-gray-300 ">@currency($item->order->ongkos_kirim)</th>
+                                <th class="py-2 px-4 border border-gray-300 ">@currency($customDetails->order->ongkos_kirim)</th>
                             </tr>
                             <tr>
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Pre Order</th>
                                 <th class="py-2 px-4 border border-gray-300 ">3 Hari</th>
                             </tr>
-                            @if ($item->order->status == 'Proses Pengembalian')
+                            @if ($customDetails->order->status == 'Proses Pengembalian')
                                 <tr>
                                     <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Alasan Pengembalian
                                         Pesanan </th>
@@ -193,8 +197,9 @@
                 </div>
 
                 <div class="w-full overflow-hidden mt-4 ">
-                    @if ($item->order->status == 'Menunggu Konfirmasi Penjual')
-                        <form method="POST" action="{{ route('reports.updateCustom', ['id' => $item->order->id]) }}">
+                    @if ($customDetails->order->status == 'Menunggu Konfirmasi Penjual')
+                        <form method="POST"
+                            action="{{ route('reports.updateCustom', ['id' => $customDetails->order->id]) }}">
                             @csrf
                             {{ method_field('put') }}
                             <h2 class="font-semibold">Aksi : </h2>
@@ -209,8 +214,9 @@
                                     Konfirmasi</button>
                             </div>
                         </form>
-                    @elseif ($item->order->status == 'Proses Pengembalian')
-                        <form method="POST" action="{{ route('reports.updateCustom', ['id' => $item->order->id]) }}">
+                    @elseif ($customDetails->order->status == 'Proses Pengembalian')
+                        <form method="POST"
+                            action="{{ route('reports.updateCustom', ['id' => $customDetails->order->id]) }}">
                             @csrf
                             {{ method_field('put') }}
                             <h2 class="font-semibold">Aksi : </h2>
@@ -401,5 +407,8 @@
         setTimeout(function() {
             $('#message').fadeOut('fast');
         }, 3000);
+        if (localStorage.getItem('recent-items')) {
+            document.querySelector('#imgPreview').src = localStorage.getItem('recent-items');
+        }
     </script>
 @endsection

@@ -44,11 +44,11 @@ class DashboardController extends Controller
     public function detail($id)
     {
         $orderdetails = OrderDetail::whereOrderId($id)->get();
-        $getOrderDetails = OrderDetail::whereOrderId($id)->first();
+        $customDetails = OrderDetail::whereOrderId($id)->first();
         // $details = OrderDetail::whereOrderId($id)->get(); // already declated a has many from categories, its mean it is beloangsto categories
         // {{ $item->order->status }}
         $returnOrder = Returns::whereOrdersId($id)->first();
-        return view('staff.reports.detail-reports', compact('orderdetails', 'returnOrder', 'getOrderDetails'));
+        return view('staff.reports.detail-reports', compact('orderdetails', 'returnOrder', 'customDetails'));
     }
     public function update($id)
     {

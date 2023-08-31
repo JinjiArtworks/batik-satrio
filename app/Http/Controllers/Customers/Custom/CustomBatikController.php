@@ -15,7 +15,6 @@ class CustomBatikController extends Controller
 {
     public function index()
     {
-        $list = session()->get('list');
         $results = Results::all();
         // return dd($results);
         $getColors = Colors::all();
@@ -29,59 +28,21 @@ class CustomBatikController extends Controller
         // return dd($list);
         return view('customers.custom.index', compact('results', 'getColors', 'getTipe', 'getMotifs', 'previews'));
     }
-    // public function checkResults(Request $request)
-    // {
-    //     $getWarna = $request->warna;
-    //     $getMotif = $request->motif;
-    //     $colors = Colors::whereNama($getWarna)->first();
-    //     $motif = Motif::whereNama($getMotif)->first();
-    //     $results = Results::all();
-    //     $gender = $request->gender;
-    //     $gender_id = $request->gender_id;
-    //     // return dd($previews);
-    //     return view('customers.custom.custom-results', compact('gender', 'gender_id', 'colors', 'motif', 'results'));
-    // }
-    // public function results(Request $request, $id)
-    // {
-    //     // to showing the results based on the rquest!
-    //     $getMotif = $request->motif; //masukkan kedalam session list
-    //     $getWarna = $request->warna; //masukkan kedalam session list
-    //     // $previews = Preview::whereId($getMotif)->get();
-    //     $colors = Colors::whereId($getWarna)->first();
-    //     $motif = Motif::whereId($getMotif)->first();
-
-    //     $previews = Preview::where('nama', 'LIKE', '%' . $colors->nama . '%')->orWhere('nama', 'LIKE', '%' . $motif->nama . '%')->get('gambar'); // kalo begini, akan menampilkan hasil dari salah satu yang diinputkan, dan seperti fitur rekomendasi saja _'_
-    //     return $previews;
-    //     // session()->put('list', $previews);
-    //     // return redirect()->back();
-    //     // if ($getWarna == $getMotif) // 1:1
-    //     //     // return $previews;
-    //     //     return $previews;
-    //     // else
-    //     //     foreach ($colors as $c) {
-    //     //         foreach ($motif as $m) {
-    //     //         }
-    //     //     }
-    //     // if ($motif == )
-    // }
 
     public function details(Request $request)
     {
         $tipe = $request->tipe;
-        $motif = $request->motif; //masukkan kedalam session list
-        $warna = $request->warna; //masukkan kedalam session list
-        // $images = $request->images; //masukkan kedalam session list
-        return dd($request->all());
-        // $images = Preview::where('nama', 'LIKE', '%' . $warna . '%')->orWhere('nama', 'LIKE', '%' . $motif . '%')->first('gambar'); // kalo begini, akan menampilkan hasil dari salah satu yang diinputkan, dan seperti fitur rekomendasi saja _'_
+        $motif = $request->motif;
+        $metode = $request->metode;
+        $uploaded_custom = $request->upload_custom;
         $results = Results::all();
-        foreach ($results as $item) {
-            if ($tipe == $item->tipe && $motif == $item->motif && $warna == $item->warna) {
-                $results2 = $item->results_images;
-            }
+        if ($request->images != null) {
+            $images = $request->images->getClientOriginalName();
+            return view('customers.custom.custom', compact('motif',  'tipe', 'images', 'metode', 'uploaded_custom'));
         }
         session()->put('list');
 
-        return view('customers.custom.custom', compact('motif', 'warna', 'tipe', 'results2'));
+        return view('customers.custom.custom', compact('motif',  'tipe','results', 'metode', 'uploaded_custom'));
     }
 
 

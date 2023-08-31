@@ -63,7 +63,7 @@
                             <p class="text-gray-500 text-sm mb-2">Status Pesanan :
                                 <span
                                     class="px-2 py-1 leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
-                                    Proses Pengembalian - {{ $detailStatus->order->status }}
+                                    {{ $detailStatus->order->status }}
                                 </span>
                             </p>
                         @elseif ($detailStatus->order->status == 'Ajuan Pengembalian Diterima')
@@ -156,8 +156,8 @@
                                                         yang dikembalikan :
                                                     </label>
                                                     @if ($detailStatus->product_id == null)
-                                                        <img src="{{ asset('images/' . $detailStatus->request_result) }}"
-                                                            alt="product 6" class="w-40">
+                                                        <img src="" id="imgPreview" alt="product 6"
+                                                            class="w-40">
                                                     @else
                                                         <img src="{{ asset('images/' . $detailStatus->product->gambar) }}"
                                                             alt="product 6" class="w-40">
@@ -199,6 +199,7 @@
                 </div>
             </div>
             @foreach ($details as $item)
+                {{-- For Custom --}}
                 @if ($item->product_id == null)
                     <div class="col-span-9 space-y-4">
                         <div class="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
@@ -224,21 +225,24 @@
                                 <th class="py-2 px-4 border border-gray-300 ">@currency($item->order->ongkos_kirim)
                                 </th>
                             </tr>
-                            <tr>
-                                <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Warna Dasar</th>
-                                <th class="py-2 px-4 border border-gray-300 ">{{ $item->request_warna }}</th>
-                            </tr>
-                            <tr>
-                                <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Motif </th>
-                                <th class="py-2 px-4 border border-gray-300 ">{{ $item->request_motif }}</th>
-                            </tr>
+                            @if ($item->request_result != null)
+                                <tr>
+                                    <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Warna Dasar</th>
+                                    <th class="py-2 px-4 border border-gray-300 ">{{ $item->request_warna }}</th>
+                                </tr>
+                                <tr>
+                                    <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Motif </th>
+                                    <th class="py-2 px-4 border border-gray-300 ">{{ $item->request_motif }}</th>
+                                </tr>
+                                <tr>
+                                    <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Lengan</th>
+                                    <th class="py-2 px-4 border border-gray-300 ">{{ $item->request_lengan }}</th>
+                                </tr>
+                            @endif
+
                             <tr>
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Model</th>
                                 <th class="py-2 px-4 border border-gray-300 ">{{ $item->request_model }}</th>
-                            </tr>
-                            <tr>
-                                <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Lengan</th>
-                                <th class="py-2 px-4 border border-gray-300 ">{{ $item->request_lengan }}</th>
                             </tr>
                             <tr>
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Kain</th>
@@ -248,7 +252,10 @@
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Ukuran Detail</th>
                                 <th class="py-2 px-4 border border-gray-300 ">{{ $item->request_ukuran }}</th>
                             </tr>
-
+                            <tr>
+                                <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Pre Order</th>
+                                <th class="py-2 px-4 border border-gray-300 ">3 Hari</th>
+                            </tr>
                         </table>
                     </div>
                 @else
@@ -327,12 +334,9 @@
                     </div>
                 @endif
             @endforeach
-
         </div>
-
         {{-- Review hanya untuk produk NON Custom! --}}
         {{-- {{ dd($item->product_id) }} --}}
-
         @if ($item->product_id != null)
             @if ($item->order->status == 'Selesai')
                 {{-- Kalo belum ngirim review --}}
@@ -341,12 +345,13 @@
                         <h3>Kirim Review</h3>
                         <form action="{{ route('history-order.review', ['id' => $item->product_id]) }}" method="POST">
                             @csrf
+
                             <div class="flex items-center space-x-1 mb-4">
                                 <input type="radio" name="rating" value="1">
-                                <input type="radio" name="rating" value="2">
-                                <input type="radio" name="rating" value="3">
-                                <input type="radio" name="rating" value="4">
-                                <input type="radio" name="rating" value="5">
+                                <input type="radio" name="rating" value="2"> 
+                                <input type="radio" name="rating" value="3"> 
+                                <input type="radio" name="rating" value="4"> 
+                                <input type="radio" name="rating" value="5"> 
                             </div>
                             <textarea
                                 class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -354,7 +359,7 @@
                             <div class="flex justify justify-end">
                                 <button type="submit"
                                     class="bg-blue-600 border my-4  border-blue-600 text-white px-4 py-2 font-medium rounded  gap-2 hover:bg-transparent hover:text-blue-600 transition">
-                                    Checkout
+                                    Kirim Review
                                 </button>
                             </div>
                         </form>
@@ -419,13 +424,16 @@
         setTimeout(function() {
             $('#message').fadeOut('fast');
         }, 3000);
+        if (localStorage.getItem('recent-items')) {
+            document.querySelector('#imgPreview').src = localStorage.getItem('recent-items');
+        }
     </script>
-    <script type="text/javascript">
+    {{-- <script type="text/javascript">
         image.onchange = evt => {
             const [file] = image.files
             if (file) {
                 blah.src = URL.createObjectURL(file)
             }
         }
-    </script>
+    </script> --}}
 @endsection

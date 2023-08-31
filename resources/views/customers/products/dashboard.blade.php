@@ -16,7 +16,7 @@
     </ol>
 @endsection
 @section('content')
-<div class="max-w-screen-xl flex flex-wrap justify-center mx-auto p-4">
+    <div class="max-w-screen-xl flex flex-wrap justify-center mx-auto p-4">
         <div id="default-carousel" class="relative w-full" data-carousel="slide">
             <!-- Carousel wrapper -->
             <div class="relative h-56 overflow-hidden rounded-lg md:h-96 shadow dark:bg-gray-800 dark:border-gray-700">
@@ -90,7 +90,7 @@
         <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-6 mx-auto">
             <div
                 class="border border-gray-20 shadow dark:bg-gray-800 dark:border-gray-700 rounded-xl px-3 py-6 flex justify-center items-center gap-5">
-                <img src="/images/icons/delivery-van.svg" alt="Delivery" class="w-12 h-12 object-contain">
+                <img src="/images/icons/delivery-van.svg" alt="Delivery" class="w-12 h-12  object-contain">
                 <div class="pl-10">
                     <h4 class=" font-light">Free Shipping</h4>
                     <p class="text-gray-500 ">Order over $200</p>
@@ -192,7 +192,7 @@
                     </div>
                 </div>
             </div>
-            
         @endforeach
     </div>
 @endsection
+
