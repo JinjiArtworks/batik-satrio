@@ -281,12 +281,11 @@
                                     class=" bg-blue-600 border border-blue-600 text-white px-4 py-2 font-medium rounded flex items-center gap-2 hover:bg-transparent hover:text-blue-600 transition">
                                     Checkout
                                 </button>
-                                {{-- Lakukan pengecekan di sweet alerts --}}
                                 <span>Stock tidak tersedia </span>
                             @endif
                         @else
-                            <button type="submit" disabled
-                                class="confirm bg-blue-600 border border-blue-600 text-white px-4 py-2 font-medium rounded flex items-center gap-2 hover:bg-transparent hover:text-blue-600 transition">
+                            <button type="submit" 
+                                class="alamat_empty bg-blue-600 border border-blue-600 text-white px-4 py-2 font-medium rounded flex items-center gap-2 hover:bg-transparent hover:text-blue-600 transition">
                                 Checkout
                             </button>
                         @endif
@@ -408,6 +407,13 @@
                 if (result.isConfirmed) {
                     form.submit();
                 }
+            })
+        });
+        $('.alamat_empty').click(function(event) {
+            event.preventDefault();
+            Swal.fire({
+                title: 'Masukkan Alamat Anda',
+                icon: 'info',
             })
         });
         setTimeout(function() {

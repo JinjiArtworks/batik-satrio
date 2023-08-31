@@ -157,32 +157,32 @@
                         @elseif ($products->ukuran == 'S')
                             <div class="flex items-center gap-2">
                                 <div class="size-selector">
-                                    <input type="radio" name="size" class="hidden"value="S"required>
-                                    <label for="size-sm"
+                                    <input type="radio" name="size" id="size-s" class="hidden"value="S"required>
+                                    <label for="size-s"
                                         class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">S</label>
                                 </div>
                             </div>
                         @elseif ($products->ukuran == 'M')
                             <div class="flex items-center gap-2">
                                 <div class="size-selector">
-                                    <input type="radio" name="size" class="hidden"value="M"required>
-                                    <label for="size-sm"
+                                    <input type="radio" name="size" id="size-m" class="hidden"value="M"required>
+                                    <label for="size-m"
                                         class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">M</label>
                                 </div>
                             </div>
                         @elseif ($products->ukuran == 'L')
                             <div class="flex items-center gap-2">
                                 <div class="size-selector">
-                                    <input type="radio" name="size" class="hidden"value="L"required>
-                                    <label for="size-sm"
+                                    <input type="radio" name="size" id="size-l" class="hidden"value="L"required>
+                                    <label for="size-l"
                                         class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">L</label>
                                 </div>
                             </div>
                         @elseif ($products->ukuran == 'XL')
                             <div class="flex items-center gap-2">
                                 <div class="size-selector">
-                                    <input type="radio" name="size" class="hidden"value="XL"required>
-                                    <label for="size-sm"
+                                    <input type="radio" name="size" id="size-xl" class="hidden"value="XL"required>
+                                    <label for="size-xl"
                                         class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">XL</label>
                                 </div>
                             </div>

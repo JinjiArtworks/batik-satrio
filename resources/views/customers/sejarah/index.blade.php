@@ -101,10 +101,7 @@
                     Flowbite</a>. It comes with the most commonly used UI components, such as buttons, navigation
                 bars, cards, form elements, and more which are conveniently built with the utility classes from
                 Tailwind CSS.</p>
-            <figure class="mt-4"><img src="https://flowbite.s3.amazonaws.com/typography-plugin/typography-image-1.png"
-                    alt="">
-                <figcaption>Digital art by Anonymous</figcaption>
-            </figure>
+           
         </article>
     </div>
 @endsection

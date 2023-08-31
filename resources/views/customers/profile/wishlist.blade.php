@@ -111,14 +111,10 @@
                             Logout
                         </a>
                     </div>
-
                 </div>
             </div>
-            <!-- ./sidebar -->
-
-            <!-- wishlist -->
             <div class="col-span-9 space-y-4">
-                @foreach ($wishlist as $item)
+                @foreach ($getWishlist as $item)
                     <div class="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
                         <div class="w-28">
                             <img src="{{ asset('images/' . $item->product->gambar) }}" alt="product 6" class="w-full">
@@ -142,10 +138,7 @@
                         </div>
                     </div>
                 @endforeach
-
             </div>
-            <!-- ./wishlist -->
-
         </div>
     </div>
 @endsection

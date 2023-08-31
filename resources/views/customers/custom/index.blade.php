@@ -75,7 +75,7 @@
     .image_container img {
         width: 400px;
         display: block;
-        background-color: var(--color);
+        /* background-color: var(--color); */
         background-image: var(--bg-image);
         content: var(--bg-lengan);
     }

@@ -17,6 +17,7 @@ use App\Http\Controllers\Staff\Resources\AddBahanController;
 use App\Http\Controllers\Staff\Resources\AddCustomController;
 use App\Http\Controllers\Staff\Resources\AddModelController;
 use App\Http\Controllers\Staff\Resources\AddMotifController;
+use App\Http\Controllers\Staff\Resources\AddResultsController;
 use App\Http\Controllers\Staff\Resources\AddTeknikController;
 use App\Http\Controllers\Staff\Resources\AddWarnaController;
 use App\Http\Controllers\Staff\ReturnOrderController;
@@ -158,26 +159,30 @@ Route::middleware(['auth'])->group(function () {
         Route::put('update-bahan/{id}', [AddBahanController::class, 'update'])->name('update-bahan');
         Route::get('delete-bahan/{id}', [AddBahanController::class, 'destroy'])->name('delete-bahan');
 
-        // Teknik
         Route::get('add-teknik', [AddTeknikController::class, 'index'])->name('dashboard');
         Route::post('store-teknik', [AddTeknikController::class, 'store'])->name('store-teknik');
         Route::get('edit-teknik/{id}', [AddTeknikController::class, 'edit'])->name('edit-teknik');
         Route::put('update-teknik/{id}', [AddTeknikController::class, 'update'])->name('update-teknik');
         Route::get('delete-teknik/{id}', [AddTeknikController::class, 'destroy'])->name('delete-teknik');
 
-        // Teknik
         Route::get('add-warna', [AddWarnaController::class, 'index'])->name('dashboard');
         Route::post('store-warna', [AddWarnaController::class, 'store'])->name('store-warna');
         Route::get('edit-warna/{id}', [AddWarnaController::class, 'edit'])->name('edit-warna');
         Route::put('update-warna/{id}', [AddWarnaController::class, 'update'])->name('update-warna');
         Route::get('delete-warna/{id}', [AddWarnaController::class, 'destroy'])->name('delete-warna');
 
-        // Teknik
+        // preview mungkin tidak diperlukan, nanti dihapus saja
         Route::get('add-custom', [AddCustomController::class, 'index'])->name('dashboard');
         Route::post('store-custom', [AddCustomController::class, 'store'])->name('store-custom');
         Route::get('edit-custom/{id}', [AddCustomController::class, 'edit'])->name('edit-custom');
         Route::put('update-custom/{id}', [AddCustomController::class, 'update'])->name('update-custom');
         Route::get('delete-custom/{id}', [AddCustomController::class, 'destroy'])->name('delete-custom');
+
+        Route::get('add-results', [AddResultsController::class, 'index'])->name('dashboard');
+        Route::post('store-results', [AddResultsController::class, 'store'])->name('store-results');
+        Route::get('edit-results/{id}', [AddResultsController::class, 'edit'])->name('edit-results');
+        Route::put('update-results/{id}', [AddResultsController::class, 'update'])->name('update-results');
+        Route::get('delete-results/{id}', [AddResultsController::class, 'destroy'])->name('delete-results');
     });
 });
 

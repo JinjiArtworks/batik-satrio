@@ -14,16 +14,14 @@ class WishlistController extends Controller
     public function index()
     {
         $user = Auth::user()->id;
-        $wishlist = Wishlist::whereUsersId($user)->get(); // already declated a has many from categories, its mean it is beloangsto categories\
-        // return dd($wishlist);
-        return view('customers.profile.wishlist', compact('wishlist'));
+        $getWishlist = Wishlist::Select(
+            "wishlists.products_id"
+        )
+            ->groupBy('products_id')
+            ->where('users_id', '=', $user)
+            ->get();
+        return view('customers.profile.wishlist', compact('getWishlist'));
     }
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Request $request)
     {
         Wishlist::where('products_id', $request->products)->delete();
