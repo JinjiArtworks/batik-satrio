@@ -28,7 +28,6 @@ class ReturnOrderController extends Controller
         // payment gateway
         $orderdetails = OrderDetail::whereOrderId($id)->get();
         $getOrderDetails = OrderDetail::whereOrderId($id)->first();
-        // return dd($getOrderDetails->order->total);
         $returnOrder = Returns::whereOrdersId($id)->first();
 
         // return dd($ordersConfirm);

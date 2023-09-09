@@ -144,6 +144,7 @@
                                     </td>
                                 </tr>
                             @endforeach
+
                         </tbody>
                     </table>
                     <table class="w-full text-left">

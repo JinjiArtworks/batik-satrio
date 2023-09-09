@@ -142,8 +142,8 @@
     </ol>
 @endsection
 @section('content')
-    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 border-b">
-        <div class="gallery border-2 rounded mx-auto m-5 bg-white" style="width:1250px;">
+    <div class="max-w-screen-xl flex-wrap items-center justify-between mx-auto p-4">
+        {{-- <div class="gallery border-2 rounded mx-auto m-5 bg-white">
             <div class="top flex p-2 border-b select-none">
                 <div class="heading text-gray-800 w-full pl-3 font-semibold my-auto"></div>
                 <div class="buttons ml-auto flex text-gray-600 mr-1">
@@ -159,7 +159,7 @@
                     </svg>
                 </div>
             </div>
-            <div class="content-area w-full h-96 overflow-hidden">
+            <div class="content-area  h-96 overflow-hidden">
                 <div class="platform shadow-xl h-full flex">
                     @foreach ($previews as $item)
                         <div class="each-frame border-box flex-none h-full" title="Pilihan Custom Batik">
@@ -182,87 +182,86 @@
                     @endforeach
                 </div>
             </div>
-        </div>
-    </div>
-    <!-- product-detail -->
-    <div class="container grid grid-cols-2 gap-6 mt-4">
-        <div class="image_container">
-            <img id="results-img" src="{{ asset('images/bajus.png') }}" alt="">
-        </div>
-        <form method="POST" action="{{ route('custom.details') }}" enctype="multipart/form-data">
-            @csrf
-            <div class="space-y-2">
-                <div class="space-y-2">
-                    <p class="space-x-2">
-                        <span class="text-gray-800 font-semibold">Pilih Metode Custom: </span>
-                        <span class="text-gray-600">
-                            <div class="flex items-center gap-2">
-                                <select name="metode" id="order-method" required
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 ">
-                                    <option value="Upload"> Upload File</option>
-                                    <option value="Custom"> Custom Manual</option>
-                                </select>
-                            </div>
-                        </span>
-                    </p>
-                </div>
-                <div class="space-y-2" id="upload-method">
-                    <p class="space-x-2">
-                        <span class="text-gray-800 font-semibold">Upload File </span>
-                        <span class="text-gray-600">
-                            <img src="{{ asset('images/no-profile.png') }}" id="blah" width="200px" height="200px"
-                                class="mt-1 mb-2">
-                            {{-- <input accept="image/*" id="input_image" type="file"
-                                name="upload_custom"required> --}}
-                            <input id="myFileInput" type="file" name="images">
-                        </span>
-                    </p>
-                </div>
-                <div class="space-y-2" id="custom-method" style="display: none">
-                    <p class="space-x-2">
-                        <span class="text-gray-800 font-semibold">Tipe Pakaian: </span>
-                        <span class="text-gray-600">
-                            <div class="flex items-center gap-2">
-                                @foreach ($getTipe as $tipes)
-                                    <div class="color-selector">
-                                        <input type="radio" name="tipe" value="{{ $tipes->nama }}"
-                                            id="{{ $tipes->nama }}" class="hidden">
-                                        <label for="{{ $tipes->nama }}" id="lengan"
-                                            class="border border-gray-200 rounded-sm w-24  cursor-pointer shadow-sm block"
-                                            data-lengan="url('images/{{ $tipes->gambar }}')">
-                                            <img src="{{ asset('images/' . $tipes->gambar) }}" alt="">
-                                        </label>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </span>
-                    </p>
-                    <p class="space-x-2">
-                        <span class="text-gray-800 font-semibold">Motif: </span>
-                        <span class="text-gray-600">
-                            <div class="flex items-center gap-2">
-                                @foreach ($getMotifs as $motifs)
-                                    <div class="color-selector">
-                                        <input type="radio" name="motif" value="{{ $motifs->nama }}"
-                                            id="{{ $motifs->nama }}" class="hidden">
-                                        <label for="{{ $motifs->nama }}" id="motif"
-                                            class="border border-gray-200 rounded-sm w-32 cursor-pointer shadow-sm block"
-                                            data-motif="url('images/{{ $motifs->gambar }}')">
-                                            <img src="{{ asset('images/' . $motifs->gambar) }}">
-                                        </label>
-                                        <p class="my-2 flex justify-center text-sm">{{ $motifs->nama }}</p>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </span>
-                    </p>
-                </div>
-                <button type="submit"
-                    class="bg-blue-600 border border-blue-600 text-white px-4 py-2 font-medium rounded  gap-2 hover:bg-transparent hover:text-blue-600 transition">
-                    Konfirmasi
-                </button>
+        </div> --}}
+        <div class="container grid grid-cols-2 gap-6 mt-4">
+            <div class="image_container">
+                <img id="results-img" src="{{ asset('images/bajus.png') }}" alt="">
             </div>
-        </form>
+            <form method="POST" action="{{ route('custom.details') }}" enctype="multipart/form-data">
+                @csrf
+                <div class="space-y-2">
+                    <div class="space-y-2">
+                        <p class="space-x-2">
+                            <span class="text-gray-800 font-semibold">Pilih Metode Custom: </span>
+                            <span class="text-gray-600">
+                                <div class="flex items-center gap-2">
+                                    <select name="metode" id="order-method" required
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 ">
+                                        <option value="Upload"> Upload File</option>
+                                        <option value="Custom"> Custom Manual</option>
+                                    </select>
+                                </div>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="space-y-2" id="upload-method">
+                        <p class="space-x-2">
+                            <span class="text-gray-800 font-semibold">Upload File </span>
+                            <span class="text-gray-600">
+                                <img src="{{ asset('images/no-profile.png') }}" id="blah" width="200px"
+                                    height="200px" class="mt-1 mb-2">
+                                {{-- <input accept="image/*" id="input_image" type="file"
+                                name="upload_custom"required> --}}
+                                <input id="myFileInput" type="file" name="images">
+                            </span>
+                        </p>
+                    </div>
+                    <div class="space-y-2" id="custom-method" style="display: none">
+                        <p class="space-x-2">
+                            <span class="text-gray-800 font-semibold">Tipe Pakaian: </span>
+                            <span class="text-gray-600">
+                                <div class="flex items-center gap-2">
+                                    @foreach ($getTipe as $tipes)
+                                        <div class="color-selector">
+                                            <input type="radio" name="tipe" value="{{ $tipes->nama }}"
+                                                id="{{ $tipes->nama }}" class="hidden">
+                                            <label for="{{ $tipes->nama }}" id="lengan"
+                                                class="border border-gray-200 rounded-sm w-24  cursor-pointer shadow-sm block"
+                                                data-lengan="url('images/{{ $tipes->gambar }}')">
+                                                <img src="{{ asset('images/' . $tipes->gambar) }}" alt="">
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </span>
+                        </p>
+                        <p class="space-x-2">
+                            <span class="text-gray-800 font-semibold">Motif: </span>
+                            <span class="text-gray-600">
+                                <div class="flex items-center gap-2">
+                                    @foreach ($getMotifs as $motifs)
+                                        <div class="color-selector">
+                                            <input type="radio" name="motif" value="{{ $motifs->nama }}"
+                                                id="{{ $motifs->nama }}" class="hidden">
+                                            <label for="{{ $motifs->nama }}" id="motif"
+                                                class="border border-gray-200 rounded-sm w-32 cursor-pointer shadow-sm block"
+                                                data-motif="url('images/{{ $motifs->gambar }}')">
+                                                <img src="{{ asset('images/' . $motifs->gambar) }}">
+                                            </label>
+                                            <p class="my-2 flex justify-center text-sm">{{ $motifs->nama }}</p>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </span>
+                        </p>
+                    </div>
+                    <button type="submit"
+                        class="bg-blue-600 border border-blue-600 text-white px-4 py-2 font-medium rounded  gap-2 hover:bg-transparent hover:text-blue-600 transition">
+                        Konfirmasi
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 @endsection
 @section('script')

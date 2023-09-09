@@ -86,7 +86,7 @@
                     <input type="hidden" value="{{ $images }}" name="images">
                     <li class="w-full">
                         <div class="flex justify-center w-full space-x-2 sm:space-x-4">
-                            <img src="" alt="Preview" id="imgPreview">
+                            <img src="" class="flex-shrink-0 object-cover w-80 h-80  rounded outline-none" alt="Preview" id="imgPreview">
                         </div>
                     </li>
                 @endif

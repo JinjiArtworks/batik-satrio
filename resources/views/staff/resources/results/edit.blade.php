@@ -99,7 +99,7 @@
                         <img src="{{ asset('images/' . $results->results_images) }}" id="blah" width="150px"
                             height="150px" class="mt-1 mb-2">
                         <input class="mt-2" accept="image/*" id="image" type="file" name="image"required>
-                    </label>
+                    </label>    
                     <button type="submit"
                         class="px-3 py-1 mt-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                         Submit

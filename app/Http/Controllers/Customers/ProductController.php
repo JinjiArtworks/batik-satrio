@@ -6,6 +6,7 @@ use App\Models\Categories;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use App\Models\Product;
+use App\Models\Review;
 use App\Models\User;
 use App\Models\Wishlist;
 use Illuminate\Support\Facades\Auth;
@@ -16,17 +17,17 @@ class ProductController extends Controller
     {
         $products = Product::all();
         $cat = Categories::all();
-        // return dd($products);
-
         return view('customers.products.shop', compact('products', 'cat'));
     }
     public function detail($id)
     {
         $products = Product::find($id);
+        $reviews = Review::whereProductsId($id)->first();
+        // return dd($reviews);
         $wishlist = Wishlist::whereProductsId($id)->get();
         // return dd($products->id);
         // $getIdProducts = $products->id;
-        return view('customers.products.detailproduct', compact('products', 'wishlist'));
+        return view('customers.products.detailproduct', compact('products', 'wishlist','reviews'));
     }
 
     public function store(Request $request)

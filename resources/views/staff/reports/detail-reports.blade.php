@@ -256,7 +256,7 @@
                                             Status Pesanan :
                                         </span><span
                                             class="px-2 py-1 ml-2 font-semibold text-sm leading-tight text-blue-700 bg-blue-100 rounded-full dark:bg-blue-700 dark:text-green-100">
-                                            {{ $getOrderDetails->order->status }}
+                                            {{ $customDetails->order->status }}
                                         </span>
                                     </label>
                                 </div>
@@ -319,7 +319,7 @@
                     <form method="POST" action="{{ route('reports.update-return', ['id' => $item->order->id]) }}">
                         @csrf
                         {{ method_field('put') }}
-                        <input type="hidden" value="{{ $getOrderDetails->order->total }}" name="grandTotal">
+                        <input type="hidden" value="{{ $customDetails->order->total }}" name="grandTotal">
                         <h2 class="font-semibold">Aksi : </h2>
                         <select name="action"
                             class="block w-full mt-1 text-sm form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple ">

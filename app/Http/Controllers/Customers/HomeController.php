@@ -22,5 +22,4 @@ class HomeController extends Controller
         // return dd($categories);
         return view('customers.products.dashboard', compact('products', 'categories'));
     }
-    
 }

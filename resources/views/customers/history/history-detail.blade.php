@@ -107,7 +107,6 @@
                                 class="px-2 py-1 leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
                                 {{ $detailStatus->order->status }}
                             </span>
-                            <p>Saldo transaksi yang anda gunakan akan kembali dalam waktu 1x24 Jam.</p>
                         @else
                             <span
                                 class="px-2 py-1 leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
@@ -118,12 +117,15 @@
                         @if ($detailStatus->order->status == 'Selesai')
                             <!-- Modal toggle -->
                             {{-- Updated_at dsini yaitu menentukan kapan pesanan tersebut diterima oleh penjual --}}
-                            @if ($detailStatus->order->updated_at == $mytime)
-                                <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal"
-                                    class="ml-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
-                                    type="button">
-                                    Ajukan Pengembalian
-                                </button>
+                            @if ($detailStatus->product_id != null)
+                                @if ($detailStatus->order->updated_at == $mytime)
+                                    <button data-modal-target="authentication-modal"
+                                        data-modal-toggle="authentication-modal"
+                                        class="ml-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
+                                        type="button">
+                                        Ajukan Pengembalian
+                                    </button>
+                                @endif
                             @endif
 
                             <div id="authentication-modal" tabindex="-1" aria-hidden="true"
@@ -239,7 +241,6 @@
                                     <th class="py-2 px-4 border border-gray-300 ">{{ $item->request_lengan }}</th>
                                 </tr>
                             @endif
-
                             <tr>
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Model</th>
                                 <th class="py-2 px-4 border border-gray-300 ">{{ $item->request_model }}</th>
@@ -348,10 +349,10 @@
 
                             <div class="flex items-center space-x-1 mb-4">
                                 <input type="radio" name="rating" value="1">
-                                <input type="radio" name="rating" value="2"> 
-                                <input type="radio" name="rating" value="3"> 
-                                <input type="radio" name="rating" value="4"> 
-                                <input type="radio" name="rating" value="5"> 
+                                <input type="radio" name="rating" value="2">
+                                <input type="radio" name="rating" value="3">
+                                <input type="radio" name="rating" value="4">
+                                <input type="radio" name="rating" value="5">
                             </div>
                             <textarea
                                 class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -428,12 +429,12 @@
             document.querySelector('#imgPreview').src = localStorage.getItem('recent-items');
         }
     </script>
-    {{-- <script type="text/javascript">
+    <script type="text/javascript">
         image.onchange = evt => {
             const [file] = image.files
             if (file) {
                 blah.src = URL.createObjectURL(file)
             }
         }
-    </script> --}}
+    </script>
 @endsection
