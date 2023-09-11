@@ -15,6 +15,7 @@ class ListOrderController extends Controller
 {
     public function index(Request $request)
     {
+
         $user = Auth::user();
         $list = session()->get('list');
         $usersCity = Auth::user()->city_id;

@@ -114,17 +114,17 @@ class CheckoutController extends Controller
         $orders->alamat = $user->address;
         $orders->tanggal = Carbon::now();
         $orders->ongkos_kirim = $request->ongkir; // belum, gunakan raja ongkir
-        if ($request->pembayaran == 'Transfer') {
-            $orders->jenis_pembayaran = $json->payment_type;
-        } else {
-            User::where('id', $user->id)
-                ->update(
-                    [
-                        'saldo' => $userSaldo - $request->grandTotal,
-                    ]
-                );
-            $orders->jenis_pembayaran = $request->pembayaran;
-        }
+        // if ($request->pembayaran == 'Transfer') {
+        $orders->jenis_pembayaran = $json->payment_type;
+        // } else {
+        //     User::where('id', $user->id)
+        //         ->update(
+        //             [
+        //                 'saldo' => $userSaldo - $request->grandTotal,
+        //             ]
+        //         );
+        //     $orders->jenis_pembayaran = $request->pembayaran;
+        // }
         $orders->jenis_pesanan = 'Non Custom';
         $orders->status = 'Sedang Diproses';
         $orders->ekspedisi = $request->courierName; // belum, gunakan raja ongkir
@@ -136,7 +136,7 @@ class CheckoutController extends Controller
             $details->order_id = $orders->id;
             $details->quantity = $item['quantity'];
             if ($item['size'] == 'XXL') {
-                $details->harga = $item['price'] + $request->extra;
+                $details->harga = $item['price'] + $request->extra_price;
             } else {
                 $details->harga = $item['price'] - $item['diskon'];
             }
@@ -158,60 +158,5 @@ class CheckoutController extends Controller
             session()->forget('cart');
             return redirect('/history-order')->with('success', 'Produk berhasil di order');
         }
-    }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

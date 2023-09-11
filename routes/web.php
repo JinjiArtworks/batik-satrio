@@ -57,7 +57,7 @@ Route::middleware(['auth'])->group(function () {
     Route::group(['as' => 'products.'], function () {
         Route::post('/store-wishlist', [ProductController::class, 'store'])->name('wishlist');
         Route::get('/belanja', [ProductController::class, 'search'])->name('search');
-        Route::post('/top-up-saldo/{id}', [ProductController::class, 'topupSaldo'])->name('topupSaldo');
+        // Route::post('/top-up-saldo/{id}', [ProductController::class, 'topupSaldo'])->name('topupSaldo');
         // Route::get('/belanja', [ProductController::class, 'searchByCat'])->name('searchByCat');
     });
     Route::group(['as' => 'wishlist.'], function () {

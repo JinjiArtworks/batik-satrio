@@ -51,16 +51,18 @@
             foreach ($cart as $key => $value) {
                 $total_grosir = $value['price_grosir'] * $value['quantity'];
                 if ($value['price_grosir'] == null) {
+                    // Produk Non Grosir
                     if ($value['size'] == 'XXL') {
                         $XXL = $value['quantity'] * 10000;
-                        $total_XXL = $value['total_after_disc'] + $XXL * $value['quantity'];
+                        $total_XXL = $value['total_after_disc'] + $XXL;
                     } else {
                         $total += $value['total_after_disc'];
                     }
                 } else {
+                    // Untuk produk grosir
                     if ($value['size'] == 'XXL') {
                         $XXL = $value['quantity'] * 10000;
-                        $total += $total_grosir + $XXl;
+                        $total += $total_grosir + $XXL;
                     } else {
                         $total += $total_grosir;
                     }
@@ -127,55 +129,43 @@
                                         <h3 class="text-lg font-semibold leadi sm:pr-8">{{ $c['name'] }} </h3>
                                         <p class="text-sm dark:text-gray-400">Size : {{ $c['size'] }}
                                             @if ($c['size'] == 'XXL')
-                                                + (@currency($XXL))
+                                                + @currency($XXL)
+                                                <span class="flex">
+                                                    <small>Tambahan biaya size XXL sebesar Rp. 10.000 / pcs</small>
+                                                </span>
                                             @endif
                                         </p>
                                     </div>
                                     <div class="text-right">
                                         <p class="text-sm font-semibold">x{{ $c['quantity'] }}</p>
                                     </div>
+                                    {{-- Start Bukan Produk Grosir --}}
                                     @if ($c['price_grosir'] == null)
-                                        @if ($c['diskon'] != null)
-                                            @if ($c['size'] == 'XXL')
-                                                <div class="text-right">
-                                                    <p class="text-sm font-semibold">@currency($c['price'] - $c['diskon'] + $XXL)</p>
-                                                </div>
-                                                <div class="text-right">
-                                                    <p class="text-sm font-semibold">@currency($total_XXL)</p>
-                                                </div>
-                                            @else
-                                                <div class="text-right">
-                                                    <p class="text-sm font-semibold">@currency($c['price'] - $c['diskon'])</p>
-                                                </div>
-                                                <div class="text-right">
-                                                    <p class="text-sm font-semibold">@currency(($c['price'] - $c['diskon']) * $c['quantity'])</p>
-                                                </div>
-                                            @endif
+                                        @if ($c['size'] == 'XXL')
+                                            <div class="text-right">
+                                                <p class="text-sm font-semibold">@currency($c['price'] - $c['diskon'] + $XXL) </p>
+                                            </div>
+                                            <div class="text-right">
+                                                <p class="text-sm font-semibold">@currency($total_XXL)</p>
+                                            </div>
                                         @else
-                                            @if ($c['size'] == 'XXL')
-                                                <div class="text-right">
-                                                    <p class="text-sm font-semibold">@currency($c['price'] - $c['diskon'] + $XXL)</p>
-                                                </div>
-                                                <div class="text-right">
-                                                    <p class="text-sm font-semibold">@currency($total_XXL)</p>
-                                                </div>
-                                            @else
-                                                <div class="text-right">
-                                                    <p class="text-sm font-semibold">@currency($c['price'] - $c['diskon'])</p>
-                                                </div>
-                                                <div class="text-right">
-                                                    <p class="text-sm font-semibold">@currency(($c['price'] - $c['diskon']) * $c['quantity'])</p>
-
-                                                </div>
-                                            @endif
+                                            <div class="text-right">
+                                                <p class="text-sm font-semibold">@currency($c['price'] - $c['diskon'])</p>
+                                            </div>
+                                            <div class="text-right">
+                                                <p class="text-sm font-semibold">@currency(($c['price'] - $c['diskon']) * $c['quantity'])</p>
+                                            </div>
                                         @endif
+                                        {{-- End Bukan Produk Grosir --}}
                                     @else
+                                        {{-- Start Produk Grosir --}}
                                         <div class="text-right">
                                             <p class="text-sm font-semibold">@currency($c['price_grosir'])</p>
                                         </div>
                                         <div class="text-right">
                                             <p class="text-sm font-semibold">@currency($c['price_grosir'] * $c['quantity'])</p>
                                         </div>
+                                        {{-- End Produk Grosir --}}
                                     @endif
 
                                     <div class="text-right">
@@ -284,7 +274,7 @@
                                 <span>Stock tidak tersedia </span>
                             @endif
                         @else
-                            <button type="submit" 
+                            <button type="submit"
                                 class="alamat_empty bg-blue-600 border border-blue-600 text-white px-4 py-2 font-medium rounded flex items-center gap-2 hover:bg-transparent hover:text-blue-600 transition">
                                 Checkout
                             </button>

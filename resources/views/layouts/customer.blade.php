@@ -43,13 +43,13 @@
                                 <span
                                     class="block text-sm text-gray-900 dark:text-white">{{ Auth::user()->name }}</span>
                                 <span class="block text-sm  text-gray-500 truncate ">{{ Auth::user()->email }}</span>
-                                <span class="block text-sm  text-gray-500 truncate ">Saldo :
-                                    @currency(Auth::user()->saldo)</span>
-                                <span class="block text-sm  text-gray-500 truncate "> <button
+                                {{-- <span class="block text-sm  text-gray-500 truncate ">Saldo :
+                                    @currency(Auth::user()->saldo)</span> --}}
+                                {{-- <span class="block text-sm  text-gray-500 truncate "> <button
                                         data-modal-target="topup-modal" data-modal-toggle="topup-modal"
                                         class="underline text-blue-700" type="button">
                                         Tambah saldo
-                                    </button></span>
+                                    </button></span> --}}
 
                             </div>
                             <ul class="py-2" aria-labelledby="user-menu-button">
@@ -80,7 +80,7 @@
                             </ul>
                         </div>
                         <!-- Main modal -->
-                        <div id="topup-modal" tabindex="-1" aria-hidden="true"
+                        {{-- <div id="topup-modal" tabindex="-1" aria-hidden="true"
                             class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
                             <div class="relative w-full max-w-md max-h-full">
                                 <!-- Modal content -->
@@ -116,7 +116,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     @else
                         <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow"
                             id="user-dropdown">

@@ -101,7 +101,7 @@
                 <ul class="flex flex-col divide-y divide-gray-700">
                     <li class="flex flex-col py-6 sm:flex-row sm:justify-between">
                         <div class="flex w-full space-x-2 sm:space-x-4">
-                            @if ($c['metode'] != 'Custom')
+                            @if ($c['metode'] == 'Upload')
                                 <img class="flex-shrink-0 object-cover w-20 h-22 dark:border-transparent rounded outline-none sm:w-32 sm:h-32 dark:bg-gray-500"
                                     src="" id="imgPreview" alt="Preview">
                             @else
@@ -190,11 +190,10 @@
                             <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Ukuran Detail</th>
                             <th class="py-2 px-4 border border-gray-300 ">{{ $c['size'] }}</th>
                         </tr>
-
-                        <tr>
+                        {{-- <tr>
                             <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Weight</th>
                             <th class="py-2 px-4 border border-gray-300 ">{{ $totalBerat }} gram</th>
-                        </tr>
+                        </tr> --}}
                         <tr>
                             <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Pre Order</th>
                             <th class="py-2 px-4 border border-gray-300 ">3 Hari</th>

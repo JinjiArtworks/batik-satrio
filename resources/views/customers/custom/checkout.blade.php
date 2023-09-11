@@ -44,12 +44,12 @@
     @php
         $total = 0;
         $berat = 0;
-        $totalBerat = 0;
+        // $totalBerat = 0;
         if ($list != null) {
             foreach ($list as $key => $value) {
                 $total = $value['total_after_disc'] + $total;
-                $berat = $value['weight'] * $value['quantity'];
-                $totalBerat += $berat;
+                // $berat = $value['weight'] * $value['quantity'];
+                // $totalBerat += $berat;
             }
             $grandTotal = $total + $cekongkir;
         }
@@ -102,12 +102,10 @@
                                     <th class="py-2 px-4 border border-gray-300 ">{{ $c['tipe'] }}</th>
                                 </tr>
                             @endif
-
                             <tr>
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Model</th>
                                 <th class="py-2 px-4 border border-gray-300 ">{{ $c['model'] }}</th>
                             </tr>
-
                             <tr>
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Kain</th>
                                 <th class="py-2 px-4 border border-gray-300 ">{{ $c['kain'] }}</th>
@@ -116,10 +114,10 @@
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Ukuran Detail</th>
                                 <th class="py-2 px-4 border border-gray-300 ">{{ $c['size'] }}</th>
                             </tr>
-                            <tr>
+                            {{-- <tr>
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Weight</th>
                                 <th class="py-2 px-4 border border-gray-300 ">{{ $totalBerat }} gram</th>
-                            </tr>
+                            </tr> --}}
                             <tr>
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Pre Order</th>
                                 <th class="py-2 px-4 border border-gray-300 ">3 Hari</th>
@@ -135,7 +133,7 @@
                     @foreach ($list as $key => $c)
                         <div class="space-y-2">
                             <div class="flex justify-between">
-                                @if ($c['metode'] != 'Custom')
+                                @if ($c['metode'] == 'Upload')
                                     <img class="object-cover w-20 h-22" src="" alt="Preview" id="imgPreview">
                                 @else
                                     <img class="object-cover w-20 h-22" src="{{ asset('images/' . $c['images_custom']) }}"
@@ -157,40 +155,39 @@
                         </div>
                         <div class="flex justify-between border-b border-gray-200 mt-1 text-gray-800 font-medium py-3 ">
                             <p>Sub Total</p>
-                            <p class="font-bold">@currency($total)</p>
+                            <p>@currency($total)</p>
                         </div>
 
                         <div class="flex justify-between border-b border-gray-200 mt-1 text-gray-800 font-medium py-3 ">
                             <p>Biaya Pengiriman</p>
                             <p>@currency($cekongkir)</p>
                         </div>
-                        <div class="flex justify-between border-b border-gray-200 mt-1 text-gray-800 font-medium py-3 ">
+                        {{-- <div class="flex justify-between border-b border-gray-200 mt-1 text-gray-800 font-medium py-3 ">
                             <p>Metode Pembayaran</p>
                             <select name="pembayaran" id="payment-type" required
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 ">
                                 <option value="Saldo"> Saldo @currency(Auth::user()->saldo)</option>
                                 <option value="Transfer"> Dompet Digital</option>
                             </select>
-                        </div>
+                        </div> --}}
                         <div class="flex justify-between text-gray-800 font-medium py-3 ">
                             <p class="font-bold">Total</p>
                             <p class="font-bold">@currency($grandTotal)</p>
                         </div>
-                        <div class="flex justify-end text-gray-800 font-medium mt-4">
+                        {{-- <div class="flex justify-end text-gray-800 font-medium mt-4">
                             <button type="submit"
                                 class="confirm flex px-2 py-2 text-center bg-blue-600 text-white font-medium rounded"
                                 id="pay_saldo">Bayar Dengan Saldo
                             </button>
-                        </div>
+                        </div> --}}
                     @endforeach
                 </div>
             </div>
         </form>
         <div class="flex justify-end text-gray-800 font-medium p-4">
             <button id="pay-button"
-                class="pay flex px-2 py-2 text-center bg-blue-600 border border-blue-600 text-white font-medium rounded gap-2 hover:bg-transparent hover:text-blue-600 transition"
-                style="display: none">
-                Bayar Dengan Dompet Digital
+                class="pay flex px-2 py-2 text-center bg-blue-600 border border-blue-600 text-white font-medium rounded gap-2 hover:bg-transparent hover:text-blue-600 transition">
+                Lanjutkan Pembayaran
             </button>
         </div>
     </div>
@@ -210,29 +207,21 @@
                 confirmButtonText: 'Yes'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    if ({{ $userSaldo }} > {{ $grandTotal }}) {
-                        form.submit();
-                    } else {
-                        event.preventDefault();
-                        Swal.fire({
-                            title: 'Saldo anda tidak cukup.',
-                            icon: 'error',
-                        })
-                    }
+                    form.submit();
                 }
             });
 
         });
-        $("#payment-type").change(function() {
-            var control = $(this);
-            if (control.val() == "Saldo") {
-                $("#pay_saldo").show();
-                $("#pay-button").hide();
-            } else if (control.val() == 'Transfer') {
-                $("#pay-button").show();
-                $("#pay_saldo").hide();
-            }
-        });
+        // $("#payment-type").change(function() {
+        //     var control = $(this);
+        //     if (control.val() == "Saldo") {
+        //         $("#pay_saldo").show();
+        //         $("#pay-button").hide();
+        //     } else if (control.val() == 'Transfer') {
+        //         $("#pay-button").show();
+        //         $("#pay_saldo").hide();
+        //     }
+        // });
         if (localStorage.getItem('recent-items')) {
             document.querySelector('#imgPreview').src = localStorage.getItem('recent-items');
         }

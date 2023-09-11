@@ -62,9 +62,6 @@ class DashboardController extends Controller
     }
     public function updateReturn(Request $request, $id)
     {
-        // return dd($request->grandTotal);
-        $user = Auth::user()->id;
-        $userSaldo = Auth::user()->saldo;
         Order::where('id', $id)
             ->update(
                 [

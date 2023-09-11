@@ -21,7 +21,7 @@ class CheckoutCustomController extends Controller
         // dd($request->courier);
         // return dd($request->all()); 
         $user = Auth::user();
-        $userSaldo = Auth::user()->saldo;
+        // $userSaldo = Auth::user()->saldo;
         $courierName = $request->courier;
         // return dd($courierName);
         $list = session()->get('list');
@@ -94,13 +94,13 @@ class CheckoutCustomController extends Controller
         );
         $snapToken = \Midtrans\Snap::getSnapToken($params);
         // dd($params);
-        return view('customers.custom.checkout', ['snap_token' => $snapToken],  compact('list', 'userSaldo', 'cekongkir', 'courierName', 'city'));
+        return view('customers.custom.checkout', ['snap_token' => $snapToken],  compact('list', 'cekongkir', 'courierName', 'city'));
     }
 
     public function store(Request $request)
     {
         $user = Auth::user();
-        $userSaldo = Auth::user()->saldo;
+        // $userSaldo = Auth::user()->saldo;
         $json = json_decode($request->get('json'));
         $list = session()->get('list');
         $orders = new Order();
@@ -110,17 +110,17 @@ class CheckoutCustomController extends Controller
         $orders->alamat = $user->address;
         $orders->tanggal = Carbon::now();
         $orders->ongkos_kirim = $request->ongkir; // belum, gunakan raja ongkir
-        if ($request->pembayaran == 'Transfer') {
-            $orders->jenis_pembayaran = $json->payment_type;
-        } else {
-            User::where('id', $user->id)
-                ->update(
-                    [
-                        'saldo' => $userSaldo - $request->grandTotal,
-                    ]
-                );
-            $orders->jenis_pembayaran = $request->pembayaran;
-        }
+        // if ($request->pembayaran == 'Transfer') {
+        $orders->jenis_pembayaran = $json->payment_type;
+        // } else {
+        //     User::where('id', $user->id)
+        //         ->update(
+        //             [
+        //                 'saldo' => $userSaldo - $request->grandTotal,
+        //             ]
+        //         );
+        //     $orders->jenis_pembayaran = $request->pembayaran;
+        // }
         $orders->jenis_pesanan = 'Custom';
         $orders->status = 'Menunggu Konfirmasi Penjual';
         $orders->preorder = '3 Hari';

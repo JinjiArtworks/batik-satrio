@@ -51,18 +51,18 @@ class ProductController extends Controller
         }
         return view('customers.products.shop', compact('products', 'cat'));
     }
-    public function topupSaldo(Request $request)
-    {
-        $user = Auth::user()->id;
-        $userSaldo = Auth::user()->saldo;
-        User::where('id', $user)
-            ->update(
-                [
-                    'saldo' => $userSaldo + $request->nominal,
-                ]
-            );
-        return redirect('/')->with('success','saldo berhasil ditambahkan');
-    }
+    // public function topupSaldo(Request $request)
+    // {
+    //     $user = Auth::user()->id;
+    //     $userSaldo = Auth::user()->saldo;
+    //     User::where('id', $user)
+    //         ->update(
+    //             [
+    //                 'saldo' => $userSaldo + $request->nominal,
+    //             ]
+    //         );
+    //     return redirect('/')->with('success','saldo berhasil ditambahkan');
+    // }
     // public function searchByCat(Request $request)
     // {
     //     $cat = Categories::all();
