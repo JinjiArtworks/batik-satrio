@@ -44,28 +44,27 @@
     @php
         $total = 0;
         $total_XXL = 0;
+        $XXL = 0;
+        $total_grosir = 0;
         if ($cart != null) {
             foreach ($cart as $key => $value) {
-                $total_grosir = $value['price_grosir'] * $value['quantity'];
-                if ($value['price_grosir'] == null) {
-                    if ($value['size'] == 'XXL') {
-                        $XXL = $value['quantity'] * 10000;
-                        $total_XXL = $value['total_after_disc'] + $XXL;
-                    } else {
-                        $total += $value['total_after_disc'];
-                    }
+                if ($value['price_grosir'] != null) {
+                    $total_grosir = $value['price_grosir'] * $value['quantity'];
                 } else {
-                    if ($value['size'] == 'XXL') {
-                        $XXL = $value['quantity'] * 10000;
-                        $total_XXL += $total_grosir + $XXl;
+                    if ($value['categories'] == 'Kain') {
+                        $total += $value['total_after_disc'];
                     } else {
-                        $total += $total_grosir;
+                        if ($value['size'] == 'XXL') {
+                            $XXL = $value['quantity'] * 10000;
+                            $total_XXL = $value['total_after_disc'] + $XXL;
+                        } else {
+                            $total += $value['total_after_disc'];
+                        }
                     }
                 }
             }
-            // echo $total_XXL;
-            $subTotal = $total + $total_XXL;
-            $grandTotal = $total + $cekongkir + $subTotal;
+            $subTotal = $total + $total_XXL + $total_grosir;
+            $grandTotal = $cekongkir + $subTotal;
         }
     @endphp
     <div class="max-w-screen-xl items-center justify-between mx-auto">
@@ -111,11 +110,13 @@
                                 <img class="object-cover w-20 h-22" src="{{ asset('images/' . $c['image']) }}">
                                 <div>
                                     <h5 class="text-gray-800 text-lg font-semibold">{{ $c['name'] }}</h5>
-                                    <p class="text-sm dark:text-gray-400">Size : {{ $c['size'] }}
-                                        @if ($c['size'] == 'XXL')
-                                            + (@currency($XXL))
-                                        @endif
-                                    </p>
+                                    @if ($c['categories'] != 'Kain')
+                                        <p class="text-sm dark:text-gray-400">Size : {{ $c['size'] }}
+                                            @if ($c['size'] == 'XXL')
+                                                + (@currency($XXL))
+                                            @endif
+                                        </p>
+                                    @endif
                                 </div>
                                 @if ($c['price_grosir'] == null)
                                     @if ($c['diskon'] != null)
@@ -161,7 +162,7 @@
                     @endforeach
                     <div class="flex justify-between border-b border-gray-200 mt-1 text-gray-800 font-medium py-3 ">
                         <p>Sub Total</p>
-                        <p>@currency($total + $total_XXL)</p>
+                        <p>@currency($subTotal)</p>
                     </div>
                     <div class="flex justify-between border-b border-gray-200 mt-1 text-gray-800 font-medium py-3 ">
                         <p>Biaya Pengiriman</p>

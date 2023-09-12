@@ -104,7 +104,6 @@ class CheckoutController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        $userSaldo = Auth::user()->saldo;
         $json = json_decode($request->get('json'));
         $cart = session()->get('cart');
         $orders = new Order();

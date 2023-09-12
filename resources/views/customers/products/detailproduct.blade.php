@@ -225,77 +225,81 @@
                 <form action="{{ route('cart.add', ['id' => $products->id]) }}" method="POST">
                     @csrf
                     <div class="pt-4">
-                        <h3 class="text-sm text-gray-800 uppercase mb-1">Size</h3>
-                        @if ($products->ukuran == 'All Size')
-                            <div class="flex items-center gap-2">
-                                <div class="size-selector">
-                                    <input type="radio" name="size" id="size-s"
-                                        class="hidden"value="S"required>
-                                    <label for="size-s"
-                                        class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">S</label>
+                        @if ($products->categories_id == 1)
+                            {{-- Kalau produknya bukan kain , tampilkan size --}}
+                            <h3 class="text-sm text-gray-800 uppercase mb-1">Size</h3>
+                            @if ($products->ukuran == 'All Size')
+                                <div class="flex items-center gap-2">
+                                    <div class="size-selector">
+                                        <input type="radio" name="size" id="size-s"
+                                            class="hidden"value="S"required>
+                                        <label for="size-s"
+                                            class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">S</label>
+                                    </div>
+                                    <div class="size-selector">
+                                        <input type="radio" name="size" id="size-m"
+                                            class="hidden"value="M"required>
+                                        <label for="size-m"
+                                            class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">M</label>
+                                    </div>
+                                    <div class="size-selector">
+                                        <input type="radio" name="size" id="size-l"
+                                            class="hidden"value="L" required>
+                                        <label for="size-l"
+                                            class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">L</label>
+                                    </div>
+                                    <div class="size-selector">
+                                        <input type="radio" name="size" id="size-xl" class="hidden"
+                                            value="XL"required>
+                                        <label for="size-xl"
+                                            class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">XL</label>
+                                    </div>
+                                    <div class="size-selector">
+                                        <input type="radio" name="size" id="size-xxl" class="hidden"
+                                            value="XXL"required>
+                                        <label for="size-xxl"
+                                            class="text-xs border border-gray-200 rounded-sm h-6 w-8 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">XXL</label>
+                                    </div>
                                 </div>
-                                <div class="size-selector">
-                                    <input type="radio" name="size" id="size-m"
-                                        class="hidden"value="M"required>
-                                    <label for="size-m"
-                                        class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">M</label>
+                            @elseif ($products->ukuran == 'S')
+                                <div class="flex items-center gap-2">
+                                    <div class="size-selector">
+                                        <input type="radio" name="size" id="size-s"
+                                            class="hidden"value="S"required>
+                                        <label for="size-s"
+                                            class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">S</label>
+                                    </div>
                                 </div>
-                                <div class="size-selector">
-                                    <input type="radio" name="size" id="size-l" class="hidden"value="L"
-                                        required>
-                                    <label for="size-l"
-                                        class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">L</label>
+                            @elseif ($products->ukuran == 'M')
+                                <div class="flex items-center gap-2">
+                                    <div class="size-selector">
+                                        <input type="radio" name="size" id="size-m"
+                                            class="hidden"value="M"required>
+                                        <label for="size-m"
+                                            class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">M</label>
+                                    </div>
                                 </div>
-                                <div class="size-selector">
-                                    <input type="radio" name="size" id="size-xl" class="hidden"
-                                        value="XL"required>
-                                    <label for="size-xl"
-                                        class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">XL</label>
+                            @elseif ($products->ukuran == 'L')
+                                <div class="flex items-center gap-2">
+                                    <div class="size-selector">
+                                        <input type="radio" name="size" id="size-l"
+                                            class="hidden"value="L"required>
+                                        <label for="size-l"
+                                            class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">L</label>
+                                    </div>
                                 </div>
-                                <div class="size-selector">
-                                    <input type="radio" name="size" id="size-xxl" class="hidden"
-                                        value="XXL"required>
-                                    <label for="size-xxl"
-                                        class="text-xs border border-gray-200 rounded-sm h-6 w-8 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">XXL</label>
+                            @elseif ($products->ukuran == 'XL')
+                                <div class="flex items-center gap-2">
+                                    <div class="size-selector">
+                                        <input type="radio" name="size" id="size-xl"
+                                            class="hidden"value="XL"required>
+                                        <label for="size-xl"
+                                            class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">XL</label>
+                                    </div>
                                 </div>
-                            </div>
-                        @elseif ($products->ukuran == 'S')
-                            <div class="flex items-center gap-2">
-                                <div class="size-selector">
-                                    <input type="radio" name="size" id="size-s"
-                                        class="hidden"value="S"required>
-                                    <label for="size-s"
-                                        class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">S</label>
-                                </div>
-                            </div>
-                        @elseif ($products->ukuran == 'M')
-                            <div class="flex items-center gap-2">
-                                <div class="size-selector">
-                                    <input type="radio" name="size" id="size-m"
-                                        class="hidden"value="M"required>
-                                    <label for="size-m"
-                                        class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">M</label>
-                                </div>
-                            </div>
-                        @elseif ($products->ukuran == 'L')
-                            <div class="flex items-center gap-2">
-                                <div class="size-selector">
-                                    <input type="radio" name="size" id="size-l"
-                                        class="hidden"value="L"required>
-                                    <label for="size-l"
-                                        class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">L</label>
-                                </div>
-                            </div>
-                        @elseif ($products->ukuran == 'XL')
-                            <div class="flex items-center gap-2">
-                                <div class="size-selector">
-                                    <input type="radio" name="size" id="size-xl"
-                                        class="hidden"value="XL"required>
-                                    <label for="size-xl"
-                                        class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">XL</label>
-                                </div>
-                            </div>
+                            @endif
                         @endif
+
                     </div>
                     @if ($products->harga_grosir == null)
                         <div class="mt-4">
@@ -310,6 +314,11 @@
                                     class="btn btn-increase h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none">
                                     +</a>
                             </div>
+                            @if ($products->categories_id == 2)
+                            <span>
+                                <small>*Quantity dalam hitungan / meter.</small>
+                            </span>
+                            @endif
                         </div>
                     @else
                         <div class="mt-4">

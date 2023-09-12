@@ -190,19 +190,31 @@
                         <span class="text-gray-700 dark:text-gray-400">
                             Harga Grosir
                         </span>
-                        <input 
+                        <input
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                            type="number" name="price_grosir" placeholder="Harga Produk"
+                            type="number" name="price_grosir" placeholder="Harga Produk Grosir"
                             value="{{ $products->harga_grosir }}" />
                         <span class="text-xs text-gray-600 dark:text-gray-400">
                             Kosongkan jika tidak ada harga grosir.
                         </span>
                     </label>
+                    {{-- <label class="block text-sm mt-4">
+                        <span class="text-gray-700 dark:text-gray-400">
+                            Harga Per Meter
+                        </span>
+                        <input
+                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                            type="number" name="price_meter" placeholder="Harga Produk Meter"
+                            value="{{ $products->harga_meter }}" />
+                        <span class="text-xs text-gray-600 dark:text-gray-400">
+                            Kosongkan jika tidak ada harga per meter.
+                        </span>
+                    </label> --}}
                     <label class="block text-sm mt-4">
                         <span class="text-gray-700 dark:text-gray-400">
                             Minimal Order
                         </span>
-                        <input 
+                        <input
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                             type="number" name="price_grosir" placeholder="Harga Produk"
                             value="{{ $products->minimal_order }}" />

@@ -41,6 +41,7 @@ class CartController extends Controller
             ];
         } else {
             if ($cart[$id]['size'] != $request->size) {
+                // Kalau sizenya tidak sama, tidak bisa di timbun alias di tambahkan produk baru sesuai dengan request sizenya.
                 $cart[$id] = [
                     "id" => $product->id,
                     "user_id" => $user,
@@ -85,6 +86,7 @@ class CartController extends Controller
         $allEkspedisi = Ekspedisi::all();
 
         $cart = session()->get('cart');
+        // return dd($cart);
         return view('customers.cart.cart', compact('cart', 'city', 'allCities', 'allProvince', 'province', 'allEkspedisi','usersProvince','usersCity'));
     }
 

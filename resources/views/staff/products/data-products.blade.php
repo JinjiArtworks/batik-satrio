@@ -152,9 +152,19 @@
                                     <td class="px-4 py-3 text-sm">
                                         {{ $item->terjual }}
                                     </td>
-                                    <td class="px-4 py-3 text-sm">
-                                        @currency($item->harga)
-                                    </td>
+                                    @if ($item->harga_grosir != null)
+                                        <td class="px-4 py-3 text-sm">
+                                            @currency($item->harga_grosir)
+                                        </td> 
+                                    @elseif ($item->harga_meter != null)
+                                        <td class="px-4 py-3 text-sm">
+                                            @currency($item->harga_meter)
+                                        </td>
+                                    @else
+                                        <td class="px-4 py-3 text-sm">
+                                            @currency($item->harga)
+                                        </td>
+                                    @endif
 
                                     <td class="px-4 py-3 text-sm">
                                         <form action="{{ route('products.edit', ['id' => $item->id]) }}">

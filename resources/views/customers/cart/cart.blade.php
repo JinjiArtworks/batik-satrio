@@ -127,14 +127,20 @@
                                 <div class="flex justify-between w-full pb-2 space-x-2">
                                     <div class="space-y-1">
                                         <h3 class="text-lg font-semibold leadi sm:pr-8">{{ $c['name'] }} </h3>
-                                        <p class="text-sm dark:text-gray-400">Size : {{ $c['size'] }}
-                                            @if ($c['size'] == 'XXL')
-                                                + @currency($XXL)
-                                                <span class="flex">
-                                                    <small>Tambahan biaya size XXL sebesar Rp. 10.000 / pcs</small>
-                                                </span>
+                                        @if ($c['categories'] != 'Kain')
+                                            @if ($c['price_grosir'] == null)
+                                                {{-- kalo produk grosir, jangan tampilkan informasi berikut : --}}
+                                                <p class="text-sm dark:text-gray-400">Size : {{ $c['size'] }}
+                                                    @if ($c['size'] == 'XXL')
+                                                        + @currency($XXL)
+                                                        <span class="flex">
+                                                            <small>Tambahan biaya size XXL sebesar Rp. 10.000 / pcs</small>
+                                                        </span>
+                                                    @endif
+                                                </p>
                                             @endif
-                                        </p>
+                                        @endif
+
                                     </div>
                                     <div class="text-right">
                                         <p class="text-sm font-semibold">x{{ $c['quantity'] }}</p>

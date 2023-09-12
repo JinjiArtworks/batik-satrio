@@ -91,7 +91,7 @@
                     </label>
                     <label class="block text-sm mt-4">
                         <span class="text-gray-700 dark:text-gray-400">
-                            Gambar
+                            Gambar Produk
                         </span>
                         <img src="{{ asset('images/no-profile.png') }}" id="blah" width="150px" height="150px"
                             class="mt-1 mb-2">
@@ -101,11 +101,21 @@
                         <span class="text-gray-700 dark:text-gray-400">
                             Kategori
                         </span>
-                        <select name="categories" required
+                        <select name="categories" required id="categories"
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                             @foreach ($categories as $item)
                                 <option value="{{ $item->id }}">{{ $item->nama }}</option>
                             @endforeach
+                        </select>
+                    </label>
+                    <label class="block text-sm mt-4" id="select_jenis">
+                        <span class="text-gray-700 dark:text-gray-400">
+                            Jenis Produk
+                        </span>
+                        <select required id="jenis"
+                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                            <option value="Normal">Normal</option>
+                            <option value="Grosir">Grosir</option>
                         </select>
                     </label>
                     <label class="block mt-4 text-sm">
@@ -119,7 +129,7 @@
                             @endforeach
                         </select>
                     </label>
-                    <label class="block mt-4 text-sm">
+                    <label class="block mt-4 text-sm" id="select_model">
                         <span class="text-gray-700 dark:text-gray-400">
                             Model
                         </span>
@@ -152,20 +162,20 @@
                             @endforeach
                         </select>
                     </label>
-                    <label class="block text-sm mt-4">
+                    <label class="block text-sm mt-4" id="select_ukuran">
                         <span class="text-gray-700 dark:text-gray-400">
                             Ukuran
                         </span>
                         <select name="size"required
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                            <option value="All Size">All Size</option>
                             <option value="S">S</option>
                             <option value="M">M</option>
                             <option value="L">L</option>
                             <option value="XL">XL</option>
-                            <option value="All Size">All Size</option>
                         </select>
                     </label>
-
+                 
                     <label class="block text-sm mt-4">
                         <span class="text-gray-700 dark:text-gray-400">
                             Deskripsi
@@ -174,30 +184,45 @@
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                             type="text" name="description" placeholder="Deskripsi Produk"></textarea>
                     </label>
-                    <label class="block text-sm mt-4">
+                    <label class="block text-sm mt-4" id="select_harga">
                         <span class="text-gray-700 dark:text-gray-400">
                             Harga
                         </span>
                         <input
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                             type="number" name="price" placeholder="Harga Produk" />
-                    </label>
-                    <label class="block text-sm mt-4">
-                        <span class="text-gray-700 dark:text-gray-400">
-                            Harga Grosir
+                        <span class="text-xs text-gray-600 dark:text-gray-400" id="select_meter" style="display: none">
+                            Masukkan harga / meter untuk kategori produk kain.
                         </span>
-                        <input 
+                    </label>
+                    <label class="block text-sm mt-4" id="select_grosir">
+                        <span class="text-gray-700 dark:text-gray-400">
+                            Harga Grosirss
+                        </span>
+                        <input
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                            type="number" name="price_grosir" placeholder="Harga Produk" />
+                            type="number" name="price_grosir" placeholder="Harga Produk Grosir" />
                         <span class="text-xs text-gray-600 dark:text-gray-400">
                             Kosongkan jika tidak ada harga grosir.
                         </span>
                     </label>
-                    <label class="block text-sm mt-4">
+                    {{-- <label class="block text-sm mt-4">
+                        <span class="text-gray-700 dark:text-gray-400">
+                            Harga Per Meter
+                        </span>
+                        <input 
+                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                            type="number" name="price_meter" placeholder="Harga Produk Kain" />
+                        <span class="text-xs text-gray-600 dark:text-gray-400">
+                            Kosongkan jika tidak ada harga per meter.
+
+                        </span>
+                    </label> --}}
+                    <label class="block text-sm mt-4" id="select_min">
                         <span class="text-gray-700 dark:text-gray-400">
                             Minimal Order
                         </span>
-                        <input 
+                        <input
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                             type="number" name="minimal_order" placeholder="Minimal Order" />
                         <span class="text-xs text-gray-600 dark:text-gray-400">
@@ -240,5 +265,34 @@
                 blah.src = URL.createObjectURL(file)
             }
         }
+        $("#categories").change(function() {
+            var control = $(this);
+            if (control.val() == "1") { // jika produk kategori baju
+                $("#select_grosir").show();
+                $("#select_ukuran").show();
+                $("#select_model").show();
+                $("#select_min").show(); // min order
+                $("#select_meter").hide();
+                $("#select_jenis").show();
+            } else if (control.val() == '2') { // jika produk kategori kain
+                $("#select_grosir").hide();
+                $("#select_ukuran").hide();
+                $("#select_model").hide();
+                $("#select_min").hide();
+                $("#select_jenis").hide();
+            }
+        });
+        $("#jenis").change(function() {
+            var control = $(this);
+            if (control.val() == "Normal") { // jika produk kategori baju
+                $("#select_grosir").hide();
+                $("#select_harga").show();
+                $("#select_min").hide(); // min order
+            } else if (control.val() == 'Grosir') { // jika produk kategori kain
+                $("#select_grosir").show();
+                $("#select_harga").hide();
+                $("#select_min").show();
+            }
+        });
     </script>
 @endsection
