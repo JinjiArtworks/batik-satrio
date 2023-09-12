@@ -88,12 +88,16 @@
                         </a>
                     </div>
                     <div class="space-y-1 pl-8 pt-4">
-                        <a href="#" class="relative hover:text-blue-600 block font-medium capitalize transition">
-                            <span class="absolute -left-8 top-0 text-base">
-                                <i class="fa-solid fa-right-from-bracket"></i>
-                            </span>
-                            Logout
-                        </a>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit"
+                                class="relative hover:text-blue-600 block font-medium capitalize transition">
+                                Log Out
+                                <span class="absolute -left-8 top-0 text-base">
+                                    <i class="fa-solid fa-right-from-bracket"></i>
+                                </span>
+                            </button>
+                        </form>
                     </div>
 
                 </div>
@@ -103,7 +107,7 @@
                     @if ($item->jenis_pesanan == 'Custom')
                         <div class="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
                             <div class="w-28">
-                                <img src="{{ asset('images/no-profile.png') }}" alt="product 6" class="w-full">
+                                <img src="{{ asset('images/no-profile-order.png') }}" alt="product 6" class="w-full">
                             </div>
                             <div class="w-1/3">
                                 <h2 class="text-gray-800 text-xl font-medium ">Produk Custom #{{ $item->id }}
@@ -146,7 +150,7 @@
                     @else
                         <div class="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
                             <div class="w-28">
-                                <img src="{{ asset('images/no-profile.png') }}" alt="product 6" class="w-full">
+                                <img src="{{ asset('images/no-profile-order.png') }}" alt="product 6" class="w-full">
                             </div>
                             <div class="w-1/3">
                                 <h2 class="text-gray-800 text-xl font-medium ">Nomor Pesanan

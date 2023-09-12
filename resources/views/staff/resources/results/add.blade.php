@@ -71,7 +71,7 @@
     <main class="h-full overflow-y-auto">
         <div class="container px-6 mx-auto grid">
             <h2 class=" mt-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-                results Pembuatan Batik
+                Contoh Results Untuk Custom Batik
             </h2>
             @if ($message = Session::get('success'))
                 <div id="message"
@@ -105,7 +105,7 @@
                                 class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                                 <th class="px-4 py-3">Tipe</th>
                                 <th class="px-4 py-3">Deskripsi</th>
-                                <th class="px-4 py-3">Deskripsi</th>
+                                <th class="px-4 py-3">Gambar</th>
                                 <th class="px-4 py-3">Aksi</th>
                             </tr>
                         </thead>
@@ -173,21 +173,21 @@
         </div>
         <div class="container px-6 mx-auto grid">
             <h2 class="mt-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-                Tambah results
+                Tambah Results Custom Batik
             </h2>
             <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
                 <form method="POST" action="{{ route('resources.store-results') }}" enctype="multipart/form-data">
                     @csrf
                     <label class="block text-sm">
                         <span class="text-gray-700 dark:text-gray-400">
-                            Nama results
+                            Nama 
                         </span>
                         <input name="tipe"
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input">
                     </label>
                     <label class="block text-sm">
                         <span class="text-gray-700 dark:text-gray-400">
-                            Deskripsi results
+                            Deskripsi 
                         </span>
                         <textarea name="motif"
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"></textarea>

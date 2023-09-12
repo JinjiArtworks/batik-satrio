@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Customers\Custom;
 
 use App\Models\Colors;
 use App\Models\Motif;
-use App\Models\Preview;
+// use App\Models\Preview;
 use App\Models\Results;
 use App\Models\Tipe;
 use Illuminate\Http\Request;
@@ -20,13 +20,13 @@ class CustomBatikController extends Controller
         $getColors = Colors::all();
         $getMotifs = Motif::all();
         $getTipe = Tipe::all();
-        $previews = Preview::all();
+        // $previews = Preview::all();
         // return dd($getMotifs[0]['nama'], '+', $getColors[0]['nama']);
         // return dd($results);
         // return dd($getTipes->gambar);
         // $getColorsValues = Colors::
         // return dd($list);
-        return view('customers.custom.index', compact('results', 'getColors', 'getTipe', 'getMotifs', 'previews'));
+        return view('customers.custom.index', compact('results', 'getColors', 'getTipe', 'getMotifs'));
     }
 
     public function details(Request $request)

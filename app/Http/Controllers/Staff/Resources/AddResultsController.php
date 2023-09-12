@@ -3,10 +3,7 @@
 namespace App\Http\Controllers\Staff\Resources;
 
 use App\Http\Controllers\Controller;
-use App\Models\Colors;
-use App\Models\Preview;
 use App\Models\Results;
-use App\Models\Teknik;
 use Illuminate\Http\Request;
 
 class AddResultsController extends Controller

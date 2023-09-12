@@ -90,12 +90,16 @@
                         </a>
                     </div>
                     <div class="space-y-1 pl-8 pt-4">
-                        <a href="#" class="relative hover:text-blue-600 block font-medium capitalize transition">
-                            <span class="absolute -left-8 top-0 text-base">
-                                <i class="fa-solid fa-right-from-bracket"></i>
-                            </span>
-                            Logout
-                        </a>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit"
+                                class="relative hover:text-blue-600 block font-medium capitalize transition">
+                                Log Out
+                                <span class="absolute -left-8 top-0 text-base">
+                                    <i class="fa-solid fa-right-from-bracket"></i>
+                                </span>
+                            </button>
+                        </form>
                     </div>
 
                 </div>

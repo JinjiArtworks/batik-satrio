@@ -22,27 +22,17 @@
             <div class="relative h-56 overflow-hidden rounded-lg md:h-96 shadow dark:bg-gray-800 dark:border-gray-700">
                 <!-- Item 1 -->
                 <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                    <img src="https://flowbite.com/docs/images/carousel/carousel-1.svg"
+                    <img src="{{ asset('images/shoppings.jpeg') }}"
                         class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
                 </div>
                 <!-- Item 2 -->
                 <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                    <img src="https://flowbite.com/docs/images/carousel/carousel-2.svg"
+                    <img src="{{ asset('images/shoppings2.jpeg') }}"
                         class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
                 </div>
                 <!-- Item 3 -->
                 <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                    <img src="https://flowbite.com/docs/images/carousel/carousel-3.svg"
-                        class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-                </div>
-                <!-- Item 4 -->
-                <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                    <img src="https://flowbite.com/docs/images/carousel/carousel-4.svg"
-                        class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-                </div>
-                <!-- Item 5 -->
-                <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                    <img src="https://flowbite.com/docs/images/carousel/carousel-5.svg"
+                    <img src="{{ asset('images/shoppings3.jpeg') }}"
                         class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
                 </div>
             </div>
@@ -54,10 +44,6 @@
                     data-carousel-slide-to="1"></button>
                 <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3"
                     data-carousel-slide-to="2"></button>
-                <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 4"
-                    data-carousel-slide-to="3"></button>
-                <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 5"
-                    data-carousel-slide-to="4"></button>
             </div>
             <!-- Slider controls -->
             <button type="button"
@@ -92,8 +78,8 @@
                 class="border border-gray-20 shadow dark:bg-gray-800 dark:border-gray-700 rounded-xl px-3 py-6 flex justify-center items-center gap-5">
                 <img src="/images/icons/delivery-van.svg" alt="Delivery" class="w-12 h-12  object-contain">
                 <div class="pl-10">
-                    <h4 class=" font-light">Free Shipping</h4>
-                    <p class="text-gray-500 ">Order over $200</p>
+                    <h4 class=" font-light">Pelayanan Terbaik</h4>
+                    <p class="text-gray-500 ">Lebih 200+ Pelanggan Puas</p>
                 </div>
             </div>
             <div
@@ -101,16 +87,16 @@
                 <img src="/images/icons/money-back.svg" alt="Delivery" class="w-12 h-12 object-contain">
                 <div class="pl-10">
 
-                    <h4 class=" font-light ">Money Returns</h4>
-                    <p class="text-gray-500 ">30 days money returns</p>
+                    <h4 class=" font-light ">Pengembalian Dana</h4>
+                    <p class="text-gray-500 ">Proses Cepat</p>
                 </div>
             </div>
             <div
                 class="border border-gray-20 shadow dark:bg-gray-800 dark:border-gray-700 rounded-xl px-3 py-6 flex justify-center items-center gap-5">
                 <img src="/images/icons/service-hours.svg" alt="Delivery" class="w-12 h-12 object-contain">
                 <div class="pl-10">
-                    <h4 class=" font-light ">24/7 Support</h4>
-                    <p class="text-gray-500 ">Customer support</p>
+                    <h4 class=" font-light ">24 Jam Customer Service</h4>
+                    <p class="text-gray-500 ">Melayani Kebutuhan Anda</p>
                 </div>
             </div>
         </div>
@@ -195,4 +181,3 @@
         @endforeach
     </div>
 @endsection
-
