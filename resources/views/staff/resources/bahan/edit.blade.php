@@ -92,6 +92,15 @@
                         <textarea name="deskripsi"
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input">{{ $bahan->deskripsi }}</textarea>
                     </label>
+                    <label class="block text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">
+                            Stok Bahan
+                        </span>
+                        <input name="stock" value="{{ $bahan->stock_bahan }}"
+                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input">
+                            <small>*kg / roll</small>
+
+                    </label>
                     <button type="submit"
                         class="px-3 py-1 mt-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                         Submit

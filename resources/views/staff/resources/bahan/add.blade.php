@@ -105,6 +105,7 @@
                                 class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                                 <th class="px-4 py-3">Nama</th>
                                 <th class="px-4 py-3">Deskripsi</th>
+                                <th class="px-4 py-3">Stock Bahan</th>
                                 <th class="px-4 py-3">Aksi</th>
                             </tr>
                         </thead>
@@ -116,6 +117,9 @@
                                     </td>
                                     <td class="px-4 py-3 text-sm">
                                         {{ $item->deskripsi }}
+                                    </td>
+                                    <td class="px-4 py-3 text-sm">
+                                        {{ $item->stock_bahan }}
                                     </td>
                                     <td class="px-4 py-3 text-sm">
                                         <form method="GET"
@@ -180,6 +184,14 @@
                         </span>
                         <textarea name="deskripsi"
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"></textarea>
+                    </label>
+                    <label class="block text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">
+                            Stok Bahan
+                        </span>
+                        <input name="stock"
+                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input">
+                            <small>*kg / roll</small>
                     </label>
                     <button type="submit"
                         class="px-3 py-1 mt-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">

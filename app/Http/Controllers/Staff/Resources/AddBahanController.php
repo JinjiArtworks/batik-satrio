@@ -20,6 +20,7 @@ class AddBahanController extends Controller
         Bahan::create([
             'nama' => $request->name,
             'deskripsi' => $request->deskripsi,
+            'stock_bahan' => $request->stock,
         ]);
         return redirect('/add-bahan')->with('success', 'Resources berhasil ditambahkan');;
     }
@@ -36,6 +37,7 @@ class AddBahanController extends Controller
                 [
                     'nama' => $request->name,
                     'deskripsi' => $request->deskripsi,
+                    'stock_bahan' => $request->stock,
                 ]
             );
         return redirect('/add-bahan')->with('success', 'Resources berhasil diubah');
