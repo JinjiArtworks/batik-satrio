@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::all();
+        // $orders = Order::all();
         $users = Auth::user()->id;
 
         // Total Pesanan
@@ -29,7 +29,11 @@ class DashboardController extends Controller
             ->groupBy('users_id')
             ->get();
         $totalClients = $getClients->count();
-
+        $orders = Order::when($request->filter_status !=  null, function ($q) use ($request) {
+            return $q->where('status', '=', $request->filter_status);
+        })->get();
+        // $orders = Order::where('status', '=', $request->filter_status)->get();
+        // dd($filterStatus);
         // Total Orders
         $filterPendapatan = Order::where('status', '=', 'Selesai')->orWhere('status', '=', 'Ajuan Pengembalian Ditolak')->get();
         $sumPendapatan = collect($filterPendapatan)->sum('total');

@@ -33,17 +33,7 @@
                 </a>
             </li>
 
-            <li class="relative px-6 py-3">
-                <span class="absolute inset-y-0 left-0 w-1 rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>
-                <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                    href="/data-history">
-                    <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                        <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
-                    </svg>
-                    <span class="ml-4">Riwayat Pesanan</span>
-                </a>
-            </li>
+          
             <li class="relative px-6 py-3">
                 <span class="absolute inset-y-0 left-0 w-1 rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>
                 <a class="inline-flex items-center w-full text-sm font-semibold  transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
@@ -175,8 +165,32 @@
                     </div>
                 </div>
             </div>
-
-            <!-- New Table -->
+            <div class="pb-4 bg-white dark:bg-gray-900">
+                <label for="table-search" class="sr-only text-sm p-4">Cari Berdasarkan Status: </label>
+                <div class="relative mt-1 ml-4 ">
+                    <form action="" method="get">
+                        <select id="countries" name="filter_status"
+                            class="bg-gray-50 border border-gray-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  mb-4  p-4 ">
+                            <option value="">Pilih Status</option>
+                            <option
+                                value="Menunggu Konfirmasi Penjual"{{ Request::get('filter_status') == 'Menunggu Konfirmasi Penjual' ? 'selected' : '' }}>
+                                Menunggu Konfirmasi Penjual</option>
+                            <option value="Selesai"{{ Request::get('filter_status') == 'Selesai' ? 'selected' : '' }}>
+                                Selesai</option>
+                            <option
+                                value="Sedang Diproses"{{ Request::get('filter_status') == 'Sedang Diproses' ? 'selected' : '' }}>
+                                Sedang Diproses</option>
+                            <option
+                                value="Pengembalian Diterima Penjual"{{ Request::get('filter_status') == 'Pengembalian Diterima Penjual' ? 'selected' : '' }}>
+                                Pengembalian Diterima Penjual</option>
+                        </select>
+                        <button type="submit"
+                            class=" p-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                            Filter
+                        </button>
+                    </form>
+                </div>
+            </div>
 
             <div class="w-full overflow-hidden rounded-lg shadow-xs">
                 <div class="w-full overflow-x-auto">
@@ -185,11 +199,9 @@
                             <tr
                                 class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                                 <th class="px-4 py-3">Nama</th>
-                                <th class="px-4 py-3">Nomor Handphone</th>
                                 <th class="px-4 py-3">Tanggal</th>
                                 <th class="px-4 py-3">Alamat</th>
                                 <th class="px-4 py-3">Jenis Pesanan</th>
-                                <th class="px-4 py-3">Ongkos Kirim</th>
                                 <th class="px-4 py-3">Grand Total</th>
                                 <th class="px-4 py-3">Status</th>
                             </tr>
@@ -200,9 +212,9 @@
                                     <td class="px-4 py-3 text-sm">
                                         <p class="font-semibold">{{ $item->nama }}</p>
                                     </td>
-                                    <td class="px-4 py-3 text-sm">
+                                    {{-- <td class="px-4 py-3 text-sm">
                                         {{ $item->nomor_hp }}
-                                    </td>
+                                    </td> --}}
                                     <td class="px-4 py-3 text-sm">
                                         {{ $item->tanggal }}
                                     </td>
@@ -212,9 +224,9 @@
                                     <td class="px-4 py-3 text-sm">
                                         {{ $item->jenis_pesanan }}
                                     </td>
-                                    <td class="px-4 py-3 text-sm">
+                                    {{-- <td class="px-4 py-3 text-sm">
                                         @currency($item->ongkos_kirim)
-                                    </td>
+                                    </td> --}}
                                     <td class="px-4 py-3 text-sm">
                                         @currency($item->total)
                                     </td>

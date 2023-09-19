@@ -41,7 +41,7 @@ class ListProductController extends Controller
         if ($request->image != null) {
             $destinationPath = '/images';
             $request->image->move(public_path($destinationPath), $request->image->getClientOriginalName());
-            $product = Product::create([
+            Product::create([
                 'categories_id' => $request->categories,
                 'motif_id' => $request->motif,
                 'nama' => $request->name,
@@ -59,6 +59,10 @@ class ListProductController extends Controller
                 'model_id' => $request->model,
                 'teknik_id' => $request->teknik,
                 'bahan_id' => $request->bahan,
+            ]);
+            $bahan = Bahan::find($request->bahan);
+            $bahan::where('id', $request->bahan)->update([
+                'stock_bahan' => $bahan['stock_bahan'] - 1
             ]);
         }
         return redirect('/data-product')->with('success', 'Product berhasil ditambahkan');
