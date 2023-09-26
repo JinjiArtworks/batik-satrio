@@ -20,7 +20,7 @@ class AddBahanController extends Controller
         Bahan::create([
             'nama' => $request->name,
             'deskripsi' => $request->deskripsi,
-            'stock_bahan' => $request->stock,
+            'satuan' => $request->satuan,
         ]);
         return redirect('/add-bahan')->with('success', 'Resources berhasil ditambahkan');;
     }
@@ -31,13 +31,13 @@ class AddBahanController extends Controller
     }
     public function update(Request $request, $id)
     {
-
         Bahan::where('id', $id)
             ->update(
                 [
                     'nama' => $request->name,
                     'deskripsi' => $request->deskripsi,
                     'stock_bahan' => $request->stock,
+                    'satuan' => $request->satuan,
                 ]
             );
         return redirect('/add-bahan')->with('success', 'Resources berhasil diubah');
@@ -46,5 +46,15 @@ class AddBahanController extends Controller
     {
         Bahan::where('id', $id)->delete();
         return redirect()->back();
+    }
+    public function updateStock(Request $request, $id)
+    {
+        Bahan::where('id', $id)
+            ->update(
+                [
+                    'stock_bahan' => $request->stock,
+                ]
+            );
+        return redirect('/add-bahan')->with('success', 'Resources berhasil diubah');
     }
 }

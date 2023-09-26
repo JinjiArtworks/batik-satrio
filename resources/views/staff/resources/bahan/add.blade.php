@@ -1,61 +1,5 @@
 @extends('layouts.stores')
-@section('aside')
-    <div>
-        <ul class="mt-6">
-            <li class="relative px-6 py-3">
-                <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                    href="/data-reports">
 
-                    <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                        <path
-                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
-                        </path>
-                    </svg>
-                    <span class="ml-4">Laporan Penjualan</span>
-                </a>
-            </li>
-        </ul>
-        <ul>
-            <li class="relative px-6 py-3">
-                <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                    href="/data-product">
-                    <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                        <path
-                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
-                        </path>
-                    </svg>
-                    <span class="ml-4">Produk</span>
-                </a>
-            </li>
-
-            <li class="relative px-6 py-3">
-                <span class="absolute inset-y-0 left-0 w-1 rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>
-                <a class="inline-flex items-center w-full text-sm font-semibold  transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                    href="/data-return">
-                    <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                        <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
-                    </svg>
-                    <span class="ml-4">Pengembalian Pesanan</span>
-                </a>
-            </li>
-            <li class="relative px-6 py-3">
-                <span class="absolute inset-y-0 left-0 w-1 rounded-tr-lg  bg-purple-600 rounded-br-lg"
-                    aria-hidden="true"></span>
-                <a class="inline-flex items-center w-full text-sm font-semibold  text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                    href="/data-resources">
-                    <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                        <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
-                    </svg>
-                    <span class="ml-4">Tambah Resources</span>
-                </a>
-            </li>
-        </ul>
-    </div>
-@endsection
 @section('content')
     <main class="h-full overflow-y-auto">
         <div class="container px-6 mx-auto grid">
@@ -93,8 +37,9 @@
                             <tr
                                 class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                                 <th class="px-4 py-3">Nama</th>
+                                <th class="px-4 py-3">Stock</th>
+                                <th class="px-4 py-3">Satuan</th>
                                 <th class="px-4 py-3">Deskripsi</th>
-                                <th class="px-4 py-3">Stock Bahan</th>
                                 <th class="px-4 py-3">Aksi</th>
                             </tr>
                         </thead>
@@ -105,15 +50,18 @@
                                         {{ $item->nama }}
                                     </td>
                                     <td class="px-4 py-3 text-sm">
-                                        {{ $item->deskripsi }}
+                                        {{ $item->stock_bahan }}
                                     </td>
                                     <td class="px-4 py-3 text-sm">
-                                        {{ $item->stock_bahan }}
+                                        {{ $item->satuan }}
+                                    </td>
+                                    <td class="px-4 py-3 text-sm">
+                                        {{ $item->deskripsi }}
                                     </td>
                                     <td class="px-4 py-3 text-sm">
                                         <form method="GET"
                                             action="{{ route('resources.edit-bahan', ['id' => $item->id]) }}">
-                                            <button class="px-4 py-2 text-sm font-medium leading-5 text-white  ">
+                                            <button type="submit" class="flex items-center px-2 py-1 pl-0 space-x-1 ">
                                                 <svg xmlns="http://www.w3.org/2000/svg" height="1em"
                                                     viewBox="0 0 512 512" class="w-4 h-4 fill-current text-blue-500">
                                                     <path
@@ -167,21 +115,61 @@
                         <input name="name"
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input">
                     </label>
-                    <label class="block text-sm">
+                    <label class="block text-sm mt-4">
                         <span class="text-gray-700 dark:text-gray-400">
                             Deskripsi Bahan
                         </span>
                         <textarea name="deskripsi"
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"></textarea>
                     </label>
+                    <label class="block text-sm mt-4">
+                        <span class="text-gray-700 dark:text-gray-400">
+                            Satuan Bahan
+                        </span>
+                        <input name="satuan"
+                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input">
+                    </label>
+                    <button type="submit"
+                        class="px-3 py-1 mt-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                        Submit
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="container px-6 mx-auto grid">
+            <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-200">
+                Tambah Stock Bahan
+            </h2>
+            <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                <form method="POST" action="{{ route('resources.update-stock-bahan', ['id' => $item->id]) }}"
+                    enctype="multipart/form-data">
+                    @csrf
+                    {{ method_field('put') }}
                     <label class="block text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">
+                            Nama Bahan
+                        </span>
+                        <select required id="jenis"
+                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                            @foreach ($bahan as $item)
+                                <option value="{{ $item->nama }}">{{ $item->nama }}</option>
+                            @endforeach
+                        </select>
+                    </label>
+                    <label class="block text-sm mt-4">
                         <span class="text-gray-700 dark:text-gray-400">
                             Stok Bahan
                         </span>
                         <input name="stock"
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input">
-                            <small>*Meter</small>
                     </label>
+                    {{-- <label class="block text-sm mt-4">
+                        <span class="text-gray-700 dark:text-gray-400">
+                            Satuan Stok Bahan
+                        </span>
+                        <input name="satuan"
+                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input">
+                    </label> --}}
                     <button type="submit"
                         class="px-3 py-1 mt-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                         Submit

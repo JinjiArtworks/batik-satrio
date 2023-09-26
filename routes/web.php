@@ -18,6 +18,7 @@ use App\Http\Controllers\Staff\Resources\AddCustomController;
 use App\Http\Controllers\Staff\Resources\AddModelController;
 use App\Http\Controllers\Staff\Resources\AddMotifController;
 use App\Http\Controllers\Staff\Resources\AddResultsController;
+use App\Http\Controllers\Staff\Resources\AddStockController;
 use App\Http\Controllers\Staff\Resources\AddTeknikController;
 use App\Http\Controllers\Staff\Resources\AddWarnaController;
 use App\Http\Controllers\Staff\ReturnOrderController;
@@ -157,6 +158,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('store-bahan', [AddBahanController::class, 'store'])->name('store-bahan');
         Route::get('edit-bahan/{id}', [AddBahanController::class, 'edit'])->name('edit-bahan');
         Route::put('update-bahan/{id}', [AddBahanController::class, 'update'])->name('update-bahan');
+        Route::put('update-stock-bahan/{id}', [AddBahanController::class, 'updateStock'])->name('update-stock-bahan');
         Route::get('delete-bahan/{id}', [AddBahanController::class, 'destroy'])->name('delete-bahan');
 
         Route::get('add-teknik', [AddTeknikController::class, 'index'])->name('dashboard');
@@ -183,6 +185,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('edit-results/{id}', [AddResultsController::class, 'edit'])->name('edit-results');
         Route::put('update-results/{id}', [AddResultsController::class, 'update'])->name('update-results');
         Route::get('delete-results/{id}', [AddResultsController::class, 'destroy'])->name('delete-results');
+
     });
 });
 
