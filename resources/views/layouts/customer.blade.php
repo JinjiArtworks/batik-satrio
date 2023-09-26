@@ -232,7 +232,7 @@
                 </div>
                 <a href="https://wa.me/+6282249165561"
                     class=" bg-blue-600 w-14 h-14 rounded-full flex justify-center items-center text-white text-2xl hover:bg-blue-700">
-                    <i class="fab fa-whatsapp"></i></a> 
+                    <i class="fab fa-whatsapp"></i></a>
             </div>
 
             <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />

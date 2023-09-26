@@ -86,7 +86,6 @@ class CartController extends Controller
         $allEkspedisi = Ekspedisi::all();
 
         $cart = session()->get('cart');
-        // return dd($cart);
         return view('customers.cart.cart', compact('cart', 'city', 'allCities', 'allProvince', 'province', 'allEkspedisi','usersProvince','usersCity'));
     }
 

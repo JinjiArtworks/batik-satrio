@@ -134,13 +134,10 @@
             <h3 class=" font-semibold text-gray-900 ">Masukkan qty dan detail ukuran </h3>
             <ul class="items-center w-full text-sm font-medium text-gray-900  rounded-lg sm:flex ">
                 <li class="w-full">
-                    <div class="flex items-center">
+                    <div class="flex items-center mb-4">
                         <textarea
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                             name="size" placeholder="Contoh : XL = 3 Pcs" required></textarea>
-                    </div>
-                    <div class="mb-4">
-                        <small>Ukuran XXL menambah biaya sebesar Rp. 10.000</small>
                     </div>
                 </li>
             </ul>

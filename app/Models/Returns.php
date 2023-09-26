@@ -14,6 +14,5 @@ class Returns extends Model
     {
         return $this->belongsTo(Order::class, 'orders_id');
     }
-
     // foreign key yang dititipkan pada tabel, akan menggunakan relasi belongsTo. Sedangkan tabel utama yang menitipkan, di modelsnya menggunakan relasi hasMany / hasOne!!!!
 }

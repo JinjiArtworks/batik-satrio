@@ -17,7 +17,6 @@ class HistoryOrderController extends Controller
     {
         $user = Auth::user()->id;
         $orders = Order::whereUsersId($user)->get();
-        // return dd($orders);
         return view('customers.history.history-order', compact('orders'));
     }
     public function detail($id)

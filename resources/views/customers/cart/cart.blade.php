@@ -50,22 +50,12 @@
         if ($cart != null) {
             foreach ($cart as $key => $value) {
                 $total_grosir = $value['price_grosir'] * $value['quantity'];
-                if ($value['price_grosir'] == null) {
-                    // Produk Non Grosir
-                    if ($value['size'] == 'XXL') {
-                        $XXL = $value['quantity'] * 10000;
-                        $total_XXL = $value['total_after_disc'] + $XXL;
-                    } else {
-                        $total += $value['total_after_disc'];
-                    }
+                // Produk Non Grosir
+                if ($value['size'] == 'XXL') {
+                    $XXL = $value['quantity'] * 10000;
+                    $total_XXL = $value['total_after_disc'] + $XXL;
                 } else {
-                    // Untuk produk grosir
-                    if ($value['size'] == 'XXL') {
-                        $XXL = $value['quantity'] * 10000;
-                        $total += $total_grosir + $XXL;
-                    } else {
-                        $total += $total_grosir;
-                    }
+                    $total += $value['total_after_disc'];
                 }
                 $berat = $value['weight'] * $value['quantity'];
                 $totalBerat += $berat;
@@ -137,6 +127,9 @@
                                                             <small>Tambahan biaya size XXL sebesar Rp. 10.000 / pcs</small>
                                                         </span>
                                                     @endif
+                                                </p>
+                                            @else
+                                                <p class="text-sm dark:text-gray-400">Size : {{ $c['size'] }}
                                                 </p>
                                             @endif
                                         @endif

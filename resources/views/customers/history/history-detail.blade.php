@@ -193,7 +193,6 @@
                             </div>
                         @endif
 
-                        </p>
                         <h2 class="text-gray-800 text-xl font-medium">Penerima: {{ Auth::user()->name }}</h2>
                         <p class="text-gray-500 text-sm">Alamat : {{ Auth::user()->address }} </p>
                         <p class="text-gray-500 text-sm">Nomor Handphone : {{ Auth::user()->phone }}</p>
