@@ -77,7 +77,7 @@ class CartController extends Controller
         $usersCity = Auth::user()->city_id;
 
         $city  = City::whereId($usersCity)->get('name');
-            // return dd($city);
+        // return dd($city);
         $province  = Province::whereId($usersProvince)->get('name');
 
         $allProvince = Province::all();
@@ -86,7 +86,8 @@ class CartController extends Controller
         $allEkspedisi = Ekspedisi::all();
 
         $cart = session()->get('cart');
-        return view('customers.cart.cart', compact('cart', 'city', 'allCities', 'allProvince', 'province', 'allEkspedisi','usersProvince','usersCity'));
+        // return dd($cart);
+        return view('customers.cart.cart', compact('cart', 'city', 'allCities', 'allProvince', 'province', 'allEkspedisi', 'usersProvince', 'usersCity'));
     }
 
     public function destroy($id)

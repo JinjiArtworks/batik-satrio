@@ -47,10 +47,13 @@
         $berat = 0;
         $totalBerat = 0;
         $grandTotal = 0;
+        $total_grosir = 0;
         if ($cart != null) {
             foreach ($cart as $key => $value) {
-                $total_grosir = $value['price_grosir'] * $value['quantity'];
-                // Produk Non Grosir
+                if ($value['price_grosir'] != null) {
+                    $total_grosir = $value['price_grosir'] * $value['quantity'];
+                    // Produk Non Grosir
+                }
                 if ($value['size'] == 'XXL') {
                     $XXL = $value['quantity'] * 10000;
                     $total_XXL = $value['total_after_disc'] + $XXL;
@@ -60,7 +63,7 @@
                 $berat = $value['weight'] * $value['quantity'];
                 $totalBerat += $berat;
             }
-            $grandTotal = $total + $total_XXL;
+            $grandTotal = $total + $total_XXL + $total_grosir;
         }
     @endphp
     @if ($cart == null)
@@ -249,7 +252,7 @@
                     </div>
                     <div class="space-y-1 text-right mt-4">
                         <p>Total belanja:
-                            <span class="font-semibold">@currency($total + $total_XXL)</span>
+                            <span class="font-semibold">@currency($grandTotal)</span>
                         </p>
                     </div>
                     <div class="flex justify-end space-x-4 mt-4">
