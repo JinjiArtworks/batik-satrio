@@ -6,32 +6,6 @@
         left: -9999px;
     }
 
-    /* input[type="radio"]:checked+label>img {
-        border: 1px solid rgb(157, 255, 0);
-        box-shadow: 0 0 3px 3px #e65b0b;
-    }
-
-    input[type="radio"]+label>img {
-        transition: 500ms all;
-        border-style: solid;
-    }
-
-    input[type="radio"]:checked+label {
-        border: 1px solid rgb(157, 255, 0);
-        box-shadow: 0 0 3px 3px #e65b0b;
-    }
-
-    input[type="radio"]+label {
-        transition: 500ms all;
-        border-style: solid;
-    } */
-
-    /*
-** Author : Chafik Amraoui
-** Date   : 14/09/2020
-** Title  : T-shirt Color Generator
-*/
-
     :root {
         --color: rgb(255, 255, 255);
     }
@@ -41,27 +15,6 @@
     *::after,
     *::before {
         box-sizing: border-box
-    }
-
-    body {
-        font-family: Arial, Helvetica, sans-serif;
-        position: relative;
-        height: 2000px;
-        background-color: rgb(255, 255, 255);
-    }
-
-    ul {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    /* End Global Rules  */
-    .container {
-        width: 90%;
-        margin: auto;
-        display: flex;
-        flex-direction: column;
     }
 
     .image_container {
@@ -79,26 +32,6 @@
         background-image: var(--bg-image);
         content: var(--bg-lengan);
     }
-
-    .colors {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 100px;
-    }
-
-    .colors ul li {
-        width: 30px;
-        height: 30px;
-        display: inline-block;
-        cursor: pointer;
-
-    }
-
-    /* input[type="radio"]:checked+label>img {
-        transform: rotateZ(-10deg) rotateX(10deg);
-    } */
 </style>
 @section('breadcum')
     <ol class="inline-flex items-center space-x-1 md:space-x-3">
@@ -120,23 +53,13 @@
                     xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd"
                         d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                        clip-rule="evenodd"></path>
+                        clip-rule="evenodd">
+                    </path>
                 </svg>
                 <a href="#"
-                    class="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">Belanja</a>
-            </div>
-        </li>
-        <li>
-            <div class="flex items-center">
-                <svg aria-hidden="true" class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd"
-                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                        clip-rule="evenodd"></path>
-                </svg>
-                <a href="#"
-                    class="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">Detail
-                    Produk</a>
+                    class="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">
+                    Custom Batik
+                </a>
             </div>
         </li>
     </ol>

@@ -131,7 +131,7 @@
                     <a href="/detail-product/{{ $item->id }}">
                         <h5 class="font-semibold text-gray-900 dark:text-white">{{ $item->nama }}</h5>
                     </a>
-                    <div class="flex items-center mt-2.5 mb-5">
+                    {{-- <div class="flex items-center mt-2.5 mb-5">
                         <svg aria-hidden="true" class="w-5 h-5 text-yellow-300" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
                             <title>First star</title>
@@ -169,7 +169,7 @@
                         </svg>
                         <span
                             class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">5.0</span>
-                    </div>
+                    </div> --}}
                     <span class="text-sm text-gray-900">Terjual : {{ $item->terjual }}</span>
                     <div class="flex mt-4">
                         <span

@@ -60,8 +60,7 @@
                                                 <img class="object-cover w-full h-full"
                                                     src="{{ asset('images/' . $item->gambar) }}" alt=""
                                                     loading="lazy" />
-                                                <div class="absolute inset-0 rounded-full shadow-inner"
-                                                    aria-hidden="true">
+                                                <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true">
                                                 </div>
                                             </div>
                                             <div>
@@ -86,7 +85,7 @@
                                     @if ($item->harga_grosir != null)
                                         <td class="px-4 py-3 text-sm">
                                             @currency($item->harga_grosir)
-                                        </td> 
+                                        </td>
                                     @elseif ($item->harga_meter != null)
                                         <td class="px-4 py-3 text-sm">
                                             @currency($item->harga_meter)
@@ -100,8 +99,8 @@
                                     <td class="px-4 py-3 text-sm">
                                         <form action="{{ route('products.edit', ['id' => $item->id]) }}">
                                             <button type="submit" class="flex items-center px-2 py-1 pl-0 space-x-1 ">
-                                                <svg xmlns="http://www.w3.org/2000/svg" height="1em"
-                                                    viewBox="0 0 512 512" class="w-4 h-4 fill-current text-blue-500">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"
+                                                    class="w-4 h-4 fill-current text-blue-500">
                                                     <path
                                                         d="M441 58.9L453.1 71c9.4 9.4 9.4 24.6 0 33.9L424 134.1 377.9 88 407 58.9c9.4-9.4 24.6-9.4 33.9 0zM209.8 256.2L344 121.9 390.1 168 255.8 302.2c-2.9 2.9-6.5 5-10.4 6.1l-58.5 16.7 16.7-58.5c1.1-3.9 3.2-7.5 6.1-10.4zM373.1 25L175.8 222.2c-8.7 8.7-15 19.4-18.3 31.1l-28.6 100c-2.4 8.4-.1 17.4 6.1 23.6s15.2 8.5 23.6 6.1l100-28.6c11.8-3.4 22.5-9.7 31.1-18.3L487 138.9c28.1-28.1 28.1-73.7 0-101.8L474.9 25C446.8-3.1 401.2-3.1 373.1 25zM88 64C39.4 64 0 103.4 0 152V424c0 48.6 39.4 88 88 88H360c48.6 0 88-39.4 88-88V312c0-13.3-10.7-24-24-24s-24 10.7-24 24V424c0 22.1-17.9 40-40 40H88c-22.1 0-40-17.9-40-40V152c0-22.1 17.9-40 40-40H200c13.3 0 24-10.7 24-24s-10.7-24-24-24H88z" />
                                                 </svg>
@@ -143,79 +142,9 @@
 
                         </tbody>
                     </table>
-                </div>
-                <div
-                    class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
-                    <span class="flex items-center col-span-3">
-                        Showing 21-30 of 100
-                    </span>
-                    <span class="col-span-2"></span>
-                    <!-- Pagination -->
-                    <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
-                        <nav aria-label="Table navigation">
-                            <ul class="inline-flex items-center">
-                                <li>
-                                    <button
-                                        class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple"
-                                        aria-label="Previous">
-                                        <svg aria-hidden="true" class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                                                clip-rule="evenodd" fill-rule="evenodd"></path>
-                                        </svg>
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
-                                        1
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
-                                        2
-                                    </button>
-                                </li>
-                                <li>
-                                    <button
-                                        class="px-3 py-1 text-white transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600 rounded-md focus:outline-none focus:shadow-outline-purple">
-                                        3
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
-                                        4
-                                    </button>
-                                </li>
-                                <li>
-                                    <span class="px-3 py-1">...</span>
-                                </li>
-                                <li>
-                                    <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
-                                        8
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
-                                        9
-                                    </button>
-                                </li>
-                                <li>
-                                    <button
-                                        class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple"
-                                        aria-label="Next">
-                                        <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
-                                            <path
-                                                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                                clip-rule="evenodd" fill-rule="evenodd"></path>
-                                        </svg>
-                                    </button>
-                                </li>
-                            </ul>
-                        </nav>
-                    </span>
+
                 </div>
             </div>
-        </div>
     </main>
 @endsection
 @section('script')

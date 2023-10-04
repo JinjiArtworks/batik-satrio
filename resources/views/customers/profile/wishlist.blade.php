@@ -128,14 +128,18 @@
                             <p class="text-gray-500 text-sm">Stock: <span
                                     class="text-green-600">{{ $item->product->stok }}</span></p>
                         </div>
-                        <div class="text-gray-600 text-lg font-semibold">@currency($item->product->harga)</div>
+                        @if ($item->product->harga_grosir == null)
+                            <div class="text-gray-600 text-lg font-semibold">@currency($item->product->harga)</div>
+                        @else
+                            <div class="text-gray-600 text-lg font-semibold">@currency($item->product->harga_grosir)</div>
+                        @endif
                         <a href="/detail-product/{{ $item->product->id }}"
                             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Lihat
                             Produk</a>
                         <div class="text-gray-600 cursor-pointer hover:text-blue-600">
                             <form action="{{ route('wishlist.remove', ['id' => $item->product->id]) }}" method="GET">
                                 <input type="hidden" name="products" value="{{ $item->product->id }}">
-                                <button type="submit" class="mt-4">
+                                <button type="submit" class="deleteWish mt-4">
                                     <i class="fa-solid fa-trash"></i>
                                 </button>
                             </form>
@@ -157,5 +161,23 @@
         setTimeout(function() {
             $('#message').fadeOut('fast');
         }, 3000);
+
+        // Delete Cart
+        $('.deleteWish').click(function(event) {
+            event.preventDefault();
+            var form = $(this).closest("form");
+            Swal.fire({
+                title: 'Hapus Produk Dari Wishlist?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            })
+        });
     </script>
 @endsection

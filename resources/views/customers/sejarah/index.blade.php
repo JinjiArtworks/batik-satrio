@@ -88,18 +88,18 @@
             </button>
         </div>
         <article class="mt-4">
-
-
             <div class=" bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <header class="m-4 lg:mb-6">
                     <h1
                         class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">
                         Best practices for successful prototypes</h1>
                 </header>
-                <a href="#">
-                    <img src="https://flowbite.s3.amazonaws.com/typography-plugin/typography-image-1.png"
-                        class="rounded-t-lg" width="30%"  alt="...">
-                </a>
+                <div class="ml-4">
+                    <a href="#">
+                        <img src="https://flowbite.s3.amazonaws.com/typography-plugin/typography-image-1.png"
+                            class="rounded-t-lg" width="30%" alt="...">
+                    </a>
+                </div>
                 <div class="p-5">
                     <a href="#">
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy

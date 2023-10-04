@@ -227,10 +227,7 @@
                                 </th>
                             </tr>
                             @if ($item->request_result != null)
-                                <tr>
-                                    <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Warna Dasar</th>
-                                    <th class="py-2 px-4 border border-gray-300 ">{{ $item->request_warna }}</th>
-                                </tr>
+                             
                                 <tr>
                                     <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Motif </th>
                                     <th class="py-2 px-4 border border-gray-300 ">{{ $item->request_motif }}</th>
