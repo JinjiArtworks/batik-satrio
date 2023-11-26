@@ -9,6 +9,7 @@ use App\Http\Controllers\Customers\HistoryOrderController;
 use App\Http\Controllers\Customers\HomeController;
 use App\Http\Controllers\Customers\ProductController;
 use App\Http\Controllers\Customers\ProfileController;
+use App\Http\Controllers\Customers\ViewBlogController;
 use App\Http\Controllers\Customers\WishlistController;
 use App\Http\Controllers\Staff\BlogController;
 use App\Http\Controllers\Staff\DashboardController;
@@ -47,9 +48,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/sejarah', function () {
-    return view('customers.sejarah.index');
-});
+Route::get('/sejarah', [ViewBlogController::class, 'index'])->name('index');
 Route::group(['as' => 'homepage.'], function () {
     Route::get('/belanja', [ProductController::class, 'index'])->name('shop');
     Route::get('/detail-product/{id}', [ProductController::class, 'detail']);

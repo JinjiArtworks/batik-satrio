@@ -89,33 +89,22 @@
         </div>
         <article class="mt-4">
             <div class=" bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                <header class="m-4 lg:mb-6">
-                    <h1
-                        class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">
-                        Best practices for successful prototypes</h1>
-                </header>
                 <div class="ml-4">
                     <a href="#">
                         <img src="https://flowbite.s3.amazonaws.com/typography-plugin/typography-image-1.png"
                             class="rounded-t-lg" width="30%" alt="...">
                     </a>
                 </div>
-                <div class="p-5">
-                    <a href="#">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy
-                            technology acquisitions 2021</h5>
-                    </a>
-                    <p class="lead">Flowbite is an open-source library of UI components built with the utility-first
-                        classes from Tailwind CSS. It also includes interactive elements such as dropdowns, modals,
-                        datepickers.</p>
-                    <p>Before going digital, you might benefit from scribbling down some ideas in a sketchbook. This way,
-                        you can think things through before committing to an actual design project.</p>
-                    <p>But then I found a <a href="https://flowbite.com">component library based on Tailwind CSS called
-                            Flowbite</a>. It comes with the most commonly used UI components, such as buttons, navigation
-                        bars, cards, form elements, and more which are conveniently built with the utility classes from
-                        Tailwind CSS.</p>
+                @foreach ($blog as $item)
+                    <div class="p-5">
+                        <a href="#">
+                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                {{ $item->title }}</h5>
+                        </a>
+                        <p class="lead">{{ $item->description }}</p>
+                    </div>
+                @endforeach
 
-                </div>
             </div>
 
 
