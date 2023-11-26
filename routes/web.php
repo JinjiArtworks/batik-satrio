@@ -10,6 +10,7 @@ use App\Http\Controllers\Customers\HomeController;
 use App\Http\Controllers\Customers\ProductController;
 use App\Http\Controllers\Customers\ProfileController;
 use App\Http\Controllers\Customers\WishlistController;
+use App\Http\Controllers\Staff\BlogController;
 use App\Http\Controllers\Staff\DashboardController;
 use App\Http\Controllers\Staff\StaffHistoryController;
 use App\Http\Controllers\Staff\ListProductController;
@@ -128,8 +129,12 @@ Route::middleware(['auth'])->group(function () {
         Route::put('update-product/{id}', [ListProductController::class, 'update'])->name('update');
         Route::get('delete-product/{id}', [ListProductController::class, 'destroy'])->name('delete');
     });
-    Route::group(['as' => 'history.'], function () {
-        Route::get('/data-history', [StaffHistoryController::class, 'index'])->name('dashboard');
+    Route::group(['as' => 'blog.'], function () {
+        Route::get('data-blog', [BlogController::class, 'index'])->name('index');
+        Route::post('store-blog', [BlogController::class, 'store'])->name('store-blog');
+        Route::get('edit-blog/{id}', [BlogController::class, 'edit'])->name('edit-blog');
+        Route::put('update-blog/{id}', [BlogController::class, 'update'])->name('update-blog');
+        Route::get('delete-blog/{id}', [BlogController::class, 'destroy'])->name('delete-blog');
     });
 
     Route::group(['as' => 'return.'], function () {

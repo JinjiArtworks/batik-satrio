@@ -70,7 +70,7 @@
             <div class="image_container">
                 <img id="results-img" src="{{ asset('images/bajus.png') }}" alt="">
             </div>
-            <form method="POST" action="{{ route('custom.details') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('custom.details') }}" enctype="multipart/form-data" id="submit-form">
                 @csrf
                 <div class="space-y-2">
                     <div class="space-y-2">
@@ -95,7 +95,7 @@
                                     class="mt-1 mb-2">
                                 {{-- <input accept="image/*" id="input_image" type="file"
                                 name="upload_custom"required> --}}
-                                <input id="myFileInput" type="file" name="images">
+                                <input id="myFileInput" type="file" name="images" required>
                             </span>
                         </p>
                     </div>
@@ -140,11 +140,10 @@
                     </div>
                     @if (Auth::user()->role == 'Customers')
                         <button type="submit"
-                            class="bg-blue-600 border border-blue-600 text-white px-4 py-2 font-medium rounded  gap-2 hover:bg-transparent hover:text-blue-600 transition">
+                            class="submits bg-blue-600 border border-blue-600 text-white px-4 py-2 font-medium rounded  gap-2 hover:bg-transparent hover:text-blue-600 transition">
                             Konfirmasi
                         </button>
                     @endif
-
                 </div>
             </form>
         </div>
@@ -174,8 +173,9 @@
             const data = await getBase64(e.target.files[0])
             localStorage.setItem('recent-items', data)
         });
-    </script>
-    <script>
+
+
+
         $("#order-method").change(function() {
             var control = $(this);
             if (control.val() == "Upload") {

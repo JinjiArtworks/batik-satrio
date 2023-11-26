@@ -117,7 +117,8 @@
                         @if ($detailStatus->order->status == 'Selesai')
                             <!-- Modal toggle -->
                             {{-- Updated_at dsini yaitu menentukan kapan pesanan tersebut diterima oleh penjual --}}
-                            @if ($detailStatus->product_id != null)
+                            @if ($detailStatus->product_id != null) 
+                            {{-- untuk produk non custom --}}
                                 @if ($detailStatus->order->updated_at == $mytime)
                                     <button data-modal-target="authentication-modal"
                                         data-modal-toggle="authentication-modal"
@@ -169,7 +170,7 @@
                                                     <label for="alasan"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alasan
                                                         Mengembalikan : </label>
-                                                    <textarea type="text" name="alasan"
+                                                    <textarea type="text" name="alasan" required
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"></textarea>
                                                 </div>
                                                 <div>
@@ -402,25 +403,22 @@
                 }
             })
         });
-        $('.confirmSendItem').click(function(event) {
-            event.preventDefault();
-            var form = $(this).closest("form");
-            Swal.fire({
-                title: 'Kirim Ajuan Pengembalian?',
-                icon: 'success',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.submit();
-                }
-            })
-        });
-        setTimeout(function() {
-            $('#message').fadeOut('fast');
-        }, 3000);
+        // $('.confirmSendItem').click(function(event) {
+        //     event.preventDefault();
+        //     var form = $(this).closest("form");
+        //     Swal.fire({
+        //         title: 'Kirim Ajuan Pengembalian?',
+        //         icon: 'success',
+        //         showCancelButton: true,
+        //         confirmButtonColor: '#3085d6',
+        //         cancelButtonColor: '#d33',
+        //         confirmButtonText: 'Yes'
+        //     }).then((result) => {
+        //         if (result.isConfirmed) {
+        //             form.submit();
+        //         }
+        //     })
+        // });
         if (localStorage.getItem('recent-items')) {
             document.querySelector('#imgPreview').src = localStorage.getItem('recent-items');
         }
