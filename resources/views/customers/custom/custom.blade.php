@@ -185,23 +185,24 @@
         if (localStorage.getItem('recent-items')) {
             document.querySelector('#imgPreview').src = localStorage.getItem('recent-items');
             // Retrieve data from local storage or any other source
-            var dataFromLocalStorage = localStorage.getItem('recent-items');
-            // Send data to Laravel controller using AJAX
-            $.ajax({
-                url: '/list-order', // Replace with your Laravel controller route
-                method: 'POST', // Use POST method to send data
-                data: {
-                    data: dataFromLocalStorage
-                }, // Data to send
-                success: function(response) {
-                    // Handle the response from the server
-                    console.log(response);
-                },
-                error: function(xhr, status, error) {
-                    // Handle any errors that occur during the AJAX request
-                    console.error(error);
-                }
-            });
+            // var dataFromLocalStorage = localStorage.getItem('recent-items');
+            // // Send data to Laravel controller using AJAX
+            // $.ajax({
+            //     // url: '/list-order', // Replace with your Laravel controller route
+            //     url: '/add-to-list', // Replace with your Laravel controller route
+            //     method: 'POST', // Use POST method to send data
+            //     data: {
+            //         data: dataFromLocalStorage
+            //     }, // Data to send
+            //     success: function(response) {
+            //         // Handle the response from the server
+            //         console.log(response);
+            //     },
+            //     error: function(xhr, status, error) {
+            //         // Handle any errors that occur during the AJAX request
+            //         console.error(error);
+            //     }
+            // });
         }
         // document.addEventListener('DOMContentLoaded', () => {
         //     const recentImageDataUrl = localStorage.getItem('recent-image');

@@ -112,21 +112,21 @@
                         <span class="text-gray-700 dark:text-gray-400">
                             Nama Bahan
                         </span>
-                        <input name="name"
+                        <input name="name" required
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input">
                     </label>
                     <label class="block text-sm mt-4">
                         <span class="text-gray-700 dark:text-gray-400">
                             Deskripsi Bahan
                         </span>
-                        <textarea name="deskripsi"
+                        <textarea name="deskripsi" required
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"></textarea>
                     </label>
                     <label class="block text-sm mt-4">
                         <span class="text-gray-700 dark:text-gray-400">
                             Satuan Bahan
                         </span>
-                        <input name="satuan"
+                        <input name="satuan" required
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input">
                     </label>
                     <button type="submit"
@@ -141,18 +141,17 @@
                 Tambah Stock Bahan
             </h2>
             <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
-                <form method="POST" action="{{ route('resources.update-stock-bahan', ['id' => $item->id]) }}"
-                    enctype="multipart/form-data">
+                <form method="POST" action="{{ route('resources.update-stock-bahan') }}" enctype="multipart/form-data">
                     @csrf
                     {{ method_field('put') }}
                     <label class="block text-sm">
                         <span class="text-gray-700 dark:text-gray-400">
                             Nama Bahan
                         </span>
-                        <select required id="jenis"
+                        <select name="id_jenis"
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                             @foreach ($bahan as $item)
-                                <option value="{{ $item->nama }}">{{ $item->nama }}</option>
+                                <option value="{{ $item->id }}">{{ $item->nama }}</option>
                             @endforeach
                         </select>
                     </label>
@@ -160,7 +159,7 @@
                         <span class="text-gray-700 dark:text-gray-400">
                             Stok Bahan
                         </span>
-                        <input name="stock"
+                        <input name="stock" required
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input">
                         <span>
                             <small>*Stock bahan yang akan ditambahkan tidak dapat diubah.</small>
@@ -204,44 +203,44 @@
             $('#message').fadeOut('fast');
         }, 3000);
 
-        $('.confirmStock').click(function(event) {
-            event.preventDefault();
-            var form = $(this).closest("form");
-            Swal.fire({
-                title: 'Konfirmasi Tambah Stock Bahan?',
-                icon: 'success',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.submit();
-                }
-            })
-        });
-        setTimeout(function() {
-            $('#message').fadeOut('fast');
-        }, 3000);
+        // $('.confirmStock').click(function(event) {
+        //     event.preventDefault();
+        //     var form = $(this).closest("form");
+        //     Swal.fire({
+        //         title: 'Konfirmasi Tambah Stock Bahan?',
+        //         icon: 'success',
+        //         showCancelButton: true,
+        //         confirmButtonColor: '#3085d6',
+        //         cancelButtonColor: '#d33',
+        //         confirmButtonText: 'Yes'
+        //     }).then((result) => {
+        //         if (result.isConfirmed) {
+        //             form.submit();
+        //         }
+        //     })
+        // });
+        // setTimeout(function() {
+        //     $('#message').fadeOut('fast');
+        // }, 3000);
 
-        $('.confirmBahan').click(function(event) {
-            event.preventDefault();
-            var form = $(this).closest("form");
-            Swal.fire({
-                title: 'Konfirmasi Tambah  Bahan?',
-                icon: 'success',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.submit();
-                }
-            })
-        });
-        setTimeout(function() {
-            $('#message').fadeOut('fast');
-        }, 3000);
+        // $('.confirmBahan').click(function(event) {
+        //     event.preventDefault();
+        //     var form = $(this).closest("form");
+        //     Swal.fire({
+        //         title: 'Konfirmasi Tambah  Bahan?',
+        //         icon: 'success',
+        //         showCancelButton: true,
+        //         confirmButtonColor: '#3085d6',
+        //         cancelButtonColor: '#d33',
+        //         confirmButtonText: 'Yes'
+        //     }).then((result) => {
+        //         if (result.isConfirmed) {
+        //             form.submit();
+        //         }
+        //     })
+        // });
+        // setTimeout(function() {
+        //     $('#message').fadeOut('fast');
+        // }, 3000);
     </script>
 @endsection

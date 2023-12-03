@@ -162,7 +162,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('store-bahan', [AddBahanController::class, 'store'])->name('store-bahan');
         Route::get('edit-bahan/{id}', [AddBahanController::class, 'edit'])->name('edit-bahan');
         Route::put('update-bahan/{id}', [AddBahanController::class, 'update'])->name('update-bahan');
-        Route::put('update-stock-bahan/{id}', [AddBahanController::class, 'updateStock'])->name('update-stock-bahan');
+        Route::put('update-stock-bahan', [AddBahanController::class, 'updateStock'])->name('update-stock-bahan');
         Route::get('delete-bahan/{id}', [AddBahanController::class, 'destroy'])->name('delete-bahan');
 
         Route::get('add-teknik', [AddTeknikController::class, 'index'])->name('dashboard');

@@ -95,7 +95,7 @@
                                     class="mt-1 mb-2">
                                 {{-- <input accept="image/*" id="input_image" type="file"
                                 name="upload_custom"required> --}}
-                                <input id="myFileInput" type="file" name="images" required>
+                                <input id="myFileInput" type="file" name="images" >
                             </span>
                         </p>
                     </div>

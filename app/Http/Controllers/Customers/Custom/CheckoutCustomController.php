@@ -18,12 +18,8 @@ class CheckoutCustomController extends Controller
 {
     public function checkout(Request $request)
     {
-        // dd($request->courier);
-        // return dd($request->all()); 
         $user = Auth::user();
-        // $userSaldo = Auth::user()->saldo;
         $courierName = $request->courier;
-        // return dd($courierName);
         $list = session()->get('list');
         $usersCity = Auth::user()->city_id;
         $city  = City::whereId($usersCity)->get('name');
@@ -127,7 +123,10 @@ class CheckoutCustomController extends Controller
         $orders->ekspedisi = $request->courierName; // belum, gunakan raja ongkir
         $orders->total = $request->grandTotal;
         $saved =  $orders->save();
+
         foreach ($list as $item) {
+            // dd($item['images']);
+            // dd($item);
             $details = new OrderDetail();
             $details->order_id = $orders->id;
             $details->quantity = $item['quantity'];
@@ -142,9 +141,9 @@ class CheckoutCustomController extends Controller
             } else if ($item['metode'] == 'Upload') {
                 $details->request_result = $item['images'];
             }
-            $details->harga = $item['harga'];
-            $details->save();
         }
+        $details->harga = $item['harga'];
+        $details->save();
         if (!$saved) {
             return redirect('/')->with('warning', 'Silahkan Menyelesaikan Pembayaran');
         } else {

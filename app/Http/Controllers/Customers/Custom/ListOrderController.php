@@ -20,20 +20,16 @@ class ListOrderController extends Controller
         $list = session()->get('list');
         $usersCity = Auth::user()->city_id;
         $usersProvince = Auth::user()->province_id;
-        // return dd($list);
         $city  = City::whereId($usersCity)->get('name');
         $province  = Province::whereId($usersProvince)->get('name');
-
         $allEkspedisi = Ekspedisi::all();
         $allCities = City::all();
         $allProvince = Province::all();
-        // return dd($list);
         return view('customers.custom.list-order', compact('list', 'city', 'allCities', 'usersCity', 'usersProvince', 'allProvince', 'allEkspedisi', 'province'));
     }
 
     public function addList(Request $request)
     {
-        // return dd($request->all());
         $list[] = [
             // disimpen disini local storage nya, dijadikan listnya aja, kirim lewat ajax
             "id" => 1,
@@ -50,6 +46,7 @@ class ListOrderController extends Controller
             "motif" => $request->motif,
             "total_after_disc" => $request->harga  * $request->post('quantity')
         ];
+        // dd($list);
         session()->put('list', $list);
         return redirect('/list-order')->with('success', 'Pesanan berhasil dibuat.');
     }

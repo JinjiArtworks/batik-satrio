@@ -106,7 +106,7 @@
                                     src="" id="imgPreview" alt="Preview">
                             @else
                                 <img class="flex-shrink-0 object-cover w-20 h-22 dark:border-transparent rounded outline-none sm:w-32 sm:h-32 dark:bg-gray-500"
-                                    src="{{ asset('images/'. $c['images_custom']) }}" alt="Preview">
+                                    src="{{ asset('images/' . $c['images_custom']) }}" alt="Preview">
                             @endif
                             <div class="flex flex-col justify-between w-full pb-4">
                                 <div class="flex justify-between w-full pb-2 space-x-2">

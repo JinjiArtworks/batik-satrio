@@ -47,12 +47,15 @@ class AddBahanController extends Controller
         Bahan::where('id', $id)->delete();
         return redirect()->back();
     }
-    public function updateStock(Request $request, $id)
+    public function updateStock(Request $request)
     {
-        Bahan::where('id', $id)
+        // dd($request->id_jenis);
+        $bahan = Bahan::where('id', $request->id_jenis)->first();
+        // dd($bahan);
+        Bahan::where('id', $bahan->id)
             ->update(
                 [
-                    'stock_bahan' => $request->stock,
+                    'stock_bahan' => $request->stock +  $bahan->stock_bahan,
                 ]
             );
         return redirect('/add-bahan')->with('success', 'Resources berhasil diubah');
