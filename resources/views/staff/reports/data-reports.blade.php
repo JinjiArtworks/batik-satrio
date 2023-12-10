@@ -105,33 +105,64 @@
                     </div>
                 </div>
             </div>
-            <div class="pb-4 bg-white dark:bg-gray-900">
-                <label for="table-search" class="sr-only text-sm p-4" >Cari Berdasarkan Status: </label>
-                <div class="relative mt-1 ml-4 ">
-                    <form action="" method="get">
-                        <select id="countries" name="filter_status"
-                            class="bg-gray-50 border border-gray-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  mb-4  p-4 ">
-                            <option value="">-- Pilih Status -- </option>
-                            <option
-                                value="Menunggu Konfirmasi Penjual"{{ Request::get('filter_status') == 'Menunggu Konfirmasi Penjual' ? 'selected' : '' }}>
-                                Menunggu Konfirmasi Penjual</option>
-                            <option value="Selesai"{{ Request::get('filter_status') == 'Selesai' ? 'selected' : '' }}>
-                                Selesai</option>
-                            <option
-                                value="Sedang Diproses"{{ Request::get('filter_status') == 'Sedang Diproses' ? 'selected' : '' }}>
-                                Sedang Diproses</option>
-                            <option
-                                value="Pengembalian Diterima Penjual"{{ Request::get('filter_status') == 'Pengembalian Diterima Penjual' ? 'selected' : '' }}>
-                                Pengembalian Diterima Penjual</option>
-                            <option
-                                value="Proses Pengembalian"{{ Request::get('filter_status') == 'Proses Pengembalian' ? 'selected' : '' }}>
-                                Proses Pengembalian</option>
-                        </select>
-                        <button type="submit"
-                            class=" p-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                            Filter
-                        </button>
-                    </form>
+            <div class="flex">
+
+                <div class="pb-4 bg-white dark:bg-gray-900">
+                    <label for="table-search" class="sr-only text-sm p-4">Cari Berdasarkan Status: </label>
+                    <div class="relative mt-1 ml-4 ">
+                        <form action="" method="get">
+                            <select name="filter_status"
+                                class="bg-gray-50 border border-gray-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  mb-4  p-4 ">
+                                <option value="">-- Pilih Status -- </option>
+                                <option
+                                    value="Menunggu Konfirmasi Penjual"{{ Request::get('filter_status') == 'Menunggu Konfirmasi Penjual' ? 'selected' : '' }}>
+                                    Menunggu Konfirmasi Penjual</option>
+                                <option value="Selesai"{{ Request::get('filter_status') == 'Selesai' ? 'selected' : '' }}>
+                                    Selesai</option>
+                                <option
+                                    value="Sedang Diproses"{{ Request::get('filter_status') == 'Sedang Diproses' ? 'selected' : '' }}>
+                                    Sedang Diproses</option>
+                                <option
+                                    value="Pengembalian Diterima Penjual"{{ Request::get('filter_status') == 'Pengembalian Diterima Penjual' ? 'selected' : '' }}>
+                                    Pengembalian Diterima Penjual</option>
+                                <option
+                                    value="Proses Pengembalian"{{ Request::get('filter_status') == 'Proses Pengembalian' ? 'selected' : '' }}>
+                                    Proses Pengembalian</option>
+                            </select>
+                            <select name="filter_bulan"
+                                class="ml-4 bg-gray-50 border border-gray-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  mb-4  p-4 ">
+                                <option value="">-- Pilih Bulan -- </option>
+                                <option value="2023-1"{{ Request::get('filter_status') == 'Januari' ? 'selected' : '' }}>
+                                    Januari</option>
+                                <option value="2023-2"{{ Request::get('filter_status') == 'Februari' ? 'selected' : '' }}>
+                                    Februari</option>
+                                <option value="2023-3"{{ Request::get('filter_status') == 'Maret' ? 'selected' : '' }}>
+                                    Maret</option>
+                                <option value="2023-4"{{ Request::get('filter_status') == 'April' ? 'selected' : '' }}>
+                                    April</option>
+                                <option value="2023-5"{{ Request::get('filter_status') == 'Mei' ? 'selected' : '' }}> Mei
+                                </option>
+                                <option value="2023-6"{{ Request::get('filter_status') == 'Juni' ? 'selected' : '' }}>
+                                    Oktober</option>
+                                <option value="2023-7"{{ Request::get('filter_status') == 'Juli' ? 'selected' : '' }}> Juli
+                                </option>
+                                <option value="2023-8"{{ Request::get('filter_status') == 'Agustus' ? 'selected' : '' }}>
+                                    Agustus</option>
+                                <option value="2023-9"{{ Request::get('filter_status') == 'September' ? 'selected' : '' }}>
+                                    September</option>
+                                <option value="2023-10"{{ Request::get('filter_status') == 'Oktober' ? 'selected' : '' }}>
+                                    Oktober</option>
+                                <option value="2023-11"{{ Request::get('filter_status') == 'November' ? 'selected' : '' }}>
+                                    November</option>
+                                <option value="2023-12"{{ Request::get('filter_status') == 'Desember' ? 'selected' : '' }}>
+                                    Oktober</option>
+                            </select>
+                            <button type="submit"
+                                class=" ml-4 p-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                                Filter
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
 

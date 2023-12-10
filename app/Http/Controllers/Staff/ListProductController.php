@@ -62,7 +62,7 @@ class ListProductController extends Controller
             ]);
             $bahan = Bahan::find($request->bahan);
             $bahan::where('id', $request->bahan)->update([
-                'stock_bahan' => $bahan['stock_bahan'] - 1
+                'stock_bahan' => $bahan['stock_bahan'] - $request->stock
             ]);
         }
         return redirect('/data-product')->with('success', 'Product berhasil ditambahkan');

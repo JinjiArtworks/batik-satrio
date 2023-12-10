@@ -40,12 +40,13 @@ class HistoryOrderController extends Controller
     public function store(Request $request, $id)
     {
         $user = Auth::user()->id;
-        $product = Review::create([
+        Review::create([
             'users_id' => $user,
             'products_id' => $id,
             'tanggal' => Carbon::now(),
             'komentar' => $request->comment,
-            'rating' => $request->rating
+            'rating' => $request->rating,
+            // 'ekspedisi' => $request->ekspedisi
         ]);
         return redirect('history-order');
     }
@@ -56,7 +57,7 @@ class HistoryOrderController extends Controller
         if ($request->bukti != null) {
             $destinationPath = '/images';
             $request->bukti->move(public_path($destinationPath), $request->bukti->getClientOriginalName());
-            $returns = Returns::create([
+            Returns::create([
                 'orders_id' => $request->order_id,
                 'tanggal' => Carbon::now(),
                 'alasan' => $request->alasan,

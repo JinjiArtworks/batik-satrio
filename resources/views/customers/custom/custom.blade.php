@@ -86,7 +86,8 @@
                     <input type="hidden" value="{{ $images }}" name="images">
                     <li class="w-full">
                         <div class="flex justify-center w-full space-x-2 sm:space-x-4">
-                            <img src="" class="flex-shrink-0 object-cover w-80 h-80  rounded outline-none" alt="Preview" id="imgPreview">
+                            <img src="" class="flex-shrink-0 object-cover w-80 h-80  rounded outline-none"
+                                alt="Preview" id="imgPreview">
                         </div>
                     </li>
                 @endif
@@ -117,7 +118,37 @@
                             <option value="Sutra">Kain Sutra</option>
                             <option value="Mori">Kain Mori</option>
                         </select>
-
+                    </div>
+                </li>
+            </ul>
+            <h3 class="font-semibold text-gray-900">Pilih Teknik Pembuatan</h3>
+            <ul class="items-center w-full text-sm font-medium text-gray-900  rounded-lg sm:flex ">
+                <li class="w-full">
+                    <div class="flex items-center mb-4">
+                        <select name="teknik"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                            required>
+                            <option value="">-- Pilih Teknik Pembuatan --</option>
+                            <option value="Batik Cap">Batik Cap</option>
+                            <option value="Batik Tulis">Slim Batik Tulis</option>
+                            <option value="Batik Printing">Batik Printing</option>
+                        </select>
+                    </div>
+                </li>
+            </ul>
+            <h3 class="font-semibold text-gray-900">Pilih Ukuran Baju</h3>
+            <ul class="items-center w-full text-sm font-medium text-gray-900  rounded-lg sm:flex ">
+                <li class="w-full">
+                    <div class="flex items-center mb-4">
+                        <select name="size"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                            required>
+                            <option value="">-- Pilih Ukuran Baju --</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                        </select>
                     </div>
                 </li>
             </ul>
@@ -131,13 +162,13 @@
                     </div>
                 </li>
             </ul>
-            <h3 class=" font-semibold text-gray-900 ">Masukkan qty dan detail ukuran </h3>
+            <h3 class=" font-semibold text-gray-900 ">Description</h3>
             <ul class="items-center w-full text-sm font-medium text-gray-900  rounded-lg sm:flex ">
                 <li class="w-full">
                     <div class="flex items-center mb-4">
                         <textarea
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                            name="size" placeholder="Contoh : XL = 3 Pcs" required></textarea>
+                            name="description" placeholder="Contoh : XL = 3 Pcs" required></textarea>
                     </div>
                 </li>
             </ul>

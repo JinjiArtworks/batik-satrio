@@ -160,7 +160,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('add-bahan', [AddBahanController::class, 'index'])->name('dashboard');
         Route::post('store-bahan', [AddBahanController::class, 'store'])->name('store-bahan');
-        Route::get('edit-bahan/{id}', [AddBahanController::class, 'edit'])->name('edit-bahan');
+        Route::get('edit-bahan/{id}', [AddBahanController::class, 'edit'])->name('edit-bahan'); 
         Route::put('update-bahan/{id}', [AddBahanController::class, 'update'])->name('update-bahan');
         Route::put('update-stock-bahan', [AddBahanController::class, 'updateStock'])->name('update-stock-bahan');
         Route::get('delete-bahan/{id}', [AddBahanController::class, 'destroy'])->name('delete-bahan');
@@ -178,11 +178,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('delete-warna/{id}', [AddWarnaController::class, 'destroy'])->name('delete-warna');
 
         // preview mungkin tidak diperlukan, nanti dihapus saja
-        Route::get('add-custom', [AddCustomController::class, 'index'])->name('dashboard');
-        Route::post('store-custom', [AddCustomController::class, 'store'])->name('store-custom');
-        Route::get('edit-custom/{id}', [AddCustomController::class, 'edit'])->name('edit-custom');
-        Route::put('update-custom/{id}', [AddCustomController::class, 'update'])->name('update-custom');
-        Route::get('delete-custom/{id}', [AddCustomController::class, 'destroy'])->name('delete-custom');
+        // Route::get('add-custom', [AddCustomController::class, 'index'])->name('dashboard');
+        // Route::post('store-custom', [AddCustomController::class, 'store'])->name('store-custom');
+        // Route::get('edit-custom/{id}', [AddCustomController::class, 'edit'])->name('edit-custom');
+        // Route::put('update-custom/{id}', [AddCustomController::class, 'update'])->name('update-custom');
+        // Route::get('delete-custom/{id}', [AddCustomController::class, 'destroy'])->name('delete-custom');
 
         Route::get('add-results', [AddResultsController::class, 'index'])->name('dashboard');
         Route::post('store-results', [AddResultsController::class, 'store'])->name('store-results');

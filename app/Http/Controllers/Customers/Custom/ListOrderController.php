@@ -35,6 +35,8 @@ class ListOrderController extends Controller
             "id" => 1,
             "harga" => $request->harga,
             "model" => $request->model,
+            "teknik" => $request->teknik,
+            "description" => $request->description,
             "kain" => $request->kain,
             "metode" => $request->metode,
             "images" => $request->images,

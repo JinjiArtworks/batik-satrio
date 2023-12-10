@@ -29,9 +29,40 @@ class DashboardController extends Controller
             ->groupBy('users_id')
             ->get();
         $totalClients = $getClients->count();
-        $orders = Order::when($request->filter_status !=  null, function ($q) use ($request) {
-            return $q->where('status', '=', $request->filter_status);
-        })->get();
+        $orders = Order::when(
+            $request->filter_status !=  null,
+            function ($q) use ($request) {
+                return $q->where('status', '=', $request->filter_status);
+            },
+            function ($q) use ($request) {
+                return $q->where('tanggal', 'LIKE', '%' . $request->filter_bulan . '%');
+            }
+        )->get();
+
+        // $products = Product::when(
+        //     $request->filter_alergi !=  null,
+        //     function ($q) use ($request) {
+        //         return $q->where('alergi_id', '!=', $request->filter_alergi);
+        //     },
+        //     // // for second select
+        //     // function ($q) use ($request) {
+        //     //     return $q->where('harga', $request);
+        //     // }
+        // )->when(
+        //     $request->filter2 !=  null,
+        //     function ($q) use ($request) {
+        //         if ($request->filter2 == 'Termurah') {
+        //             return $q->orderBy('harga', 'asc');
+        //         } else if ($request->filter2 == 'Termahal') {
+        //             return $q->orderBy('harga', 'desc');
+        //         } else if ($request->filter2 == 'Terlaris') {
+        //             return $q->orderBy('terjual', 'desc');
+        //         } else if ($request->filter2 == 'BestRating') {
+        //             return $q->orderBy('jumlah_penilaian', 'desc');
+        //         }
+        //     },
+        // )->get();
+
         // $orders = Order::where('status', '=', $request->filter_status)->get();
         // dd($filterStatus);
         // Total Orders

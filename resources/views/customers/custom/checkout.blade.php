@@ -98,8 +98,16 @@
                                     <th class="py-2 px-4 border border-gray-300 ">{{ $c['motif'] }}</th>
                                 </tr>
                                 <tr>
-                                    <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Tipe Lengan</th>
+                                    <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Tipe</th>
                                     <th class="py-2 px-4 border border-gray-300 ">{{ $c['tipe'] }}</th>
+                                </tr>
+                                <tr>
+                                    <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Teknik</th>
+                                    <th class="py-2 px-4 border border-gray-300 ">{{ $c['teknik'] }}</th>
+                                </tr>
+                                <tr>
+                                    <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Description</th>
+                                    <th class="py-2 px-4 border border-gray-300 ">{{ $c['description'] }}</th>
                                 </tr>
                             @endif
                             <tr>
@@ -107,17 +115,18 @@
                                 <th class="py-2 px-4 border border-gray-300 ">{{ $c['model'] }}</th>
                             </tr>
                             <tr>
+                                <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Ekspedisi</th>
+                                <th class="py-2 px-4 border border-gray-300 ">JNE - REG</th>
+                            </tr>
+
+                            <tr>
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Kain</th>
                                 <th class="py-2 px-4 border border-gray-300 ">{{ $c['kain'] }}</th>
                             </tr>
                             <tr>
-                                <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Ukuran Detail</th>
+                                <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Ukuran</th>
                                 <th class="py-2 px-4 border border-gray-300 ">{{ $c['size'] }}</th>
                             </tr>
-                            {{-- <tr>
-                                <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Weight</th>
-                                <th class="py-2 px-4 border border-gray-300 ">{{ $totalBerat }} gram</th>
-                            </tr> --}}
                             <tr>
                                 <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Pre Order</th>
                                 <th class="py-2 px-4 border border-gray-300 ">3 Hari</th>

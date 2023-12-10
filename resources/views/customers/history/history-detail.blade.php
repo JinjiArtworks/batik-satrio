@@ -117,8 +117,8 @@
                         @if ($detailStatus->order->status == 'Selesai')
                             <!-- Modal toggle -->
                             {{-- Updated_at dsini yaitu menentukan kapan pesanan tersebut diterima oleh penjual --}}
-                            @if ($detailStatus->product_id != null) 
-                            {{-- untuk produk non custom --}}
+                            @if ($detailStatus->product_id != null)
+                                {{-- untuk produk non custom --}}
                                 @if ($detailStatus->order->updated_at == $mytime)
                                     <button data-modal-target="authentication-modal"
                                         data-modal-toggle="authentication-modal"
@@ -228,7 +228,10 @@
                                 </th>
                             </tr>
                             @if ($item->request_result != null)
-                             
+                                <tr>
+                                    <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Ekspedisi </th>
+                                    <th class="py-2 px-4 border border-gray-300 ">{{ $item->order->ekspedisi }}</th>
+                                </tr>
                                 <tr>
                                     <th class="py-2 px-4 border border-gray-300 w-40 font-medium">Motif </th>
                                     <th class="py-2 px-4 border border-gray-300 ">{{ $item->request_motif }}</th>
