@@ -35,10 +35,16 @@ class DashboardController extends Controller
                 return $q->where('status', '=', $request->filter_status);
             },
             function ($q) use ($request) {
-                return $q->where('tanggal', 'LIKE', '%' . $request->filter_bulan . '%');
-            }
+                return $q->whereBetween('tanggal',[ $request->start_date, $request->end_date ]);
+            },
         )->get();
-
+        // $startDate = $request->start_date;
+        // $endDate = $request->end_date;
+        // if ($startDate && $endDate !=  null) {
+        //     $orders = Order::where('tanggal', '=>', $startDate)
+        //         ->orWhere('tanggal', '=<', $endDate)
+        //         ->get();
+        // }
         // $products = Product::when(
         //     $request->filter_alergi !=  null,
         //     function ($q) use ($request) {
@@ -66,6 +72,7 @@ class DashboardController extends Controller
         // $orders = Order::where('status', '=', $request->filter_status)->get();
         // dd($filterStatus);
         // Total Orders
+
         $filterPendapatan = Order::where('status', '=', 'Selesai')->orWhere('status', '=', 'Ajuan Pengembalian Ditolak')->get();
         $sumPendapatan = collect($filterPendapatan)->sum('total');
         $totalOngkir = collect($filterPendapatan)->sum('ongkos_kirim');
