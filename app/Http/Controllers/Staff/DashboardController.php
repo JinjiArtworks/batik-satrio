@@ -29,31 +29,12 @@ class DashboardController extends Controller
             ->groupBy('users_id')
             ->get();
         $totalClients = $getClients->count();
-        $orders = Order::when(
-            $request->filter_status !=  null,
-            function ($q) use ($request) {
-                return $q->where('status', '=', $request->filter_status);
-            },
-            function ($q) use ($request) {
-                return $q->whereBetween('tanggal',[ $request->start_date, $request->end_date ]);
-            },
-        )->get();
-        // $startDate = $request->start_date;
-        // $endDate = $request->end_date;
-        // if ($startDate && $endDate !=  null) {
-        //     $orders = Order::where('tanggal', '=>', $startDate)
-        //         ->orWhere('tanggal', '=<', $endDate)
-        //         ->get();
-        // }
+
         // $products = Product::when(
         //     $request->filter_alergi !=  null,
         //     function ($q) use ($request) {
         //         return $q->where('alergi_id', '!=', $request->filter_alergi);
         //     },
-        //     // // for second select
-        //     // function ($q) use ($request) {
-        //     //     return $q->where('harga', $request);
-        //     // }
         // )->when(
         //     $request->filter2 !=  null,
         //     function ($q) use ($request) {
@@ -67,10 +48,23 @@ class DashboardController extends Controller
         //             return $q->orderBy('jumlah_penilaian', 'desc');
         //         }
         //     },
+        // )->when(
+        //     $request->start_age && $request->end_age !=  null,
+        //     function ($q) use ($request) {
+        //         return $q->whereBetween('usia', [$request->start_age, $request->end_age]);
+        //     }
         // )->get();
-
-        // $orders = Order::where('status', '=', $request->filter_status)->get();
-        // dd($filterStatus);
+        $orders = Order::when(
+            $request->filter_status !=  null,
+            function ($q) use ($request) {
+                return $q->where('status', '=', $request->filter_status);
+            },
+        )->when(
+            $request->start_date !=  null,
+            function ($q) use ($request) {
+                return $q->whereBetween('tanggal', [$request->start_date, $request->end_date]);
+            },
+        )->get();
         // Total Orders
 
         $filterPendapatan = Order::where('status', '=', 'Selesai')->orWhere('status', '=', 'Ajuan Pengembalian Ditolak')->get();
